@@ -40,7 +40,8 @@
 #include <avr/pgmspace.h>
 #include <AH_AD9850.h>
 #include <avr/wdt.h>
-
+#include <Modbus.h>
+#include <ModbusSerial.h>
 
 
 //CLK - D6, FQUP - D7,  BitData - D8, RESET - D9
@@ -244,9 +245,11 @@ unsigned int sampleCount1 = 0;
 
 //+++++++++++++++++++ MODBUS ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
-modbusDevice regBank;
+ModbusSerial mb;
+
+//modbusDevice regBank;
 //Create the modbus slave protocol handler
-modbusSlave slave;
+//modbusSlave slave;
 
 //byte regs_in[5];                                    // Регистры работы с платой Камертон CPLL
 byte regs_out[4];                                   // Регистры работы с платой Камертон
@@ -1047,7 +1050,7 @@ void flash_time()                                              // Программа обра
 		//prer_Kmerton_Run = false;
 		//if (slave.run()!= 0)
 		//slave.run();
-
+		 mb.task();
 			//Serial.println("Serial_Event");
 		//clear_serial3();
 	//	digitalWrite(ledPin13,LOW);
@@ -1065,7 +1068,7 @@ void serialEvent3()
 	////{
 	//Serial_Event++; 
 	//Serial.println(Serial_Event);
-	slave.run();
+	//slave.run();
 
 	//clear_serial3();
 	//digitalWrite(ledPin13,LOW);
@@ -4755,17 +4758,17 @@ void test_power()
 	file_print_date();
 	myFile.println("");
 
-	//regBank.add(40293);                         // Aдрес счетчика  ошибки ADC1 напряжение 12/3 вольт
-	//regBank.add(40294);                         // Aдрес счетчика  ошибки ADC14 напряжение 12/3 вольт Radio1
-	//regBank.add(40295);                         // Aдрес счетчика  ошибки ADC14 напряжение 12/3 вольт Radio2
-	//regBank.add(40296);                         // Aдрес счетчика  ошибки ADC14 напряжение 12/3 вольт ГГС
-	//regBank.add(40297);                         // Aдрес счетчика  ошибки ADC15 напряжение светодиода 3,6 вольта
+	//mb.addHreg(40293);                         // Aдрес счетчика  ошибки ADC1 напряжение 12/3 вольт
+	//mb.addHreg(40294);                         // Aдрес счетчика  ошибки ADC14 напряжение 12/3 вольт Radio1
+	//mb.addHreg(40295);                         // Aдрес счетчика  ошибки ADC14 напряжение 12/3 вольт Radio2
+	//mb.addHreg(40296);                         // Aдрес счетчика  ошибки ADC14 напряжение 12/3 вольт ГГС
+	//mb.addHreg(40297);                         // Aдрес счетчика  ошибки ADC15 напряжение светодиода 3,6 вольта
 
-	//regBank.add(40493);                         // Aдрес данных измерения ADC1 напряжение 12/3 вольт
-	//regBank.add(40494);                         // Aдрес данных измерения ADC14 напряжение 12/3 вольт Radio1
-	//regBank.add(40495);                         // Aдрес данных измерения ADC14 напряжение 12/3 вольт Radio2
-	//regBank.add(40496);                         // Aдрес данных измерения ADC14 напряжение 12/3 вольт ГГС
-	//regBank.add(40497);                         // Aдрес данных измерения ADC15 напряжение светодиода 3,6 вольта
+	//mb.addHreg(40493);                         // Aдрес данных измерения ADC1 напряжение 12/3 вольт
+	//mb.addHreg(40494);                         // Aдрес данных измерения ADC14 напряжение 12/3 вольт Radio1
+	//mb.addHreg(40495);                         // Aдрес данных измерения ADC14 напряжение 12/3 вольт Radio2
+	//mb.addHreg(40496);                         // Aдрес данных измерения ADC14 напряжение 12/3 вольт ГГС
+	//mb.addHreg(40497);                         // Aдрес данных измерения ADC15 напряжение светодиода 3,6 вольта
 
 	measure_power();
 
@@ -6449,9 +6452,14 @@ void read_mem_porog()
 // Чтение и запись информиции одно байтных слов
 void mem_byte_trans_read()
 {
-	unsigned int _adr_reg = regBank.get(40127)+40000;  //  Адрес блока регистров для передачи в ПК уровней порогов.
-	int _adr_mem = regBank.get(40128)+200;  //  Адрес блока памяти для передачи в ПК уровней порогов.
-	int _size_block = regBank.get(40129);  //  Адрес длины блока
+
+	unsigned int _adr_reg = (mb.Hreg(40127)+40000);                      //  Адрес блока регистров для передачи в ПК уровней порогов.
+	int _adr_mem          = (mb.Hreg(40128)+200);                        //  Адрес блока памяти для передачи в ПК уровней порогов.
+	int _size_block       = mb.Hreg(40129);                              //  Адрес длины блока
+
+	//unsigned int _adr_reg = regBank.get(40127)+40000;  //  Адрес блока регистров для передачи в ПК уровней порогов.
+	//int _adr_mem = regBank.get(40128)+200;  //  Адрес блока памяти для передачи в ПК уровней порогов.
+	//int _size_block = regBank.get(40129);  //  Адрес длины блока
 
 	Serial.println(_adr_reg);
 	Serial.println(_adr_mem);
@@ -6710,18 +6718,221 @@ void setup_regModbus()
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
   //Assign the modbus device ID.  
-  regBank.setId(1);               // Slave ID 1
+//  regBank.setId(1);               // Slave ID 1
 
 /*
 modbus registers follow the following format
 00001-09999  Digital Outputs, A master device can read and write to these registers
-10001-19999  Digital Inputs,  A master device can only read the values from these registers
+10001-19999  Digital Inputs,  A master device can only read the values from these registersmb.addCoil
 30001-39999  Analog Inputs,   A master device can only read the values from these registers
 40001-49999  Analog Outputs,  A master device can read and write to these registers 
 Лучше всего, чтобы настроить регистры как типа в смежных блоках. это
 обеспечивает более эффективный поиск и регистра и уменьшает количество сообщений
 требуются мастера для извлечения данных.
 */
+
+	mb.addCoil(1);                           // Реле RL0 Звук  MIC1P
+	mb.addCoil(2);                           // Реле RL1 Звук  MIC2P
+	mb.addCoil(3);                           // Реле RL2 Звук  MIC3P
+	mb.addCoil(4);                           // Реле RL3 Звук  LFE  "Маг."
+	mb.addCoil(5);                           // Реле RL4 XP1 12  HeS2e   Включение микрофона инструктора
+	mb.addCoil(6);                           // Реле RL5 Звук Front L, Front R
+	mb.addCoil(7);                           // Реле RL6 Звук Center
+	mb.addCoil(8);                           // Реле RL7 Питание платы
+  
+	mb.addCoil(9);                           // Реле RL8 Звук на микрофон
+	mb.addCoil(10);                          // Реле RL9 XP1 10 Включение микрофона диспетчера
+	mb.addCoil(11);                          // Реле RL10 Включение питания на высоковольтный модуль 
+	mb.addCoil(12);                          // Свободен J24 - 1 
+	mb.addCoil(13);                          // XP8 - 2   sensor Тангента ножная
+	mb.addCoil(14);                          // XP8 - 1   PTT Тангента ножная
+	mb.addCoil(15);                          // XS1 - 5   PTT Мик
+	mb.addCoil(16);                          // XS1 - 6   sensor Мик
+ 
+	mb.addCoil(17);                          // J8-12     XP7 4 PTT2   Танг. р.
+	mb.addCoil(18);                          // XP1 - 20  HangUp  DCD
+	mb.addCoil(19);                          // J8-11     XP7 2 sensor  Танг. р.
+	mb.addCoil(20);                          // J8-23     XP7 1 PTT1 Танг. р.
+	mb.addCoil(21);                          // XP2-2     sensor "Маг."  
+	mb.addCoil(22);                          // XP5-3     sensor "ГГC."
+	mb.addCoil(23);                          // XP3-3     sensor "ГГ-Радио1."
+	mb.addCoil(24);                          // XP4-3     sensor "ГГ-Радио2."
+ 
+	mb.addCoil(25);                          // XP1- 19 HaSs      sensor подключения трубки    MTT                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
+	mb.addCoil(26);                          // XP1- 17 HaSPTT    CTS DSR вкл.  
+	mb.addCoil(27);                          // XP1- 16 HeS2Rs    sensor подключения гарнитуры инструктора с 2 наушниками
+	mb.addCoil(28);                          // XP1- 15 HeS2PTT   CTS вкл PTT Инструктора
+	mb.addCoil(29);                          // XP1- 13 HeS2Ls    sensor подключения гарнитуры инструктора 
+	mb.addCoil(30);                          // XP1- 6  HeS1PTT   CTS вкл   РТТ Диспетчера
+	mb.addCoil(31);                          // XP1- 5  HeS1Rs    sensor подкючения гарнитуры диспетчера с 2 наушниками
+	mb.addCoil(32);                          // XP1- 1  HeS1Ls    sensor подкючения гарнитуры диспетчера
+
+
+	mb.addCoil(118);                         // Флаг индикации многоразовой проверки
+	mb.addCoil(119);                         // 
+
+	mb.addCoil(120);                         // Флаг индикации возникновения любой ошибки
+	mb.addCoil(122);                         // Флаг индикации открытия файла
+	mb.addCoil(123);                         // Флаг индикации закрытия файла
+	mb.addCoil(124);                         // Флаг индикации связи с модулем "Камертон"
+	mb.addCoil(125);                         // Флаг индикации инициализации SD памяти
+	mb.addCoil(126);                         //  
+	mb.addCoil(127);                         //  
+	mb.addCoil(128);                         //  
+	mb.addCoil(129);                         //  
+
+	mb.addCoil(130);                         //  Флаг индикации порта 0 - RS232, 1 - USB0
+	mb.addCoil(131);                         //  
+
+
+	mb.addCoil(200);                         // Флаг ошибки "Sensor MTT                          XP1- 19 HaSs            OFF - ";
+	mb.addCoil(201);                         // Флаг ошибки "Sensor tangenta ruchnaja            XP7 - 2                 OFF - ";
+	mb.addCoil(202);                         // Флаг ошибки "Sensor tangenta nognaja             XP8 - 2                 OFF - "; 
+	mb.addCoil(203);                         // Флаг ошибки "Sensor headset instructor 2         XP1- 16 HeS2Rs          OFF - ";
+	mb.addCoil(204);                         // Флаг ошибки "Sensor headset instructor           XP1- 13 HeS2Ls          OFF - "; 
+	mb.addCoil(205);                         // Флаг ошибки "Sensor headset dispatcher 2         XP1- 13 HeS2Ls          OFF - ";
+	mb.addCoil(206);                         // Флаг ошибки "Sensor headset dispatcher           XP1- 1  HeS1Ls          OFF - ";
+	mb.addCoil(207);                         // Флаг ошибки "Sensor microphone                   XS1 - 6                 OFF - "; 
+	mb.addCoil(208);                         // Флаг ошибки "Microphone headset instructor Sw.   XP1 12 HeS2e            OFF - "; 
+	mb.addCoil(209);                         // Флаг ошибки "Microphone headset dispatcher Sw.   XP1 12 HeS2e            OFF - ";  
+
+	mb.addCoil(210);                         // Флаг ошибки "Sensor MTT                          XP1- 19 HaSs            ON  - ";
+	mb.addCoil(211);                         // Флаг ошибки "Sensor tangenta ruchnaja            XP7 - 2                 ON  - ";
+	mb.addCoil(212);                         // Флаг ошибки "Sensor tangenta nognaja             XP8 - 2                 ON  - "; 
+	mb.addCoil(213);                         // Флаг ошибки "Sensor headset instructor 2         XP1- 16 HeS2Rs          ON  - ";
+	mb.addCoil(214);                         // Флаг ошибки "Sensor headset instructor           XP1- 13 HeS2Ls          ON  - "; 
+	mb.addCoil(215);                         // Флаг ошибки "Sensor headset dispatcher 2         XP1- 13 HeS2Ls          ON  - ";
+	mb.addCoil(216);                         // Флаг ошибки "Sensor headset dispatcher           XP1- 1  HeS1Ls          ON  - ";
+	mb.addCoil(217);                         // Флаг ошибки "Sensor microphone                   XS1 - 6                 ON  - "; 
+	mb.addCoil(218);                         // Флаг ошибки "Microphone headset instructor Sw.   XP1 12 HeS2e            ON  - "; 
+	mb.addCoil(219);                         // Флаг ошибки "Microphone headset dispatcher Sw.   XP1 12 HeS2e            ON  - "; 
+	 
+	mb.addCoil(220);                         // Флаг ошибки "Command PTT headset instructor (CTS)                        OFF - ";
+	mb.addCoil(221);                         // Флаг ошибки "Command PTT headset instructor (CTS)                        ON  - ";
+	mb.addCoil(222);                         // Флаг ошибки "Command PTT headset dispatcher (CTS)                        OFF - ";
+	mb.addCoil(223);                         // Флаг ошибки "Command PTT headset dispatcher (CTS)                        ON  - ";
+	mb.addCoil(224);                         // Флаг ошибки "Test headset instructor ** Signal LineL                     ON  - ";
+	mb.addCoil(225);                         // Флаг ошибки "Test headset instructor ** Signal LineR                     ON  - ";   
+	mb.addCoil(226);                         // Флаг ошибки "Test headset instructor ** Signal Mag phone                 ON  - ";
+	mb.addCoil(227);                         // Флаг ошибки "Test headset dispatcher ** Signal LineL                     ON  - ";
+	mb.addCoil(228);                         // Флаг ошибки "Test headset dispatcher ** Signal LineR                     ON  - ";  
+	mb.addCoil(229);                         // Флаг ошибки "Test headset dispatcher ** Signal Mag phone                 ON  - ";
+
+	mb.addCoil(230);                         // Флаг ошибки "Test headset instructor ** Signal FrontL                    OFF - ";
+	mb.addCoil(231);                         // Флаг ошибки "Test headset instructor ** Signal FrontR                    OFF - ";
+	mb.addCoil(232);                         // Флаг ошибки "Test headset instructor ** Signal LineL                     OFF - ";
+	mb.addCoil(233);                         // Флаг ошибки "Test headset instructor ** Signal LineR                     OFF - ";
+	mb.addCoil(234);                         // Флаг ошибки "Test headset instructor ** Signal mag radio                 OFF - "; 
+	mb.addCoil(235);                         // Флаг ошибки "Test headset instructor ** Signal mag phone                 OFF - ";
+	mb.addCoil(236);                         // Флаг ошибки "Test headset instructor ** Signal GGS                       OFF - ";
+	mb.addCoil(237);                         // Флаг ошибки "Test headset instructor ** Signal GG Radio1                 OFF - ";
+	mb.addCoil(238);                         // Флаг ошибки "Test headset instructor ** Signal GG Radio2                 OFF - ";
+	mb.addCoil(239);                         // Флаг ошибки  ADC0  ток x1 
+
+	mb.addCoil(240);                         // Флаг ошибки "Test headset dispatcher ** Signal FrontL                    OFF - ";
+	mb.addCoil(241);                         // Флаг ошибки "Test headset dispatcher ** Signal FrontR                    OFF - ";
+	mb.addCoil(242);                         // Флаг ошибки "Test headset dispatcher ** Signal LineL                     OFF - "; 
+	mb.addCoil(243);                         // Флаг ошибки "Test headset dispatcher ** Signal LineR                     OFF - ";
+	mb.addCoil(244);                         // Флаг ошибки "Test headset dispatcher ** Signal mag radio                 OFF - "; 
+	mb.addCoil(245);                         // Флаг ошибки "Test headset dispatcher ** Signal mag phone                 OFF - ";
+	mb.addCoil(246);                         // Флаг ошибки "Test headset dispatcher ** Signal GGS                       OFF - "; 
+	mb.addCoil(247);                         // Флаг ошибки "Test headset dispatcher ** Signal GG Radio1                 OFF - ";
+	mb.addCoil(248);                         // Флаг ошибки "Test headset dispatcher ** Signal GG Radio2                 OFF - "; 
+	mb.addCoil(249);                         // Флаг ошибки ADC2 ток x10  
+
+	mb.addCoil(250);                         // Флаг ошибки "Test MTT ** Signal FrontL                                   OFF - ";
+	mb.addCoil(251);                         // Флаг ошибки "Test MTT ** Signal FrontR                                   OFF - ";
+	mb.addCoil(252);                         // Флаг ошибки "Test MTT ** Signal LineL                                    OFF - ";
+	mb.addCoil(253);                         // Флаг ошибки "Test MTT ** Signal LineR                                    OFF - "; 
+	mb.addCoil(254);                         // Флаг ошибки "Test MTT ** Signal mag radio                                OFF - ";
+	mb.addCoil(255);                         // Флаг ошибки "Test MTT ** Signal mag phone                                OFF - ";
+	mb.addCoil(256);                         // Флаг ошибки "Test MTT ** Signal GGS                                      OFF - ";
+	mb.addCoil(257);                         // Флаг ошибки "Test MTT ** Signal GG Radio1                                OFF - ";
+	mb.addCoil(258);                         // Флаг ошибки "Test MTT ** Signal GG Radio2                                OFF - "; 
+	mb.addCoil(259);                         // Флаг ошибки "Test MTT ** Signal GGS                                      ON  - ";
+
+	mb.addCoil(260);                         // Флаг ошибки "Test MTT ** Signal LineL                                    ON  - ";
+	mb.addCoil(261);                         // Флаг ошибки "Test MTT ** Signal LineR                                    ON  - ";  
+	mb.addCoil(262);                         // Флаг ошибки "Test MTT ** Signal Mag phone                                ON  - ";
+	mb.addCoil(263);                         // Флаг ошибки "Test MTT PTT    (CTS)                                       OFF - ";
+	mb.addCoil(264);                         // Флаг ошибки "Test microphone PTT  (CTS)                                  OFF - ";
+	mb.addCoil(265);                         // Флаг ошибки "Test MTT PTT    (CTS)                                       ON  - ";
+	mb.addCoil(266);                         // Флаг ошибки "Test microphone PTT  (CTS)                                  ON  - ";
+	mb.addCoil(267);                         // Флаг ошибки "Test MTT HangUp (DCD)                                       OFF - ";
+	mb.addCoil(268);                         // Флаг ошибки "Test MTT HangUp (DCD)                                       ON  - ";
+	mb.addCoil(269);                         // Флаг ошибки Длительность регулировки яркости 
+
+	mb.addCoil(270);                         // Флаг ошибки "Command PTT1 tangenta ruchnaja (CTS)                        OFF - ";
+	mb.addCoil(271);                         // Флаг ошибки "Command PTT2 tangenta ruchnaja (DCR)                        OFF - ";
+	mb.addCoil(272);                         // Флаг ошибки "Command PTT1 tangenta ruchnaja (CTS)                        ON  - ";
+	mb.addCoil(273);                         // Флаг ошибки "Command PTT2 tangenta ruchnaja (DCR)                        ON  - ";
+	mb.addCoil(274);                         // Флаг ошибки "Command sensor tangenta ruchnaja                            OFF - ";
+	mb.addCoil(275);                         // Флаг ошибки "Command sensor tangenta ruchnaja                            ON  - ";
+	mb.addCoil(276);                         // Флаг ошибки "Command sensor tangenta nognaja                             OFF - ";
+	mb.addCoil(277);                         // Флаг ошибки "Command sensor tangenta nognaja                             ON  - ";
+	mb.addCoil(278);                         // Флаг ошибки "Command PTT tangenta nognaja (CTS)                          OFF - ";
+	mb.addCoil(279);                         // Флаг ошибки "Command PTT tangenta nognaja (CTS)                          ON  - ";
+
+	mb.addCoil(280);                         // Флаг ошибки "Test GGS ** Signal FrontL                                   OFF - ";
+	mb.addCoil(281);                         // Флаг ошибки "Test GGS ** Signal FrontR                                   OFF - ";
+	mb.addCoil(282);                         // Флаг ошибки "Test GGS ** Signal LineL                                    OFF - ";
+	mb.addCoil(283);                         // Флаг ошибки "Test GGS ** Signal LineR                                    OFF - ";
+	mb.addCoil(284);                         // Флаг ошибки "Test GGS ** Signal mag radio                                OFF - ";
+	mb.addCoil(285);                         // Флаг ошибки "Test GGS ** Signal mag phone                                OFF - ";
+	mb.addCoil(286);                         // Флаг ошибки "Test GGS ** Signal GGS                                      OFF - ";
+	mb.addCoil(287);                         // Флаг ошибки "Test GGS ** Signal GG Radio1                                OFF - ";
+	mb.addCoil(288);                         // Флаг ошибки "Test GGS ** Signal GG Radio2                                OFF - ";
+	mb.addCoil(289);                         // Флаг ошибки "Test GGS ** Signal GGS                                      ON  - ";
+
+	mb.addCoil(290);                         // Флаг ошибки "Test GGS ** Signal FrontL                                   ON  - ";
+	mb.addCoil(291);                         // Флаг ошибки "Test GGS ** Signal FrontR                                   ON  - ";
+	mb.addCoil(292);                         // Флаг ошибки "Test GGS ** Signal mag phone                                ON  - ";
+	mb.addCoil(293);                         // Флаг ошибки ADC1 напряжение 12/3 вольт
+	mb.addCoil(294);                         // Флаг ошибки ADC14 напряжение 12/3 вольт Radio1
+	mb.addCoil(295);                         // Флаг ошибки ADC14 напряжение 12/3 вольт Radio2
+	mb.addCoil(296);                         // Флаг ошибки ADC14 напряжение 12/3 вольт ГГС
+	mb.addCoil(297);                         // Флаг ошибки ADC15 напряжение светодиода 3,6 вольта
+	mb.addCoil(298);                         // Флаг ошибки "Test Microphone ** Signal mag phone                         ON  - ";      
+	mb.addCoil(299);                         // Флаг ошибки "Test Microphone ** Signal LineL                             ON  - ";   
+
+	mb.addCoil(300);                         // Флаг ошибки "Test Radio1 ** Signal FrontL                                OFF - ";
+	mb.addCoil(301);                         // Флаг ошибки "Test Radio1 ** Signal FrontR                                OFF - ";
+	mb.addCoil(302);                         // Флаг ошибки "Test Radio1 ** Signal LineL                                 OFF - ";
+	mb.addCoil(303);                         // Флаг ошибки "Test Radio1 ** Signal LineR                                 OFF - ";
+	mb.addCoil(304);                         // Флаг ошибки "Test Radio1 ** Signal mag radio                             OFF - ";
+	mb.addCoil(305);                         // Флаг ошибки "Test Radio1 ** Signal mag phone                             OFF - ";
+	mb.addCoil(306);                         // Флаг ошибки "Test Radio1 ** Signal GGS                                   OFF - ";
+	mb.addCoil(307);                         // Флаг ошибки "Test Radio1 ** Signal GG Radio1                             OFF - ";
+	mb.addCoil(308);                         // Флаг ошибки "Test Radio1 ** Signal GG Radio2                             OFF - ";
+	mb.addCoil(309);                         // Флаг ошибки "Test Radio1 ** Signal Radio1                                ON  - ";
+
+	mb.addCoil(310);                         // Флаг ошибки "Test Radio2 ** Signal FrontL                                OFF - ";
+	mb.addCoil(311);                         // Флаг ошибки "Test Radio2 ** Signal FrontR                                OFF - ";
+	mb.addCoil(312);                         // Флаг ошибки "Test Radio2 ** Signal LineL                                 OFF - ";
+	mb.addCoil(313);                         // Флаг ошибки "Test Radio2 ** Signal LineR                                 OFF - ";
+	mb.addCoil(314);                         // Флаг ошибки "Test Radio2 ** Signal mag radio                             OFF - ";
+	mb.addCoil(315);                         // Флаг ошибки "Test Radio2 ** Signal mag phone                             OFF - ";
+	mb.addCoil(316);                         // Флаг ошибки "Test Radio2 ** Signal GGS                                   OFF - ";
+	mb.addCoil(317);                         // Флаг ошибки "Test Radio2 ** Signal GG Radio1                             OFF - ";
+	mb.addCoil(318);                         // Флаг ошибки "Test Radio2 ** Signal GG Radio2                             OFF - ";
+	mb.addCoil(319);                         // Флаг ошибки "Test Radio2 ** Signal Radio2                                ON  - ";
+
+	mb.addCoil(320);                         // Флаг ошибки "Test Microphone ** Signal FrontL                            OFF - ";
+	mb.addCoil(321);                         // Флаг ошибки "Test Microphone ** Signal FrontR                            OFF - ";
+	mb.addCoil(322);                         // Флаг ошибки "Test Microphone ** Signal LineL                             OFF - ";
+	mb.addCoil(323);                         // Флаг ошибки "Test Microphone ** Signal LineR                             OFF - ";
+	mb.addCoil(324);                         // Флаг ошибки "Test Microphone ** Signal mag radio                         OFF - ";
+	mb.addCoil(325);                         // Флаг ошибки "Test Microphone ** Signal mag phone                         OFF - ";
+	mb.addCoil(326);                         // Флаг ошибки "Test Microphone ** Signal GGS                               OFF - ";
+	mb.addCoil(327);                         // Флаг ошибки "Test Microphone ** Signal GG Radio1                         OFF - ";
+	mb.addCoil(328);                         // Флаг ошибки "Test Microphone ** Signal GG Radio2                         OFF - ";
+	mb.addCoil(329);                         // Флаг ошибки Код яркости дисплея
+
+	mb.addCoil(330);                         // Флаг ошибки "Test Radio1 ** Signal mag radio                             ON  - ";
+	mb.addCoil(331);                         // Флаг ошибки "Test Radio2 ** Signal mag radio                             ON  - ";                    // 
+	mb.addCoil(332);                         // Флаг ошибки "Test GGS ** Signal mag radio   
+
+	/*
 	regBank.add(1);                           // Реле RL0 Звук  MIC1P
 	regBank.add(2);                           // Реле RL1 Звук  MIC2P
 	regBank.add(3);                           // Реле RL2 Звук  MIC3P
@@ -6923,10 +7134,11 @@ modbus registers follow the following format
 	regBank.add(331);                         // Флаг ошибки "Test Radio2 ** Signal mag radio                             ON  - ";                    // 
 	regBank.add(332);                         // Флаг ошибки "Test GGS ** Signal mag radio   
 
+	*/
 
-	regBank.add(10081);    // Адрес флагa индикации состояния сигнала CTS
-	regBank.add(10082);    // Адрес флагa индикации состояния сигнала DSR
-	regBank.add(10083);    // Адрес флагa индикации состояния сигнала DCD
+	mb.addIsts(0081);    // Адрес флагa индикации состояния сигнала CTS
+	mb.addIsts(0082);    // Адрес флагa индикации состояния сигнала DSR
+	mb.addIsts(0083);    // Адрес флагa индикации состояния сигнала DCD
 
 						 //Add Input registers 30001-30040 to the register bank
 
@@ -6997,476 +7209,477 @@ modbus registers follow the following format
 
 
 	//regBank.set(40004+buffer,Serial1.read());
-	regBank.add(40000);  // 
-	regBank.add(40001);  // Регистры обмена с Аудио 1
-	regBank.add(40002);  // Регистры обмена с Аудио 1
-	regBank.add(40003);  // Регистры обмена с Аудио 1
-	regBank.add(40004);  // Регистры обмена с Аудио 1
-	regBank.add(40005);  // Регистры обмена с Аудио 1
-	regBank.add(40006);  // Регистры обмена с Аудио 1
-	regBank.add(40007);  // Регистры обмена с Аудио 1
-	regBank.add(40008);  // 
-	regBank.add(40009);  // 
 
-	regBank.add(40010);  // №  Аудио 1
-	regBank.add(40011);  // №  Аудио 1
-	regBank.add(40012);  // №  Аудио 1
-	regBank.add(40013);  // №  Аудио 1
-	regBank.add(40014);  // 
-	regBank.add(40015);  // 
-	regBank.add(40016);  // 
-	regBank.add(40017);  // 
-	regBank.add(40018);  // 
-	regBank.add(40019);  // 
+	//mb.addHreg(40000);  // 
+	mb.addHreg(0001);  // Регистры обмена с Аудио 1
+	mb.addHreg(0002);  // Регистры обмена с Аудио 1
+	mb.addHreg(0003);  // Регистры обмена с Аудио 1
+	mb.addHreg(0004);  // Регистры обмена с Аудио 1
+	mb.addHreg(0005);  // Регистры обмена с Аудио 1
+	mb.addHreg(0006);  // Регистры обмена с Аудио 1
+	mb.addHreg(0007);  // Регистры обмена с Аудио 1
+	mb.addHreg(0008);  // 
+	mb.addHreg(0009);  // 
+
+	mb.addHreg(0010);  // №  Аудио 1
+	mb.addHreg(0011);  // №  Аудио 1
+	mb.addHreg(0012);  // №  Аудио 1
+	mb.addHreg(0013);  // №  Аудио 1
+	mb.addHreg(0014);  // 
+	mb.addHreg(0015);  // 
+	mb.addHreg(0016);  // 
+	mb.addHreg(0017);  // 
+	mb.addHreg(0018);  // 
+	mb.addHreg(0019);  // 
 
 						 // Текущее время 
-	regBank.add(40046);  // адрес день модуля часов контроллера
-	regBank.add(40047);  // адрес месяц модуля часов контроллера
-	regBank.add(40048);  // адрес год модуля часов контроллера
-	regBank.add(40049);  // адрес час модуля часов контроллера
-	regBank.add(40050);  // адрес минута модуля часов контроллера
-	regBank.add(40051);  // адрес секунда модуля часов контроллера
+	mb.addHreg(0046);  // адрес день модуля часов контроллера
+	mb.addHreg(0047);  // адрес месяц модуля часов контроллера
+	mb.addHreg(0048);  // адрес год модуля часов контроллера
+	mb.addHreg(0049);  // адрес час модуля часов контроллера
+	mb.addHreg(0050);  // адрес минута модуля часов контроллера
+	mb.addHreg(0051);  // адрес секунда модуля часов контроллера
  
 						 // Установка времени в контроллере
-	regBank.add(40052);  // адрес день
-	regBank.add(40053);  // адрес месяц
-	regBank.add(40054);  // адрес год
-	regBank.add(40055);  // адрес час
-	regBank.add(40056);  // адрес минута
-	regBank.add(40057);  // 
-	regBank.add(40058);  // 
-	regBank.add(40059);  // 
+	mb.addHreg(0052);  // адрес день
+	mb.addHreg(0053);  // адрес месяц
+	mb.addHreg(0054);  // адрес год
+	mb.addHreg(0055);  // адрес час
+	mb.addHreg(0056);  // адрес минута
+	mb.addHreg(0057);  // 
+	mb.addHreg(0058);  // 
+	mb.addHreg(0059);  // 
 	
-	regBank.add(40060);  // Адрес хранения величины сигнала резисторами
-	regBank.add(40061);  // Адрес хранения величины яркости для управления
-	regBank.add(40062);  // Адрес хранения величины яркости для передачи в программу
-	regBank.add(40063);  // Адрес хранения длительности импульса яркости для передачи в программу ПК
+	mb.addHreg(0060);  // Адрес хранения величины сигнала резисторами
+	mb.addHreg(0061);  // Адрес хранения величины яркости для управления
+	mb.addHreg(0062);  // Адрес хранения величины яркости для передачи в программу
+	mb.addHreg(0063);  // Адрес хранения длительности импульса яркости для передачи в программу ПК
 
 
 	/*
-	regBank.add(40061); // адрес счетчика ошибки
-	regBank.add(40062); // адрес счетчика ошибки
-	regBank.add(40063); // адрес счетчика ошибки
-	regBank.add(40064); // адрес ошибки
-	regBank.add(40065); // адрес ошибки
-	regBank.add(40066); // адрес ошибки
-	regBank.add(40067); // адрес ошибки
-	regBank.add(40068); // адрес ошибки
-	regBank.add(40069); // адрес ошибки
-	regBank.add(40070); // адрес ошибки
-	regBank.add(40071); // адрес ошибки
+	mb.addHreg(40061); // адрес счетчика ошибки
+	mb.addHreg(40062); // адрес счетчика ошибки
+	mb.addHreg(40063); // адрес счетчика ошибки
+	mb.addHreg(40064); // адрес ошибки
+	mb.addHreg(40065); // адрес ошибки
+	mb.addHreg(40066); // адрес ошибки
+	mb.addHreg(40067); // адрес ошибки
+	mb.addHreg(40068); // адрес ошибки
+	mb.addHreg(40069); // адрес ошибки
+	mb.addHreg(40070); // адрес ошибки
+	mb.addHreg(40071); // адрес ошибки
 
-	regBank.add(40072); // адрес ошибки в %
-	regBank.add(40073); // адрес ошибки в %
-	regBank.add(40074); // адрес ошибки в %
-	regBank.add(40075); // адрес ошибки %
-	regBank.add(40076); // адрес ошибки %
-	regBank.add(40077); // адрес ошибки %
-	regBank.add(40078); // адрес ошибки %
-	regBank.add(40079); // адрес ошибки %
-	regBank.add(40080); // адрес ошибки %
-	regBank.add(40081); // адрес ошибки %
-	regBank.add(40082); // адрес ошибки %
-	regBank.add(40083); // адрес ошибки %
+	mb.addHreg(40072); // адрес ошибки в %
+	mb.addHreg(40073); // адрес ошибки в %
+	mb.addHreg(40074); // адрес ошибки в %
+	mb.addHreg(40075); // адрес ошибки %
+	mb.addHreg(40076); // адрес ошибки %
+	mb.addHreg(40077); // адрес ошибки %
+	mb.addHreg(40078); // адрес ошибки %
+	mb.addHreg(40079); // адрес ошибки %
+	mb.addHreg(40080); // адрес ошибки %
+	mb.addHreg(40081); // адрес ошибки %
+	mb.addHreg(40082); // адрес ошибки %
+	mb.addHreg(40083); // адрес ошибки %
 
 	// Время ошибки на включение
-	regBank.add(40084); // адрес день adr_Mic_On_day 
-	regBank.add(40085); // адрес месяц adr_Mic_On_month  
-	regBank.add(40086); // адрес год adr_Mic_On_year  
-	regBank.add(40087); // адрес час adr_Mic_On_hour 
-	regBank.add(40088); // адрес минута adr_Mic_On_minute 
-	regBank.add(40089); // адрес секунда  adr_Mic_On_second    
+	mb.addHreg(40084); // адрес день adr_Mic_On_day 
+	mb.addHreg(40085); // адрес месяц adr_Mic_On_month  
+	mb.addHreg(40086); // адрес год adr_Mic_On_year  
+	mb.addHreg(40087); // адрес час adr_Mic_On_hour 
+	mb.addHreg(40088); // адрес минута adr_Mic_On_minute 
+	mb.addHreg(40089); // адрес секунда  adr_Mic_On_second    
 
 	// Время ошибки на выключение
-	regBank.add(40090); // адрес день adr_Mic_Off_day    
-	regBank.add(40091); // адрес месяц  adr_Mic_Off_month 
-	regBank.add(40092); // адрес год adr_Mic_Off_year  
-	regBank.add(40093); // адрес час adr_Mic_Off_hour   
-	regBank.add(40094); // адрес минута adr_Mic_Off_minute   
-	regBank.add(40095); // адрес секунда adr_Mic_Off_second    
+	mb.addHreg(40090); // адрес день adr_Mic_Off_day    
+	mb.addHreg(40091); // адрес месяц  adr_Mic_Off_month 
+	mb.addHreg(40092); // адрес год adr_Mic_Off_year  
+	mb.addHreg(40093); // адрес час adr_Mic_Off_hour   
+	mb.addHreg(40094); // адрес минута adr_Mic_Off_minute   
+	mb.addHreg(40095); // адрес секунда adr_Mic_Off_second    
 	*/
 	// Время старта теста
-	regBank.add(40096);  // адрес день  adr_Mic_Start_day    
-	regBank.add(40097);  // адрес месяц adr_Mic_Start_month  
-	regBank.add(40098);  // адрес год adr_Mic_Start_year  
-	regBank.add(40099);  // адрес час adr_Mic_Start_hour 
-	regBank.add(40100);  // адрес минута adr_Mic_Start_minute 
-	regBank.add(40101);  // адрес секунда adr_Mic_Start_second  
+	mb.addHreg(0096);  // адрес день  adr_Mic_Start_day    
+	mb.addHreg(0097);  // адрес месяц adr_Mic_Start_month  
+	mb.addHreg(0098);  // адрес год adr_Mic_Start_year  
+	mb.addHreg(0099);  // адрес час adr_Mic_Start_hour 
+	mb.addHreg(0100);  // адрес минута adr_Mic_Start_minute 
+	mb.addHreg(0101);  // адрес секунда adr_Mic_Start_second  
 
 	// Время окончания теста
-	regBank.add(40102);  // адрес день adr_Mic_Stop_day 
-	regBank.add(40103);  // адрес месяц adr_Mic_Stop_month 
-	regBank.add(40104);  // адрес год adr_Mic_Stop_year
-	regBank.add(40105);  // адрес час adr_Mic_Stop_hour 
-	regBank.add(40106);  // адрес минута adr_Mic_Stop_minute  
-	regBank.add(40107);  // адрес секунда adr_Mic_Stop_second 
+	mb.addHreg(0102);  // адрес день adr_Mic_Stop_day 
+	mb.addHreg(0103);  // адрес месяц adr_Mic_Stop_month 
+	mb.addHreg(0104);  // адрес год adr_Mic_Stop_year
+	mb.addHreg(0105);  // адрес час adr_Mic_Stop_hour 
+	mb.addHreg(0106);  // адрес минута adr_Mic_Stop_minute  
+	mb.addHreg(0107);  // адрес секунда adr_Mic_Stop_second 
 
 	// Продолжительность выполнения теста
-	regBank.add(40108);  // адрес день adr_Time_Test_day 
-	regBank.add(40109);  // адрес час adr_Time_Test_hour 
-	regBank.add(40110);  // адрес минута adr_Time_Test_minute
-	regBank.add(40111);  // адрес секунда adr_Time_Test_second
+	mb.addHreg(0108);  // адрес день adr_Time_Test_day 
+	mb.addHreg(0109);  // адрес час adr_Time_Test_hour 
+	mb.addHreg(0110);  // адрес минута adr_Time_Test_minute
+	mb.addHreg(0111);  // адрес секунда adr_Time_Test_second
 
-	regBank.add(40112);  // Адрес хранения переменной год 
-	regBank.add(40113);  // Адрес хранения переменной месяц 
-	regBank.add(40114);  // Адрес хранения переменной день
-	regBank.add(40115);  // Адрес хранения переменной счетчика последнего номера файла
-	regBank.add(40116);  // Адрес хранения переменной счетчика текущего номера файла
+	mb.addHreg(0112);  // Адрес хранения переменной год 
+	mb.addHreg(0113);  // Адрес хранения переменной месяц 
+	mb.addHreg(0114);  // Адрес хранения переменной день
+	mb.addHreg(0115);  // Адрес хранения переменной счетчика последнего номера файла
+	mb.addHreg(0116);  // Адрес хранения переменной счетчика текущего номера файла
 
-	regBank.add(40120);  // adr_control_command Адрес передачи комманд на выполнение
-	regBank.add(40121);  // Адрес счетчика всех ошибок
-	regBank.add(40122);  //
-	regBank.add(40123);  //
-	regBank.add(40124);  //
-	regBank.add(40125);  //  
-	regBank.add(40126);  //  
-	regBank.add(40127);  //  Адрес блока регистров для передачи в ПК уровней порогов.
-	regBank.add(40128);  //  Адрес блока памяти для передачи в ПК уровней порогов.
-	regBank.add(40129);  //  Адрес длины блока памяти для передачи в ПК уровней порогов.
+	mb.addHreg(0120);  // adr_control_command Адрес передачи комманд на выполнение
+	mb.addHreg(0121);  // Адрес счетчика всех ошибок
+	mb.addHreg(0122);  //
+	mb.addHreg(0123);  //
+	mb.addHreg(0124);  //
+	mb.addHreg(0125);  //  
+	mb.addHreg(0126);  //  
+	mb.addHreg(0127);  //  Адрес блока регистров для передачи в ПК уровней порогов.
+	mb.addHreg(0128);  //  Адрес блока памяти для передачи в ПК уровней порогов.
+	mb.addHreg(0129);  //  Адрес длины блока памяти для передачи в ПК уровней порогов.
 
-	regBank.add(40130);  //  Регистры временного хранения для передачи уровней порогов 
-	regBank.add(40131);  //
-	regBank.add(40132);  //  
-	regBank.add(40133);  //
-	regBank.add(40134);  //  
-	regBank.add(40135);  //
-	regBank.add(40136);  //  
-	regBank.add(40137);  //
-	regBank.add(40138);  //  
-	regBank.add(40139);  //
+	mb.addHreg(0130);  //  Регистры временного хранения для передачи уровней порогов 
+	mb.addHreg(0131);  //
+	mb.addHreg(0132);  //  
+	mb.addHreg(0133);  //
+	mb.addHreg(0134);  //  
+	mb.addHreg(0135);  //
+	mb.addHreg(0136);  //  
+	mb.addHreg(0137);  //
+	mb.addHreg(0138);  //  
+	mb.addHreg(0139);  //
 
-	regBank.add(40140);  //  
-	regBank.add(40141);  //
-	regBank.add(40142);  //  
-	regBank.add(40143);  //
-	regBank.add(40144);  //  
-	regBank.add(40145);  //
-	regBank.add(40146);  //  
-	regBank.add(40147);  //
-	regBank.add(40148);  //  
-	regBank.add(40149);  //
+	mb.addHreg(0140);  //  
+	mb.addHreg(0141);  //
+	mb.addHreg(0142);  //  
+	mb.addHreg(0143);  //
+	mb.addHreg(0144);  //  
+	mb.addHreg(0145);  //
+	mb.addHreg(0146);  //  
+	mb.addHreg(0147);  //
+	mb.addHreg(0148);  //  
+	mb.addHreg(0149);  //
 
-	regBank.add(40150);  //  
-	regBank.add(40151);  //
-	regBank.add(40152);  //  
-	regBank.add(40153);  //
-	regBank.add(40154);  //  
-	regBank.add(40155);  //
-	regBank.add(40156);  //  
-	regBank.add(40157);  //
-	regBank.add(40158);  //  
-	regBank.add(40159);  //
+	mb.addHreg(0150);  //  
+	mb.addHreg(0151);  //
+	mb.addHreg(0152);  //  
+	mb.addHreg(0153);  //
+	mb.addHreg(0154);  //  
+	mb.addHreg(0155);  //
+	mb.addHreg(0156);  //  
+	mb.addHreg(0157);  //
+	mb.addHreg(0158);  //  
+	mb.addHreg(0159);  //
 
-	regBank.add(40160);  //  
-	regBank.add(40161);  //
-	regBank.add(40162);  //  
-	regBank.add(40163);  //
-	regBank.add(40164);  //  
-	regBank.add(40165);  //
-	regBank.add(40166);  //  
-	regBank.add(40167);  //
-	regBank.add(40168);  //  
-	regBank.add(40169);  //
+	mb.addHreg(0160);  //  
+	mb.addHreg(0161);  //
+	mb.addHreg(0162);  //  
+	mb.addHreg(0163);  //
+	mb.addHreg(0164);  //  
+	mb.addHreg(0165);  //
+	mb.addHreg(0166);  //  
+	mb.addHreg(0167);  //
+	mb.addHreg(0168);  //  
+	mb.addHreg(0169);  //
 
 
-	regBank.add(40200);                         // Aдрес счетчика ошибки "Sensor MTT                          XP1- 19 HaSs            OFF - ";
-	regBank.add(40201);                         // Aдрес счетчика ошибки "Sensor tangenta ruchnaja            XP7 - 2                 OFF - ";
-	regBank.add(40202);                         // Aдрес счетчика ошибки "Sensor tangenta nognaja             XP8 - 2                 OFF - "; 
-	regBank.add(40203);                         // Aдрес счетчика ошибки "Sensor headset instructor 2         XP1- 16 HeS2Rs          OFF - ";
-	regBank.add(40204);                         // Aдрес счетчика ошибки "Sensor headset instructor           XP1- 13 HeS2Ls          OFF - "; 
-	regBank.add(40205);                         // Aдрес счетчика ошибки "Sensor headset dispatcher 2         XP1- 13 HeS2Ls          OFF - ";
-	regBank.add(40206);                         // Aдрес счетчика ошибки "Sensor headset dispatcher           XP1- 1  HeS1Ls          OFF - ";
-	regBank.add(40207);                         // Aдрес счетчика ошибки "Sensor microphone                   XS1 - 6                 OFF - "; 
-	regBank.add(40208);                         // Aдрес счетчика ошибки "Microphone headset instructor Sw.   XP1 12 HeS2e            OFF - "; 
-	regBank.add(40209);                         // Aдрес счетчика ошибки "Microphone headset dispatcher Sw.   XP1 12 HeS2e            OFF - ";  
+	mb.addHreg(0200);                         // Aдрес счетчика ошибки "Sensor MTT                          XP1- 19 HaSs            OFF - ";
+	mb.addHreg(0201);                         // Aдрес счетчика ошибки "Sensor tangenta ruchnaja            XP7 - 2                 OFF - ";
+	mb.addHreg(0202);                         // Aдрес счетчика ошибки "Sensor tangenta nognaja             XP8 - 2                 OFF - "; 
+	mb.addHreg(0203);                         // Aдрес счетчика ошибки "Sensor headset instructor 2         XP1- 16 HeS2Rs          OFF - ";
+	mb.addHreg(0204);                         // Aдрес счетчика ошибки "Sensor headset instructor           XP1- 13 HeS2Ls          OFF - "; 
+	mb.addHreg(0205);                         // Aдрес счетчика ошибки "Sensor headset dispatcher 2         XP1- 13 HeS2Ls          OFF - ";
+	mb.addHreg(0206);                         // Aдрес счетчика ошибки "Sensor headset dispatcher           XP1- 1  HeS1Ls          OFF - ";
+	mb.addHreg(0207);                         // Aдрес счетчика ошибки "Sensor microphone                   XS1 - 6                 OFF - "; 
+	mb.addHreg(0208);                         // Aдрес счетчика ошибки "Microphone headset instructor Sw.   XP1 12 HeS2e            OFF - "; 
+	mb.addHreg(0209);                         // Aдрес счетчика ошибки "Microphone headset dispatcher Sw.   XP1 12 HeS2e            OFF - ";  
 
-	regBank.add(40210);                         // Aдрес счетчика ошибки "Sensor MTT                          XP1- 19 HaSs            ON  - ";
-	regBank.add(40211);                         // Aдрес счетчика ошибки "Sensor tangenta ruchnaja            XP7 - 2                 ON  - ";
-	regBank.add(40212);                         // Aдрес счетчика ошибки "Sensor tangenta nognaja             XP8 - 2                 ON  - "; 
-	regBank.add(40213);                         // Aдрес счетчика ошибки "Sensor headset instructor 2         XP1- 16 HeS2Rs          ON  - ";
-	regBank.add(40214);                         // Aдрес счетчика ошибки "Sensor headset instructor           XP1- 13 HeS2Ls          ON  - "; 
-	regBank.add(40215);                         // Aдрес счетчика ошибки "Sensor headset dispatcher 2         XP1- 13 HeS2Ls          ON  - ";
-	regBank.add(40216);                         // Aдрес счетчика ошибки "Sensor headset dispatcher           XP1- 1  HeS1Ls          ON  - ";
-	regBank.add(40217);                         // Aдрес счетчика ошибки "Sensor microphone                   XS1 - 6                 ON  - "; 
-	regBank.add(40218);                         // Aдрес счетчика ошибки "Microphone headset instructor Sw.   XP1 12 HeS2e            ON  - "; 
-	regBank.add(40219);                         // Aдрес счетчика ошибки "Microphone headset dispatcher Sw.   XP1 12 HeS2e            ON  - "; 
+	mb.addHreg(0210);                         // Aдрес счетчика ошибки "Sensor MTT                          XP1- 19 HaSs            ON  - ";
+	mb.addHreg(0211);                         // Aдрес счетчика ошибки "Sensor tangenta ruchnaja            XP7 - 2                 ON  - ";
+	mb.addHreg(0212);                         // Aдрес счетчика ошибки "Sensor tangenta nognaja             XP8 - 2                 ON  - "; 
+	mb.addHreg(0213);                         // Aдрес счетчика ошибки "Sensor headset instructor 2         XP1- 16 HeS2Rs          ON  - ";
+	mb.addHreg(0214);                         // Aдрес счетчика ошибки "Sensor headset instructor           XP1- 13 HeS2Ls          ON  - "; 
+	mb.addHreg(0215);                         // Aдрес счетчика ошибки "Sensor headset dispatcher 2         XP1- 13 HeS2Ls          ON  - ";
+	mb.addHreg(0216);                         // Aдрес счетчика ошибки "Sensor headset dispatcher           XP1- 1  HeS1Ls          ON  - ";
+	mb.addHreg(0217);                         // Aдрес счетчика ошибки "Sensor microphone                   XS1 - 6                 ON  - "; 
+	mb.addHreg(0218);                         // Aдрес счетчика ошибки "Microphone headset instructor Sw.   XP1 12 HeS2e            ON  - "; 
+	mb.addHreg(0219);                         // Aдрес счетчика ошибки "Microphone headset dispatcher Sw.   XP1 12 HeS2e            ON  - "; 
 
-	regBank.add(40220);                         // Aдрес счетчика ошибки "Command PTT headset instructor (CTS)                        OFF - ";
-	regBank.add(40221);                         // Aдрес счетчика ошибки "Command PTT headset instructor (CTS)                        ON  - ";
-	regBank.add(40222);                         // Aдрес счетчика ошибки "Command PTT headset dispatcher (CTS)                        OFF - ";
-	regBank.add(40223);                         // Aдрес счетчика ошибки "Command PTT headset dispatcher (CTS)                        ON  - ";
-	regBank.add(40224);                         // Aдрес счетчика ошибки "Test headset instructor ** Signal LineL                     ON  - ";
-	regBank.add(40225);                         // Aдрес счетчика ошибки "Test headset instructor ** Signal LineR                     ON  - ";   
-	regBank.add(40226);                         // Aдрес счетчика ошибки "Test headset instructor ** Signal Mag phone                 ON  - ";
-	regBank.add(40227);                         // Aдрес счетчика ошибки "Test headset dispatcher ** Signal LineL                     ON  - ";
-	regBank.add(40228);                         // Aдрес счетчика ошибки "Test headset dispatcher ** Signal LineR                     ON  - ";  
-	regBank.add(40229);                         // Aдрес счетчика ошибки "Test headset dispatcher ** Signal Mag phone                 ON  - ";
+	mb.addHreg(0220);                         // Aдрес счетчика ошибки "Command PTT headset instructor (CTS)                        OFF - ";
+	mb.addHreg(0221);                         // Aдрес счетчика ошибки "Command PTT headset instructor (CTS)                        ON  - ";
+	mb.addHreg(0222);                         // Aдрес счетчика ошибки "Command PTT headset dispatcher (CTS)                        OFF - ";
+	mb.addHreg(0223);                         // Aдрес счетчика ошибки "Command PTT headset dispatcher (CTS)                        ON  - ";
+	mb.addHreg(0224);                         // Aдрес счетчика ошибки "Test headset instructor ** Signal LineL                     ON  - ";
+	mb.addHreg(0225);                         // Aдрес счетчика ошибки "Test headset instructor ** Signal LineR                     ON  - ";   
+	mb.addHreg(0226);                         // Aдрес счетчика ошибки "Test headset instructor ** Signal Mag phone                 ON  - ";
+	mb.addHreg(0227);                         // Aдрес счетчика ошибки "Test headset dispatcher ** Signal LineL                     ON  - ";
+	mb.addHreg(0228);                         // Aдрес счетчика ошибки "Test headset dispatcher ** Signal LineR                     ON  - ";  
+	mb.addHreg(0229);                         // Aдрес счетчика ошибки "Test headset dispatcher ** Signal Mag phone                 ON  - ";
 
-	regBank.add(40230);                         // Aдрес счетчика ошибки "Test headset instructor ** Signal FrontL                    OFF - ";
-	regBank.add(40231);                         // Aдрес счетчика ошибки "Test headset instructor ** Signal FrontR                    OFF - ";
-	regBank.add(40232);                         // Aдрес счетчика ошибки "Test headset instructor ** Signal LineL                     OFF - ";
-	regBank.add(40233);                         // Aдрес счетчика ошибки "Test headset instructor ** Signal LineR                     OFF - ";
-	regBank.add(40234);                         // Aдрес счетчика ошибки "Test headset instructor ** Signal mag radio                 OFF - "; 
-	regBank.add(40235);                         // Aдрес счетчика ошибки "Test headset instructor ** Signal mag phone                 OFF - ";
-	regBank.add(40236);                         // Aдрес счетчика ошибки "Test headset instructor ** Signal GGS                       OFF - ";
-	regBank.add(40237);                         // Aдрес счетчика ошибки "Test headset instructor ** Signal GG Radio1                 OFF - ";
-	regBank.add(40238);                         // Aдрес счетчика ошибки "Test headset instructor ** Signal GG Radio2                 OFF - ";
-	regBank.add(40239);                         // Aдрес счетчика ошибки ADC0  ток x1 
+	mb.addHreg(0230);                         // Aдрес счетчика ошибки "Test headset instructor ** Signal FrontL                    OFF - ";
+	mb.addHreg(0231);                         // Aдрес счетчика ошибки "Test headset instructor ** Signal FrontR                    OFF - ";
+	mb.addHreg(0232);                         // Aдрес счетчика ошибки "Test headset instructor ** Signal LineL                     OFF - ";
+	mb.addHreg(0233);                         // Aдрес счетчика ошибки "Test headset instructor ** Signal LineR                     OFF - ";
+	mb.addHreg(0234);                         // Aдрес счетчика ошибки "Test headset instructor ** Signal mag radio                 OFF - "; 
+	mb.addHreg(0235);                         // Aдрес счетчика ошибки "Test headset instructor ** Signal mag phone                 OFF - ";
+	mb.addHreg(0236);                         // Aдрес счетчика ошибки "Test headset instructor ** Signal GGS                       OFF - ";
+	mb.addHreg(0237);                         // Aдрес счетчика ошибки "Test headset instructor ** Signal GG Radio1                 OFF - ";
+	mb.addHreg(0238);                         // Aдрес счетчика ошибки "Test headset instructor ** Signal GG Radio2                 OFF - ";
+	mb.addHreg(0239);                         // Aдрес счетчика ошибки ADC0  ток x1 
 
-	regBank.add(40240);                         // Aдрес счетчика ошибки "Test headset dispatcher ** Signal FrontL                    OFF - ";
-	regBank.add(40241);                         // Aдрес счетчика ошибки "Test headset dispatcher ** Signal FrontR                    OFF - ";
-	regBank.add(40242);                         // Aдрес счетчика ошибки "Test headset dispatcher ** Signal LineL                     OFF - "; 
-	regBank.add(40243);                         // Aдрес счетчика ошибки "Test headset dispatcher ** Signal LineR                     OFF - ";
-	regBank.add(40244);                         // Aдрес счетчика ошибки "Test headset dispatcher ** Signal mag radio                 OFF - "; 
-	regBank.add(40245);                         // Aдрес счетчика ошибки "Test headset dispatcher ** Signal mag phone                 OFF - ";
-	regBank.add(40246);                         // Aдрес счетчика ошибки "Test headset dispatcher ** Signal GGS                       OFF - "; 
-	regBank.add(40247);                         // Aдрес счетчика ошибки "Test headset dispatcher ** Signal GG Radio1                 OFF - ";
-	regBank.add(40248);                         // Aдрес счетчика ошибки "Test headset dispatcher ** Signal GG Radio2                 OFF - "; 
-	regBank.add(40249);                         // Aдрес счетчика ошибки ADC2 ток x10
+	mb.addHreg(0240);                         // Aдрес счетчика ошибки "Test headset dispatcher ** Signal FrontL                    OFF - ";
+	mb.addHreg(0241);                         // Aдрес счетчика ошибки "Test headset dispatcher ** Signal FrontR                    OFF - ";
+	mb.addHreg(0242);                         // Aдрес счетчика ошибки "Test headset dispatcher ** Signal LineL                     OFF - "; 
+	mb.addHreg(0243);                         // Aдрес счетчика ошибки "Test headset dispatcher ** Signal LineR                     OFF - ";
+	mb.addHreg(0244);                         // Aдрес счетчика ошибки "Test headset dispatcher ** Signal mag radio                 OFF - "; 
+	mb.addHreg(0245);                         // Aдрес счетчика ошибки "Test headset dispatcher ** Signal mag phone                 OFF - ";
+	mb.addHreg(0246);                         // Aдрес счетчика ошибки "Test headset dispatcher ** Signal GGS                       OFF - "; 
+	mb.addHreg(0247);                         // Aдрес счетчика ошибки "Test headset dispatcher ** Signal GG Radio1                 OFF - ";
+	mb.addHreg(0248);                         // Aдрес счетчика ошибки "Test headset dispatcher ** Signal GG Radio2                 OFF - "; 
+	mb.addHreg(0249);                         // Aдрес счетчика ошибки ADC2 ток x10
 
-	regBank.add(40250);                         // Aдрес счетчика ошибки "Test MTT ** Signal FrontL                                   OFF - ";
-	regBank.add(40251);                         // Aдрес счетчика ошибки "Test MTT ** Signal FrontR                                   OFF - ";
-	regBank.add(40252);                         // Aдрес счетчика ошибки "Test MTT ** Signal LineL                                    OFF - ";
-	regBank.add(40253);                         // Aдрес счетчика ошибки "Test MTT ** Signal LineR                                    OFF - "; 
-	regBank.add(40254);                         // Aдрес счетчика ошибки "Test MTT ** Signal mag radio                                OFF - ";
-	regBank.add(40255);                         // Aдрес счетчика ошибки "Test MTT ** Signal mag phone                                OFF - ";
-	regBank.add(40256);                         // Aдрес счетчика ошибки "Test MTT ** Signal GGS                                      OFF - ";
-	regBank.add(40257);                         // Aдрес счетчика ошибки "Test MTT ** Signal GG Radio1                                OFF - ";
-	regBank.add(40258);                         // Aдрес счетчика ошибки "Test MTT ** Signal GG Radio2                                OFF - "; 
-	regBank.add(40259);                         // Aдрес счетчика ошибки "Test MTT ** Signal GGS                                      ON  - ";
+	mb.addHreg(0250);                         // Aдрес счетчика ошибки "Test MTT ** Signal FrontL                                   OFF - ";
+	mb.addHreg(0251);                         // Aдрес счетчика ошибки "Test MTT ** Signal FrontR                                   OFF - ";
+	mb.addHreg(0252);                         // Aдрес счетчика ошибки "Test MTT ** Signal LineL                                    OFF - ";
+	mb.addHreg(0253);                         // Aдрес счетчика ошибки "Test MTT ** Signal LineR                                    OFF - "; 
+	mb.addHreg(0254);                         // Aдрес счетчика ошибки "Test MTT ** Signal mag radio                                OFF - ";
+	mb.addHreg(0255);                         // Aдрес счетчика ошибки "Test MTT ** Signal mag phone                                OFF - ";
+	mb.addHreg(0256);                         // Aдрес счетчика ошибки "Test MTT ** Signal GGS                                      OFF - ";
+	mb.addHreg(0257);                         // Aдрес счетчика ошибки "Test MTT ** Signal GG Radio1                                OFF - ";
+	mb.addHreg(0258);                         // Aдрес счетчика ошибки "Test MTT ** Signal GG Radio2                                OFF - "; 
+	mb.addHreg(0259);                         // Aдрес счетчика ошибки "Test MTT ** Signal GGS                                      ON  - ";
 
-	regBank.add(40260);                         // Aдрес счетчика ошибки "Test MTT ** Signal LineL                                    ON  - ";
-	regBank.add(40261);                         // Aдрес счетчика ошибки "Test MTT ** Signal LineR                                    ON  - ";  
-	regBank.add(40262);                         // Aдрес счетчика ошибки "Test MTT ** Signal Mag phone                                ON  - ";
-	regBank.add(40263);                         // Aдрес счетчика ошибки "Test MTT PTT    (CTS)                                       OFF - ";
-	regBank.add(40264);                         // Aдрес счетчика ошибки "Test microphone PTT  (CTS)                                  OFF - ";
-	regBank.add(40265);                         // Aдрес счетчика ошибки "Test MTT PTT    (CTS)                                       ON  - ";
-	regBank.add(40266);                         // Aдрес счетчика ошибки "Test microphone PTT  (CTS)                                  ON  - ";
-	regBank.add(40267);                         // Aдрес счетчика ошибки "Test MTT HangUp (DCD)                                       OFF - ";
-	regBank.add(40268);                         // Aдрес счетчика ошибки "Test MTT HangUp (DCD)                                       ON  - ";
-	regBank.add(40269);                         // Aдрес счетчика ошибки Длительность регулировки яркости
+	mb.addHreg(0260);                         // Aдрес счетчика ошибки "Test MTT ** Signal LineL                                    ON  - ";
+	mb.addHreg(0261);                         // Aдрес счетчика ошибки "Test MTT ** Signal LineR                                    ON  - ";  
+	mb.addHreg(0262);                         // Aдрес счетчика ошибки "Test MTT ** Signal Mag phone                                ON  - ";
+	mb.addHreg(0263);                         // Aдрес счетчика ошибки "Test MTT PTT    (CTS)                                       OFF - ";
+	mb.addHreg(0264);                         // Aдрес счетчика ошибки "Test microphone PTT  (CTS)                                  OFF - ";
+	mb.addHreg(0265);                         // Aдрес счетчика ошибки "Test MTT PTT    (CTS)                                       ON  - ";
+	mb.addHreg(0266);                         // Aдрес счетчика ошибки "Test microphone PTT  (CTS)                                  ON  - ";
+	mb.addHreg(0267);                         // Aдрес счетчика ошибки "Test MTT HangUp (DCD)                                       OFF - ";
+	mb.addHreg(0268);                         // Aдрес счетчика ошибки "Test MTT HangUp (DCD)                                       ON  - ";
+	mb.addHreg(0269);                         // Aдрес счетчика ошибки Длительность регулировки яркости
 
-	regBank.add(40270);                         // Aдрес счетчика ошибки "Command PTT1 tangenta ruchnaja (CTS)                        OFF - ";
-	regBank.add(40271);                         // Aдрес счетчика ошибки "Command PTT2 tangenta ruchnaja (DCR)                        OFF - ";
-	regBank.add(40272);                         // Aдрес счетчика ошибки "Command PTT1 tangenta ruchnaja (CTS)                        ON  - ";
-	regBank.add(40273);                         // Aдрес счетчика ошибки "Command PTT2 tangenta ruchnaja (DCR)                        ON  - ";
-	regBank.add(40274);                         // Aдрес счетчика ошибки "Command sensor tangenta ruchnaja                            OFF - ";
-	regBank.add(40275);                         // Aдрес счетчика ошибки "Command sensor tangenta ruchnaja                            ON  - ";
-	regBank.add(40276);                         // Aдрес счетчика ошибки "Command sensor tangenta nognaja                             OFF - ";
-	regBank.add(40277);                         // Aдрес счетчика ошибки "Command sensor tangenta nognaja                             ON  - ";
-	regBank.add(40278);                         // Aдрес счетчика ошибки "Command PTT tangenta nognaja (CTS)                          OFF - ";
-	regBank.add(40279);                         // Aдрес счетчика ошибки "Command PTT tangenta nognaja (CTS)                          ON  - ";
+	mb.addHreg(0270);                         // Aдрес счетчика ошибки "Command PTT1 tangenta ruchnaja (CTS)                        OFF - ";
+	mb.addHreg(0271);                         // Aдрес счетчика ошибки "Command PTT2 tangenta ruchnaja (DCR)                        OFF - ";
+	mb.addHreg(0272);                         // Aдрес счетчика ошибки "Command PTT1 tangenta ruchnaja (CTS)                        ON  - ";
+	mb.addHreg(0273);                         // Aдрес счетчика ошибки "Command PTT2 tangenta ruchnaja (DCR)                        ON  - ";
+	mb.addHreg(0274);                         // Aдрес счетчика ошибки "Command sensor tangenta ruchnaja                            OFF - ";
+	mb.addHreg(0275);                         // Aдрес счетчика ошибки "Command sensor tangenta ruchnaja                            ON  - ";
+	mb.addHreg(0276);                         // Aдрес счетчика ошибки "Command sensor tangenta nognaja                             OFF - ";
+	mb.addHreg(0277);                         // Aдрес счетчика ошибки "Command sensor tangenta nognaja                             ON  - ";
+	mb.addHreg(0278);                         // Aдрес счетчика ошибки "Command PTT tangenta nognaja (CTS)                          OFF - ";
+	mb.addHreg(0279);                         // Aдрес счетчика ошибки "Command PTT tangenta nognaja (CTS)                          ON  - ";
 
-	regBank.add(40280);                         // Aдрес счетчика ошибки "Test GGS ** Signal FrontL                                   OFF - ";
-	regBank.add(40281);                         // Aдрес счетчика ошибки "Test GGS ** Signal FrontR                                   OFF - ";
-	regBank.add(40282);                         // Aдрес счетчика ошибки "Test GGS ** Signal LineL                                    OFF - ";
-	regBank.add(40283);                         // Aдрес счетчика ошибки "Test GGS ** Signal LineR                                    OFF - ";
-	regBank.add(40284);                         // Aдрес счетчика ошибки "Test GGS ** Signal mag radio                                OFF - ";
-	regBank.add(40285);                         // Aдрес счетчика ошибки "Test GGS ** Signal mag phone                                OFF - ";
-	regBank.add(40286);                         // Aдрес счетчика ошибки "Test GGS ** Signal GGS                                      OFF - ";
-	regBank.add(40287);                         // Aдрес счетчика ошибки "Test GGS ** Signal GG Radio1                                OFF - ";
-	regBank.add(40288);                         // Aдрес счетчика ошибки "Test GGS ** Signal GG Radio2                                OFF - ";
-	regBank.add(40289);                         // Aдрес счетчика ошибки "Test GGS ** Signal GGS                                      ON  - ";
+	mb.addHreg(0280);                         // Aдрес счетчика ошибки "Test GGS ** Signal FrontL                                   OFF - ";
+	mb.addHreg(0281);                         // Aдрес счетчика ошибки "Test GGS ** Signal FrontR                                   OFF - ";
+	mb.addHreg(0282);                         // Aдрес счетчика ошибки "Test GGS ** Signal LineL                                    OFF - ";
+	mb.addHreg(0283);                         // Aдрес счетчика ошибки "Test GGS ** Signal LineR                                    OFF - ";
+	mb.addHreg(0284);                         // Aдрес счетчика ошибки "Test GGS ** Signal mag radio                                OFF - ";
+	mb.addHreg(0285);                         // Aдрес счетчика ошибки "Test GGS ** Signal mag phone                                OFF - ";
+	mb.addHreg(0286);                         // Aдрес счетчика ошибки "Test GGS ** Signal GGS                                      OFF - ";
+	mb.addHreg(0287);                         // Aдрес счетчика ошибки "Test GGS ** Signal GG Radio1                                OFF - ";
+	mb.addHreg(0288);                         // Aдрес счетчика ошибки "Test GGS ** Signal GG Radio2                                OFF - ";
+	mb.addHreg(0289);                         // Aдрес счетчика ошибки "Test GGS ** Signal GGS                                      ON  - ";
 
-	regBank.add(40290);                         // Aдрес счетчика ошибки "Test GGS ** Signal FrontL                                   ON  - ";
-	regBank.add(40291);                         // Aдрес счетчика ошибки "Test GGS ** Signal FrontR                                   ON  - ";
-	regBank.add(40292);                         // Aдрес счетчика ошибки "Test GGS ** Signal mag phone                                ON  - ";
-	regBank.add(40293);                         // Aдрес счетчика  ошибки ADC1 напряжение 12/3 вольт
-	regBank.add(40294);                         // Aдрес счетчика  ошибки ADC14 напряжение 12/3 вольт Radio1
-	regBank.add(40295);                         // Aдрес счетчика  ошибки ADC14 напряжение 12/3 вольт Radio2
-	regBank.add(40296);                         // Aдрес счетчика  ошибки ADC14 напряжение 12/3 вольт ГГС
-	regBank.add(40297);                         // Aдрес счетчика  ошибки ADC15 напряжение светодиода 3,6 вольта
-	regBank.add(40298);                         // Aдрес счетчика ошибки "Test Microphone ** Signal mag phone                         ON  - ";    
-	regBank.add(40299);                         // Aдрес счетчика ошибки "Test Microphone ** Signal LineL                             ON  - ";   
+	mb.addHreg(0290);                         // Aдрес счетчика ошибки "Test GGS ** Signal FrontL                                   ON  - ";
+	mb.addHreg(0291);                         // Aдрес счетчика ошибки "Test GGS ** Signal FrontR                                   ON  - ";
+	mb.addHreg(0292);                         // Aдрес счетчика ошибки "Test GGS ** Signal mag phone                                ON  - ";
+	mb.addHreg(0293);                         // Aдрес счетчика  ошибки ADC1 напряжение 12/3 вольт
+	mb.addHreg(0294);                         // Aдрес счетчика  ошибки ADC14 напряжение 12/3 вольт Radio1
+	mb.addHreg(0295);                         // Aдрес счетчика  ошибки ADC14 напряжение 12/3 вольт Radio2
+	mb.addHreg(0296);                         // Aдрес счетчика  ошибки ADC14 напряжение 12/3 вольт ГГС
+	mb.addHreg(0297);                         // Aдрес счетчика  ошибки ADC15 напряжение светодиода 3,6 вольта
+	mb.addHreg(0298);                         // Aдрес счетчика ошибки "Test Microphone ** Signal mag phone                         ON  - ";    
+	mb.addHreg(0299);                         // Aдрес счетчика ошибки "Test Microphone ** Signal LineL                             ON  - ";   
 
-	regBank.add(40300);                         // Aдрес счетчика ошибки "Test Radio1 ** Signal FrontL                                OFF - ";
-	regBank.add(40301);                         // Aдрес счетчика ошибки "Test Radio1 ** Signal FrontR                                OFF - ";
-	regBank.add(40302);                         // Aдрес счетчика ошибки "Test Radio1 ** Signal LineL                                 OFF - ";
-	regBank.add(40303);                         // Aдрес счетчика ошибки "Test Radio1 ** Signal LineR                                 OFF - ";
-	regBank.add(40304);                         // Aдрес счетчика ошибки "Test Radio1 ** Signal mag radio                             OFF - ";
-	regBank.add(40305);                         // Aдрес счетчика ошибки "Test Radio1 ** Signal mag phone                             OFF - ";
-	regBank.add(40306);                         // Aдрес счетчика ошибки "Test Radio1 ** Signal GGS                                   OFF - ";
-	regBank.add(40307);                         // Aдрес счетчика ошибки "Test Radio1 ** Signal GG Radio1                             OFF - ";
-	regBank.add(40308);                         // Aдрес счетчика ошибки "Test Radio1 ** Signal GG Radio2                             OFF - ";
-	regBank.add(40309);                         // Aдрес счетчика ошибки "Test Radio1 ** Signal Radio1                                ON  - ";
+	mb.addHreg(0300);                         // Aдрес счетчика ошибки "Test Radio1 ** Signal FrontL                                OFF - ";
+	mb.addHreg(0301);                         // Aдрес счетчика ошибки "Test Radio1 ** Signal FrontR                                OFF - ";
+	mb.addHreg(0302);                         // Aдрес счетчика ошибки "Test Radio1 ** Signal LineL                                 OFF - ";
+	mb.addHreg(0303);                         // Aдрес счетчика ошибки "Test Radio1 ** Signal LineR                                 OFF - ";
+	mb.addHreg(0304);                         // Aдрес счетчика ошибки "Test Radio1 ** Signal mag radio                             OFF - ";
+	mb.addHreg(0305);                         // Aдрес счетчика ошибки "Test Radio1 ** Signal mag phone                             OFF - ";
+	mb.addHreg(0306);                         // Aдрес счетчика ошибки "Test Radio1 ** Signal GGS                                   OFF - ";
+	mb.addHreg(0307);                         // Aдрес счетчика ошибки "Test Radio1 ** Signal GG Radio1                             OFF - ";
+	mb.addHreg(0308);                         // Aдрес счетчика ошибки "Test Radio1 ** Signal GG Radio2                             OFF - ";
+	mb.addHreg(0309);                         // Aдрес счетчика ошибки "Test Radio1 ** Signal Radio1                                ON  - ";
 
-	regBank.add(40310);                         // Aдрес счетчика ошибки "Test Radio2 ** Signal FrontL                                OFF - ";
-	regBank.add(40311);                         // Aдрес счетчика ошибки "Test Radio2 ** Signal FrontR                                OFF - ";
-	regBank.add(40312);                         // Aдрес счетчика ошибки "Test Radio2 ** Signal LineL                                 OFF - ";
-	regBank.add(40313);                         // Aдрес счетчика ошибки "Test Radio2 ** Signal LineR                                 OFF - ";
-	regBank.add(40314);                         // Aдрес счетчика ошибки "Test Radio2 ** Signal mag radio                             OFF - ";
-	regBank.add(40315);                         // Aдрес счетчика ошибки "Test Radio2 ** Signal mag phone                             OFF - ";
-	regBank.add(40316);                         // Aдрес счетчика ошибки "Test Radio2 ** Signal GGS                                   OFF - ";
-	regBank.add(40317);                         // Aдрес счетчика ошибки "Test Radio2 ** Signal GG Radio1                             OFF - ";
-	regBank.add(40318);                         // Aдрес счетчика ошибки "Test Radio2 ** Signal GG Radio2                             OFF - ";
-	regBank.add(40319);                         // Aдрес счетчика ошибки "Test Radio2 ** Signal Radio2                                ON  - ";
+	mb.addHreg(0310);                         // Aдрес счетчика ошибки "Test Radio2 ** Signal FrontL                                OFF - ";
+	mb.addHreg(0311);                         // Aдрес счетчика ошибки "Test Radio2 ** Signal FrontR                                OFF - ";
+	mb.addHreg(0312);                         // Aдрес счетчика ошибки "Test Radio2 ** Signal LineL                                 OFF - ";
+	mb.addHreg(0313);                         // Aдрес счетчика ошибки "Test Radio2 ** Signal LineR                                 OFF - ";
+	mb.addHreg(0314);                         // Aдрес счетчика ошибки "Test Radio2 ** Signal mag radio                             OFF - ";
+	mb.addHreg(0315);                         // Aдрес счетчика ошибки "Test Radio2 ** Signal mag phone                             OFF - ";
+	mb.addHreg(0316);                         // Aдрес счетчика ошибки "Test Radio2 ** Signal GGS                                   OFF - ";
+	mb.addHreg(0317);                         // Aдрес счетчика ошибки "Test Radio2 ** Signal GG Radio1                             OFF - ";
+	mb.addHreg(0318);                         // Aдрес счетчика ошибки "Test Radio2 ** Signal GG Radio2                             OFF - ";
+	mb.addHreg(0319);                         // Aдрес счетчика ошибки "Test Radio2 ** Signal Radio2                                ON  - ";
 
-	regBank.add(40320);                         // Aдрес счетчика ошибки "Test Microphone ** Signal FrontL                            OFF - ";
-	regBank.add(40321);                         // Aдрес счетчика ошибки "Test Microphone ** Signal FrontR                            OFF - ";
-	regBank.add(40322);                         // Aдрес счетчика ошибки "Test Microphone ** Signal LineL                             OFF - ";
-	regBank.add(40323);                         // Aдрес счетчика ошибки "Test Microphone ** Signal LineR                             OFF - ";
-	regBank.add(40324);                         // Aдрес счетчика ошибки "Test Microphone ** Signal mag radio                         OFF - ";
-	regBank.add(40325);                         // Aдрес счетчика ошибки "Test Microphone ** Signal mag phone                         OFF - ";
-	regBank.add(40326);                         // Aдрес счетчика ошибки "Test Microphone ** Signal GGS                               OFF - ";
-	regBank.add(40327);                         // Aдрес счетчика ошибки "Test Microphone ** Signal GG Radio1                         OFF - ";
-	regBank.add(40328);                         // Aдрес счетчика ошибки "Test Microphone ** Signal GG Radio2                         OFF - ";
-	regBank.add(40329);                         // Aдрес счетчика ошибки Код регулировки яркости                             // 
+	mb.addHreg(0320);                         // Aдрес счетчика ошибки "Test Microphone ** Signal FrontL                            OFF - ";
+	mb.addHreg(0321);                         // Aдрес счетчика ошибки "Test Microphone ** Signal FrontR                            OFF - ";
+	mb.addHreg(0322);                         // Aдрес счетчика ошибки "Test Microphone ** Signal LineL                             OFF - ";
+	mb.addHreg(0323);                         // Aдрес счетчика ошибки "Test Microphone ** Signal LineR                             OFF - ";
+	mb.addHreg(0324);                         // Aдрес счетчика ошибки "Test Microphone ** Signal mag radio                         OFF - ";
+	mb.addHreg(0325);                         // Aдрес счетчика ошибки "Test Microphone ** Signal mag phone                         OFF - ";
+	mb.addHreg(0326);                         // Aдрес счетчика ошибки "Test Microphone ** Signal GGS                               OFF - ";
+	mb.addHreg(0327);                         // Aдрес счетчика ошибки "Test Microphone ** Signal GG Radio1                         OFF - ";
+	mb.addHreg(0328);                         // Aдрес счетчика ошибки "Test Microphone ** Signal GG Radio2                         OFF - ";
+	mb.addHreg(0329);                         // Aдрес счетчика ошибки Код регулировки яркости                             // 
 
-	regBank.add(40330);                         // Aдрес счетчика ошибки "Test Radio1 ** Signal mag radio                             ON  - ";
-	regBank.add(40331);                         // Aдрес счетчика ошибки "Test Radio2 ** Signal mag radio                             ON  - ";
-	regBank.add(40332);                         // Aдрес счетчика ошибки "Test GGS    ** Signal mag radio                             ON  - ";
+	mb.addHreg(0330);                         // Aдрес счетчика ошибки "Test Radio1 ** Signal mag radio                             ON  - ";
+	mb.addHreg(0331);                         // Aдрес счетчика ошибки "Test Radio2 ** Signal mag radio                             ON  - ";
+	mb.addHreg(0332);                         // Aдрес счетчика ошибки "Test GGS    ** Signal mag radio                             ON  - ";
 
 
 	
 	// ++++++++++++++++++++++ Регистры хранения данных при проверке модулей ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
-	regBank.add(40400);                         // Aдрес напряжение ADC0  ток x1 
-	regBank.add(40401);                         // Aдрес напряжение ADC1 напряжение 12/3 вольт
-	regBank.add(40402);                         // Aдрес напряжение ADC2 ток x10
-	regBank.add(40403);                         // Aдрес напряжение ADC14 напряжение 12/3 вольт Radio1
-	regBank.add(40404);                         // Aдрес напряжение ADC14 напряжение 12/3 вольт Radio2
-	regBank.add(40405);                         // Aдрес напряжение ADC14 напряжение 12/3 вольт ГГС
-	regBank.add(40406);                         // Aдрес напряжение ADC15 напряжение светодиода 3,6 вольта
-	regBank.add(40407);                         // Aдрес 
-	regBank.add(40408);                         // Aдрес 
-	regBank.add(40409);                         // Aдрес  
+	mb.addHreg(0400);                         // Aдрес напряжение ADC0  ток x1 
+	mb.addHreg(0401);                         // Aдрес напряжение ADC1 напряжение 12/3 вольт
+	mb.addHreg(0402);                         // Aдрес напряжение ADC2 ток x10
+	mb.addHreg(0403);                         // Aдрес напряжение ADC14 напряжение 12/3 вольт Radio1
+	mb.addHreg(0404);                         // Aдрес напряжение ADC14 напряжение 12/3 вольт Radio2
+	mb.addHreg(0405);                         // Aдрес напряжение ADC14 напряжение 12/3 вольт ГГС
+	mb.addHreg(0406);                         // Aдрес напряжение ADC15 напряжение светодиода 3,6 вольта
+	mb.addHreg(0407);                         // Aдрес 
+	mb.addHreg(0408);                         // Aдрес 
+	mb.addHreg(0409);                         // Aдрес  
 
-	regBank.add(40410);                         // Aдрес счетчика 
-	regBank.add(40411);                         // Aдрес счетчика  
-	regBank.add(40412);                         // Aдрес счетчика  
-	regBank.add(40413);                         // Aдрес счетчика  
-	regBank.add(40414);                         // Aдрес счетчика  
-	regBank.add(40415);                         // Aдрес счетчика  
-	regBank.add(40416);                         // Aдрес счетчика  
-	regBank.add(40417);                         // Aдрес счетчика  
-	regBank.add(40418);                         // Aдрес счетчика  
-	regBank.add(40419);                         // Aдрес счетчика  
+	mb.addHreg(0410);                         // Aдрес счетчика 
+	mb.addHreg(0411);                         // Aдрес счетчика  
+	mb.addHreg(0412);                         // Aдрес счетчика  
+	mb.addHreg(0413);                         // Aдрес счетчика  
+	mb.addHreg(0414);                         // Aдрес счетчика  
+	mb.addHreg(0415);                         // Aдрес счетчика  
+	mb.addHreg(0416);                         // Aдрес счетчика  
+	mb.addHreg(0417);                         // Aдрес счетчика  
+	mb.addHreg(0418);                         // Aдрес счетчика  
+	mb.addHreg(0419);                         // Aдрес счетчика  
 
-	regBank.add(40420);                         // Aдрес  ;
-	regBank.add(40421);                         // Aдрес  ;
-	regBank.add(40422);                         // Aдрес  ;
-	regBank.add(40423);                         // Aдрес  ;
-	regBank.add(40424);                         // Aдрес данных измерения "Test headset instructor ** Signal LineL                     ON  - ";
-	regBank.add(40425);                         // Aдрес данных измерения "Test headset instructor ** Signal LineR                     ON  - ";   
-	regBank.add(40426);                         // Aдрес данных измерения "Test headset instructor ** Signal Mag phone                 ON  - ";
-	regBank.add(40427);                         // Aдрес данных измерения "Test headset dispatcher ** Signal LineL                     ON  - ";
-	regBank.add(40428);                         // Aдрес данных измерения "Test headset dispatcher ** Signal LineR                     ON  - ";  
-	regBank.add(40429);                         // Aдрес данных измерения "Test headset dispatcher ** Signal Mag phone                 ON  - ";
+	mb.addHreg(0420);                         // Aдрес  ;
+	mb.addHreg(0421);                         // Aдрес  ;
+	mb.addHreg(0422);                         // Aдрес  ;
+	mb.addHreg(0423);                         // Aдрес  ;
+	mb.addHreg(0424);                         // Aдрес данных измерения "Test headset instructor ** Signal LineL                     ON  - ";
+	mb.addHreg(0425);                         // Aдрес данных измерения "Test headset instructor ** Signal LineR                     ON  - ";   
+	mb.addHreg(0426);                         // Aдрес данных измерения "Test headset instructor ** Signal Mag phone                 ON  - ";
+	mb.addHreg(0427);                         // Aдрес данных измерения "Test headset dispatcher ** Signal LineL                     ON  - ";
+	mb.addHreg(0428);                         // Aдрес данных измерения "Test headset dispatcher ** Signal LineR                     ON  - ";  
+	mb.addHreg(0429);                         // Aдрес данных измерения "Test headset dispatcher ** Signal Mag phone                 ON  - ";
 
-	regBank.add(40430);                         // Aдрес данных измерения "Test headset instructor ** Signal FrontL                    OFF - ";
-	regBank.add(40431);                         // Aдрес данных измерения "Test headset instructor ** Signal FrontR                    OFF - ";
-	regBank.add(40432);                         // Aдрес данных измерения "Test headset instructor ** Signal LineL                     OFF - ";
-	regBank.add(40433);                         // Aдрес данных измерения "Test headset instructor ** Signal LineR                     OFF - ";
-	regBank.add(40434);                         // Aдрес данных измерения "Test headset instructor ** Signal mag radio                 OFF - "; 
-	regBank.add(40435);                         // Aдрес данных измерения "Test headset instructor ** Signal mag phone                 OFF - ";
-	regBank.add(40436);                         // Aдрес данных измерения "Test headset instructor ** Signal GGS                       OFF - ";
-	regBank.add(40437);                         // Aдрес данных измерения "Test headset instructor ** Signal GG Radio1                 OFF - ";
-	regBank.add(40438);                         // Aдрес данных измерения "Test headset instructor ** Signal GG Radio2                 OFF - ";
-	regBank.add(40439);                         // Aдрес данных измерения ADC0  ток x1 
+	mb.addHreg(0430);                         // Aдрес данных измерения "Test headset instructor ** Signal FrontL                    OFF - ";
+	mb.addHreg(0431);                         // Aдрес данных измерения "Test headset instructor ** Signal FrontR                    OFF - ";
+	mb.addHreg(0432);                         // Aдрес данных измерения "Test headset instructor ** Signal LineL                     OFF - ";
+	mb.addHreg(0433);                         // Aдрес данных измерения "Test headset instructor ** Signal LineR                     OFF - ";
+	mb.addHreg(0434);                         // Aдрес данных измерения "Test headset instructor ** Signal mag radio                 OFF - "; 
+	mb.addHreg(0435);                         // Aдрес данных измерения "Test headset instructor ** Signal mag phone                 OFF - ";
+	mb.addHreg(0436);                         // Aдрес данных измерения "Test headset instructor ** Signal GGS                       OFF - ";
+	mb.addHreg(0437);                         // Aдрес данных измерения "Test headset instructor ** Signal GG Radio1                 OFF - ";
+	mb.addHreg(0438);                         // Aдрес данных измерения "Test headset instructor ** Signal GG Radio2                 OFF - ";
+	mb.addHreg(0439);                         // Aдрес данных измерения ADC0  ток x1 
 
-	regBank.add(40440);                         // Aдрес данных измерения "Test headset dispatcher ** Signal FrontL                    OFF - ";
-	regBank.add(40441);                         // Aдрес данных измерения "Test headset dispatcher ** Signal FrontR                    OFF - ";
-	regBank.add(40442);                         // Aдрес данных измерения "Test headset dispatcher ** Signal LineL                     OFF - "; 
-	regBank.add(40443);                         // Aдрес данных измерения "Test headset dispatcher ** Signal LineR                     OFF - ";
-	regBank.add(40444);                         // Aдрес данных измерения "Test headset dispatcher ** Signal mag radio                 OFF - "; 
-	regBank.add(40445);                         // Aдрес данных измерения "Test headset dispatcher ** Signal mag phone                 OFF - ";
-	regBank.add(40446);                         // Aдрес данных измерения "Test headset dispatcher ** Signal GGS                       OFF - "; 
-	regBank.add(40447);                         // Aдрес данных измерения "Test headset dispatcher ** Signal GG Radio1                 OFF - ";
-	regBank.add(40448);                         // Aдрес данных измерения "Test headset dispatcher ** Signal GG Radio2                 OFF - "; 
-	regBank.add(40449);                         // Aдрес данных измерения ADC2 ток x10
+	mb.addHreg(0440);                         // Aдрес данных измерения "Test headset dispatcher ** Signal FrontL                    OFF - ";
+	mb.addHreg(0441);                         // Aдрес данных измерения "Test headset dispatcher ** Signal FrontR                    OFF - ";
+	mb.addHreg(0442);                         // Aдрес данных измерения "Test headset dispatcher ** Signal LineL                     OFF - "; 
+	mb.addHreg(0443);                         // Aдрес данных измерения "Test headset dispatcher ** Signal LineR                     OFF - ";
+	mb.addHreg(0444);                         // Aдрес данных измерения "Test headset dispatcher ** Signal mag radio                 OFF - "; 
+	mb.addHreg(0445);                         // Aдрес данных измерения "Test headset dispatcher ** Signal mag phone                 OFF - ";
+	mb.addHreg(0446);                         // Aдрес данных измерения "Test headset dispatcher ** Signal GGS                       OFF - "; 
+	mb.addHreg(0447);                         // Aдрес данных измерения "Test headset dispatcher ** Signal GG Radio1                 OFF - ";
+	mb.addHreg(0448);                         // Aдрес данных измерения "Test headset dispatcher ** Signal GG Radio2                 OFF - "; 
+	mb.addHreg(0449);                         // Aдрес данных измерения ADC2 ток x10
 
-	regBank.add(40450);                         // Aдрес данных измерения "Test MTT ** Signal FrontL                                   OFF - ";
-	regBank.add(40451);                         // Aдрес данных измерения "Test MTT ** Signal FrontR                                   OFF - ";
-	regBank.add(40452);                         // Aдрес данных измерения "Test MTT ** Signal LineL                                    OFF - ";
-	regBank.add(40453);                         // Aдрес данных измерения "Test MTT ** Signal LineR                                    OFF - "; 
-	regBank.add(40454);                         // Aдрес данных измерения "Test MTT ** Signal mag radio                                OFF - ";
-	regBank.add(40455);                         // Aдрес данных измерения "Test MTT ** Signal mag phone                                OFF - ";
-	regBank.add(40456);                         // Aдрес данных измерения "Test MTT ** Signal GGS                                      OFF - ";
-	regBank.add(40457);                         // Aдрес данных измерения "Test MTT ** Signal GG Radio1                                OFF - ";
-	regBank.add(40458);                         // Aдрес данных измерения "Test MTT ** Signal GG Radio2                                OFF - "; 
-	regBank.add(40459);                         // Aдрес данных измерения "Test MTT ** Signal GGS                                      ON  - ";
+	mb.addHreg(0450);                         // Aдрес данных измерения "Test MTT ** Signal FrontL                                   OFF - ";
+	mb.addHreg(0451);                         // Aдрес данных измерения "Test MTT ** Signal FrontR                                   OFF - ";
+	mb.addHreg(0452);                         // Aдрес данных измерения "Test MTT ** Signal LineL                                    OFF - ";
+	mb.addHreg(0453);                         // Aдрес данных измерения "Test MTT ** Signal LineR                                    OFF - "; 
+	mb.addHreg(0454);                         // Aдрес данных измерения "Test MTT ** Signal mag radio                                OFF - ";
+	mb.addHreg(0455);                         // Aдрес данных измерения "Test MTT ** Signal mag phone                                OFF - ";
+	mb.addHreg(0456);                         // Aдрес данных измерения "Test MTT ** Signal GGS                                      OFF - ";
+	mb.addHreg(0457);                         // Aдрес данных измерения "Test MTT ** Signal GG Radio1                                OFF - ";
+	mb.addHreg(0458);                         // Aдрес данных измерения "Test MTT ** Signal GG Radio2                                OFF - "; 
+	mb.addHreg(0459);                         // Aдрес данных измерения "Test MTT ** Signal GGS                                      ON  - ";
 
-	regBank.add(40460);                         // Aдрес данных измерения "Test MTT ** Signal LineL                                    ON  - ";
-	regBank.add(40461);                         // Aдрес данных измерения "Test MTT ** Signal LineR                                    ON  - ";  
-	regBank.add(40462);                         // Aдрес данных измерения "Test MTT ** Signal Mag phone                                ON  - ";
-	regBank.add(40463);                         // Aдрес данных измерения "Test MTT PTT    (CTS)                                       OFF - ";
-	regBank.add(40464);                         // 
-	regBank.add(40465);                         // Aдрес данных измерения "Test MTT PTT    (CTS)                                       ON  - ";
-	regBank.add(40466);                         // 
-	regBank.add(40467);                         // Aдрес данных измерения "Test MTT HangUp (DCD)                                       OFF - ";
-	regBank.add(40468);                         // Aдрес данных измерения "Test MTT HangUp (DCD)                                       ON  - ";
-	regBank.add(40469);                         // Длительность импульса регулировки яркости дисплея
+	mb.addHreg(0460);                         // Aдрес данных измерения "Test MTT ** Signal LineL                                    ON  - ";
+	mb.addHreg(0461);                         // Aдрес данных измерения "Test MTT ** Signal LineR                                    ON  - ";  
+	mb.addHreg(0462);                         // Aдрес данных измерения "Test MTT ** Signal Mag phone                                ON  - ";
+	mb.addHreg(0463);                         // Aдрес данных измерения "Test MTT PTT    (CTS)                                       OFF - ";
+	mb.addHreg(0464);                         // 
+	mb.addHreg(0465);                         // Aдрес данных измерения "Test MTT PTT    (CTS)                                       ON  - ";
+	mb.addHreg(0466);                         // 
+	mb.addHreg(0467);                         // Aдрес данных измерения "Test MTT HangUp (DCD)                                       OFF - ";
+	mb.addHreg(0468);                         // Aдрес данных измерения "Test MTT HangUp (DCD)                                       ON  - ";
+	mb.addHreg(0469);                         // Длительность импульса регулировки яркости дисплея
 
-	regBank.add(40470);                         // Aдрес данных измерения "Command PTT1 tangenta ruchnaja (CTS)                        OFF - ";
-	regBank.add(40471);                         // Aдрес данных измерения "Command PTT2 tangenta ruchnaja (DCR)                        OFF - ";
-	regBank.add(40472);                         // Aдрес данных измерения "Command PTT1 tangenta ruchnaja (CTS)                        ON  - ";
-	regBank.add(40473);                         // Aдрес данных измерения "Command PTT2 tangenta ruchnaja (DCR)                        ON  - ";
-	regBank.add(40474);                         // Aдрес данных измерения "Command sensor tangenta ruchnaja                            OFF - ";
-	regBank.add(40475);                         // Aдрес данных измерения "Command sensor tangenta ruchnaja                            ON  - ";
-	regBank.add(40476);                         // Aдрес данных измерения "Command sensor tangenta nognaja                             OFF - ";
-	regBank.add(40477);                         // Aдрес данных измерения "Command sensor tangenta nognaja                             ON  - ";
-	regBank.add(40478);                         // Aдрес данных измерения "Command PTT tangenta nognaja (CTS)                          OFF - ";
-	regBank.add(40479);                         // Aдрес данных измерения "Command PTT tangenta nognaja (CTS)                          ON  - ";
+	mb.addHreg(0470);                         // Aдрес данных измерения "Command PTT1 tangenta ruchnaja (CTS)                        OFF - ";
+	mb.addHreg(0471);                         // Aдрес данных измерения "Command PTT2 tangenta ruchnaja (DCR)                        OFF - ";
+	mb.addHreg(0472);                         // Aдрес данных измерения "Command PTT1 tangenta ruchnaja (CTS)                        ON  - ";
+	mb.addHreg(0473);                         // Aдрес данных измерения "Command PTT2 tangenta ruchnaja (DCR)                        ON  - ";
+	mb.addHreg(0474);                         // Aдрес данных измерения "Command sensor tangenta ruchnaja                            OFF - ";
+	mb.addHreg(0475);                         // Aдрес данных измерения "Command sensor tangenta ruchnaja                            ON  - ";
+	mb.addHreg(0476);                         // Aдрес данных измерения "Command sensor tangenta nognaja                             OFF - ";
+	mb.addHreg(0477);                         // Aдрес данных измерения "Command sensor tangenta nognaja                             ON  - ";
+	mb.addHreg(0478);                         // Aдрес данных измерения "Command PTT tangenta nognaja (CTS)                          OFF - ";
+	mb.addHreg(0479);                         // Aдрес данных измерения "Command PTT tangenta nognaja (CTS)                          ON  - ";
 
-	regBank.add(40480);                         // Aдрес данных измерения "Test GGS ** Signal FrontL                                   OFF - ";
-	regBank.add(40481);                         // Aдрес данных измерения "Test GGS ** Signal FrontR                                   OFF - ";
-	regBank.add(40482);                         // Aдрес данных измерения "Test GGS ** Signal LineL                                    OFF - ";
-	regBank.add(40483);                         // Aдрес данных измерения "Test GGS ** Signal LineR                                    OFF - ";
-	regBank.add(40484);                         // Aдрес данных измерения "Test GGS ** Signal mag radio                                OFF - ";
-	regBank.add(40485);                         // Aдрес данных измерения "Test GGS ** Signal mag phone                                OFF - ";
-	regBank.add(40486);                         // Aдрес данных измерения "Test GGS ** Signal GGS                                      OFF - ";
-	regBank.add(40487);                         // Aдрес данных измерения "Test GGS ** Signal GG Radio1                                OFF - ";
-	regBank.add(40488);                         // Aдрес данных измерения "Test GGS ** Signal GG Radio2                                OFF - ";
-	regBank.add(40489);                         // Aдрес данных измерения "Test GGS ** Signal GGS                                      ON  - ";
+	mb.addHreg(0480);                         // Aдрес данных измерения "Test GGS ** Signal FrontL                                   OFF - ";
+	mb.addHreg(0481);                         // Aдрес данных измерения "Test GGS ** Signal FrontR                                   OFF - ";
+	mb.addHreg(0482);                         // Aдрес данных измерения "Test GGS ** Signal LineL                                    OFF - ";
+	mb.addHreg(0483);                         // Aдрес данных измерения "Test GGS ** Signal LineR                                    OFF - ";
+	mb.addHreg(0484);                         // Aдрес данных измерения "Test GGS ** Signal mag radio                                OFF - ";
+	mb.addHreg(0485);                         // Aдрес данных измерения "Test GGS ** Signal mag phone                                OFF - ";
+	mb.addHreg(0486);                         // Aдрес данных измерения "Test GGS ** Signal GGS                                      OFF - ";
+	mb.addHreg(0487);                         // Aдрес данных измерения "Test GGS ** Signal GG Radio1                                OFF - ";
+	mb.addHreg(0488);                         // Aдрес данных измерения "Test GGS ** Signal GG Radio2                                OFF - ";
+	mb.addHreg(0489);                         // Aдрес данных измерения "Test GGS ** Signal GGS                                      ON  - ";
 
-	regBank.add(40490);                         // Aдрес данных измерения "Test GGS ** Signal FrontL                                   ON  - ";
-	regBank.add(40491);                         // Aдрес данных измерения "Test GGS ** Signal FrontR                                   ON  - ";
-	regBank.add(40492);                         // Aдрес данных измерения "Test GGS ** Signal mag phone                                ON  - ";
-	regBank.add(40493);                         // Aдрес данных измерения ADC1 напряжение 12/3 вольт
-	regBank.add(40494);                         // Aдрес данных измерения ADC14 напряжение 12/3 вольт Radio1
-	regBank.add(40495);                         // Aдрес данных измерения ADC14 напряжение 12/3 вольт Radio2
-	regBank.add(40496);                         // Aдрес данных измерения ADC14 напряжение 12/3 вольт ГГС
-	regBank.add(40497);                         // Aдрес данных измерения ADC15 напряжение светодиода 3,6 вольта
-	regBank.add(40498);                         // Aдрес данных измерения "Test Microphone ** Signal mag phone                         ON  - "; 
-	regBank.add(40499);                         // Aдрес данных измерения "Test Microphone ** Signal LineL                             ON  - ";   
+	mb.addHreg(0490);                         // Aдрес данных измерения "Test GGS ** Signal FrontL                                   ON  - ";
+	mb.addHreg(0491);                         // Aдрес данных измерения "Test GGS ** Signal FrontR                                   ON  - ";
+	mb.addHreg(0492);                         // Aдрес данных измерения "Test GGS ** Signal mag phone                                ON  - ";
+	mb.addHreg(0493);                         // Aдрес данных измерения ADC1 напряжение 12/3 вольт
+	mb.addHreg(0494);                         // Aдрес данных измерения ADC14 напряжение 12/3 вольт Radio1
+	mb.addHreg(0495);                         // Aдрес данных измерения ADC14 напряжение 12/3 вольт Radio2
+	mb.addHreg(0496);                         // Aдрес данных измерения ADC14 напряжение 12/3 вольт ГГС
+	mb.addHreg(0497);                         // Aдрес данных измерения ADC15 напряжение светодиода 3,6 вольта
+	mb.addHreg(0498);                         // Aдрес данных измерения "Test Microphone ** Signal mag phone                         ON  - "; 
+	mb.addHreg(0499);                         // Aдрес данных измерения "Test Microphone ** Signal LineL                             ON  - ";   
 
-	regBank.add(40500);                         // Aдрес данных измерения "Test Radio1 ** Signal FrontL                                OFF - ";
-	regBank.add(40501);                         // Aдрес данных измерения "Test Radio1 ** Signal FrontR                                OFF - ";
-	regBank.add(40502);                         // Aдрес данных измерения "Test Radio1 ** Signal LineL                                 OFF - ";
-	regBank.add(40503);                         // Aдрес данных измерения "Test Radio1 ** Signal LineR                                 OFF - ";
-	regBank.add(40504);                         // Aдрес данных измерения "Test Radio1 ** Signal mag radio                             OFF - ";
-	regBank.add(40505);                         // Aдрес данных измерения "Test Radio1 ** Signal mag phone                             OFF - ";
-	regBank.add(40506);                         // Aдрес данных измерения "Test Radio1 ** Signal GGS                                   OFF - ";
-	regBank.add(40507);                         // Aдрес данных измерения "Test Radio1 ** Signal GG Radio1                             OFF - ";
-	regBank.add(40508);                         // Aдрес данных измерения "Test Radio1 ** Signal GG Radio2                             OFF - ";
-	regBank.add(40509);                         // Aдрес данных измерения "Test Radio1 ** Signal Radio1                                ON  - ";
+	mb.addHreg(0500);                         // Aдрес данных измерения "Test Radio1 ** Signal FrontL                                OFF - ";
+	mb.addHreg(0501);                         // Aдрес данных измерения "Test Radio1 ** Signal FrontR                                OFF - ";
+	mb.addHreg(0502);                         // Aдрес данных измерения "Test Radio1 ** Signal LineL                                 OFF - ";
+	mb.addHreg(0503);                         // Aдрес данных измерения "Test Radio1 ** Signal LineR                                 OFF - ";
+	mb.addHreg(0504);                         // Aдрес данных измерения "Test Radio1 ** Signal mag radio                             OFF - ";
+	mb.addHreg(0505);                         // Aдрес данных измерения "Test Radio1 ** Signal mag phone                             OFF - ";
+	mb.addHreg(0506);                         // Aдрес данных измерения "Test Radio1 ** Signal GGS                                   OFF - ";
+	mb.addHreg(0507);                         // Aдрес данных измерения "Test Radio1 ** Signal GG Radio1                             OFF - ";
+	mb.addHreg(0508);                         // Aдрес данных измерения "Test Radio1 ** Signal GG Radio2                             OFF - ";
+	mb.addHreg(0509);                         // Aдрес данных измерения "Test Radio1 ** Signal Radio1                                ON  - ";
 
-	regBank.add(40510);                         // Aдрес данных измерения "Test Radio2 ** Signal FrontL                                OFF - ";
-	regBank.add(40511);                         // Aдрес данных измерения "Test Radio2 ** Signal FrontR                                OFF - ";
-	regBank.add(40512);                         // Aдрес данных измерения "Test Radio2 ** Signal LineL                                 OFF - ";
-	regBank.add(40513);                         // Aдрес данных измерения "Test Radio2 ** Signal LineR                                 OFF - ";
-	regBank.add(40514);                         // Aдрес данных измерения "Test Radio2 ** Signal mag radio                             OFF - ";
-	regBank.add(40515);                         // Aдрес данных измерения "Test Radio2 ** Signal mag phone                             OFF - ";
-	regBank.add(40516);                         // Aдрес данных измерения "Test Radio2 ** Signal GGS                                   OFF - ";
-	regBank.add(40517);                         // Aдрес данных измерения "Test Radio2 ** Signal GG Radio1                             OFF - ";
-	regBank.add(40518);                         // Aдрес данных измерения "Test Radio2 ** Signal GG Radio2                             OFF - ";
-	regBank.add(40519);                         // Aдрес данных измерения "Test Radio2 ** Signal Radio2                                ON  - ";
+	mb.addHreg(0510);                         // Aдрес данных измерения "Test Radio2 ** Signal FrontL                                OFF - ";
+	mb.addHreg(0511);                         // Aдрес данных измерения "Test Radio2 ** Signal FrontR                                OFF - ";
+	mb.addHreg(0512);                         // Aдрес данных измерения "Test Radio2 ** Signal LineL                                 OFF - ";
+	mb.addHreg(0513);                         // Aдрес данных измерения "Test Radio2 ** Signal LineR                                 OFF - ";
+	mb.addHreg(0514);                         // Aдрес данных измерения "Test Radio2 ** Signal mag radio                             OFF - ";
+	mb.addHreg(0515);                         // Aдрес данных измерения "Test Radio2 ** Signal mag phone                             OFF - ";
+	mb.addHreg(0516);                         // Aдрес данных измерения "Test Radio2 ** Signal GGS                                   OFF - ";
+	mb.addHreg(0517);                         // Aдрес данных измерения "Test Radio2 ** Signal GG Radio1                             OFF - ";
+	mb.addHreg(0518);                         // Aдрес данных измерения "Test Radio2 ** Signal GG Radio2                             OFF - ";
+	mb.addHreg(0519);                         // Aдрес данных измерения "Test Radio2 ** Signal Radio2                                ON  - ";
 
-	regBank.add(40520);                         // Aдрес данных измерения "Test Microphone ** Signal FrontL                            OFF - ";
-	regBank.add(40521);                         // Aдрес данных измерения "Test Microphone ** Signal FrontR                            OFF - ";
-	regBank.add(40522);                         // Aдрес данных измерения "Test Microphone ** Signal LineL                             OFF - ";
-	regBank.add(40523);                         // Aдрес данных измерения "Test Microphone ** Signal LineR                             OFF - ";
-	regBank.add(40524);                         // Aдрес данных измерения "Test Microphone ** Signal mag radio                         OFF - ";
-	regBank.add(40525);                         // Aдрес данных измерения "Test Microphone ** Signal mag phone                         OFF - ";
-	regBank.add(40526);                         // Aдрес данных измерения "Test Microphone ** Signal GGS                               OFF - ";
-	regBank.add(40527);                         // Aдрес данных измерения "Test Microphone ** Signal GG Radio1                         OFF - ";
-	regBank.add(40528);                         // Aдрес данных измерения "Test Microphone ** Signal GG Radio2                         OFF - ";
-	regBank.add(40529);                         // Код регулировки яркости дисплея
-	regBank.add(40530);                         // Aдрес данных измерения "Test Radio1 ** Signal mag radio                             ON  - ";
-	regBank.add(40531);                         // Aдрес данных измерения "Test Radio2 ** Signal mag radio                             ON  - ";                    // 
-	regBank.add(40532);                         // Aдрес данных измерения "Test GGS ** Signal mag radio   
+	mb.addHreg(0520);                         // Aдрес данных измерения "Test Microphone ** Signal FrontL                            OFF - ";
+	mb.addHreg(0521);                         // Aдрес данных измерения "Test Microphone ** Signal FrontR                            OFF - ";
+	mb.addHreg(0522);                         // Aдрес данных измерения "Test Microphone ** Signal LineL                             OFF - ";
+	mb.addHreg(0523);                         // Aдрес данных измерения "Test Microphone ** Signal LineR                             OFF - ";
+	mb.addHreg(0524);                         // Aдрес данных измерения "Test Microphone ** Signal mag radio                         OFF - ";
+	mb.addHreg(0525);                         // Aдрес данных измерения "Test Microphone ** Signal mag phone                         OFF - ";
+	mb.addHreg(0526);                         // Aдрес данных измерения "Test Microphone ** Signal GGS                               OFF - ";
+	mb.addHreg(0527);                         // Aдрес данных измерения "Test Microphone ** Signal GG Radio1                         OFF - ";
+	mb.addHreg(0528);                         // Aдрес данных измерения "Test Microphone ** Signal GG Radio2                         OFF - ";
+	mb.addHreg(0529);                         // Код регулировки яркости дисплея
+	mb.addHreg(0530);                         // Aдрес данных измерения "Test Radio1 ** Signal mag radio                             ON  - ";
+	mb.addHreg(0531);                         // Aдрес данных измерения "Test Radio2 ** Signal mag radio                             ON  - ";                    // 
+	mb.addHreg(0532);                         // Aдрес данных измерения "Test GGS ** Signal mag radio   
 
-	slave._device = &regBank;  
+	//slave._device = &regBank;  
 }
 void test_system()
 {
@@ -7759,7 +7972,7 @@ void file_del_SD()
 
 void setup()
 {
-	wdt_disable(); // бесполезная строка до которой не доходит выполнение при bootloop
+//	wdt_disable(); // бесполезная строка до которой не доходит выполнение при bootloop
 	Wire.begin();
 	if (!RTC.begin())                               // Настройка часов 
 		{
@@ -7772,7 +7985,14 @@ void setup()
 	mcp_Analog.digitalWrite(Front_led_Red, HIGH); 
 	Serial.begin(9600);                             // Подключение к USB ПК
 	Serial1.begin(115200);                          // Подключение к звуковому модулю Камертон
-	slave.setSerial(3,19200);                       // Подключение к протоколу MODBUS компьютера Serial3 
+
+	  // Config Modbus Serial (port, speed, byte format) 
+    mb.config(&Serial, 38400, SERIAL_8N1);
+    // Set the Slave ID (1-247)
+    mb.setSlaveId(1);  
+
+
+  //slave.setSerial(3,19200);                       // Подключение к протоколу MODBUS компьютера Serial3 
   // 	slave.setSerial(3,57600);                       // Подключение к протоколу MODBUS компьютера Serial3                                               // 
 	Serial2.begin(38400);                            // 
 	//Serial2.begin(9600);                            // 
