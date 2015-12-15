@@ -163,9 +163,9 @@ MCP23017 mcp_Out1;                                  // Назначение портов расшире
 MCP23017 mcp_Out2;                                  // Назначение портов расширения MCP23017  6 A - Out, B - Out
 MCP23017 mcp_Analog;                                // Назначение портов расширения MCP23017  5 A - Out, B - In
 //----------------------------------------------------------------------------------------------
-const int adr_reg_ind_CTS      PROGMEM           = 10081;        // Адрес флагa индикации состояния сигнала CTS
-const int adr_reg_ind_DSR      PROGMEM           = 10082;        // Адрес флагa индикации состояния сигнала DSR
-const int adr_reg_ind_DCD      PROGMEM           = 10083;        // Адрес флагa индикации состояния сигнала DCD
+const int adr_reg_ind_CTS      PROGMEM           = 81;        // Адрес флагa индикации состояния сигнала CTS
+const int adr_reg_ind_DSR      PROGMEM           = 82;        // Адрес флагa индикации состояния сигнала DSR
+const int adr_reg_ind_DCD      PROGMEM           = 83;        // Адрес флагa индикации состояния сигнала DCD
 
 // **************** Адреса внешней памяти для хранения даты. Применяется приформировании имени файла *************
 //const int adr_temp_day         PROGMEM           = 240;          // Адрес хранения переменной день
@@ -267,49 +267,49 @@ unsigned char bufferK;                              // Счетчик количества приним
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 // Текущее время 
-const unsigned int adr_kontrol_day        PROGMEM      = 40046; // адрес день
-const unsigned int adr_kontrol_month      PROGMEM      = 40047; // адрес месяц
-const unsigned int adr_kontrol_year       PROGMEM      = 40048; // адрес год
-const unsigned int adr_kontrol_hour       PROGMEM      = 40049; // адрес час
-const unsigned int adr_kontrol_minute     PROGMEM      = 40050; // адрес минута
-const unsigned int adr_kontrol_second     PROGMEM      = 40051; // адрес секунда
+const unsigned int adr_kontrol_day        PROGMEM      = 46; // адрес день
+const unsigned int adr_kontrol_month      PROGMEM      = 47; // адрес месяц
+const unsigned int adr_kontrol_year       PROGMEM      = 48; // адрес год
+const unsigned int adr_kontrol_hour       PROGMEM      = 49; // адрес час
+const unsigned int adr_kontrol_minute     PROGMEM      = 50; // адрес минута
+const unsigned int adr_kontrol_second     PROGMEM      = 51; // адрес секунда
 
 // Установка времени в контроллере
-const unsigned int adr_set_kontrol_day    PROGMEM      = 40052;   // адрес день
-const unsigned int adr_set_kontrol_month  PROGMEM      = 40053;   // адрес месяц
-const unsigned int adr_set_kontrol_year   PROGMEM      = 40054;   // адрес год
-const unsigned int adr_set_kontrol_hour   PROGMEM      = 40055;   // адрес час
-const unsigned int adr_set_kontrol_minute PROGMEM      = 40056;   // адрес минута
+const unsigned int adr_set_kontrol_day    PROGMEM      = 52;   // адрес день
+const unsigned int adr_set_kontrol_month  PROGMEM      = 53;   // адрес месяц
+const unsigned int adr_set_kontrol_year   PROGMEM      = 54;   // адрес год
+const unsigned int adr_set_kontrol_hour   PROGMEM      = 55;   // адрес час
+const unsigned int adr_set_kontrol_minute PROGMEM      = 56;   // адрес минута
 
 // Время старта теста
-const unsigned int adr_Mic_Start_day      PROGMEM      = 40096; // адрес день
-const unsigned int adr_Mic_Start_month    PROGMEM      = 40097; // адрес месяц
-const unsigned int adr_Mic_Start_year     PROGMEM      = 40098; // адрес год
-const unsigned int adr_Mic_Start_hour     PROGMEM      = 40099; // адрес час
-const unsigned int adr_Mic_Start_minute   PROGMEM      = 40100; // адрес минута
-const unsigned int adr_Mic_Start_second   PROGMEM      = 40101; // адрес секунда
+const unsigned int adr_Mic_Start_day      PROGMEM      = 96; // адрес день
+const unsigned int adr_Mic_Start_month    PROGMEM      = 97; // адрес месяц
+const unsigned int adr_Mic_Start_year     PROGMEM      = 98; // адрес год
+const unsigned int adr_Mic_Start_hour     PROGMEM      = 99; // адрес час
+const unsigned int adr_Mic_Start_minute   PROGMEM      = 100; // адрес минута
+const unsigned int adr_Mic_Start_second   PROGMEM      = 101; // адрес секунда
 // Время окончания теста
-const unsigned int adr_Mic_Stop_day       PROGMEM       = 40102; // адрес день
-const unsigned int adr_Mic_Stop_month     PROGMEM       = 40103; // адрес месяц
-const unsigned int adr_Mic_Stop_year      PROGMEM       = 40104; // адрес год
-const unsigned int adr_Mic_Stop_hour      PROGMEM       = 40105; // адрес час
-const unsigned int adr_Mic_Stop_minute    PROGMEM       = 40106; // адрес минута
-const unsigned int adr_Mic_Stop_second    PROGMEM       = 40107; // адрес секунда
+const unsigned int adr_Mic_Stop_day       PROGMEM       = 102; // адрес день
+const unsigned int adr_Mic_Stop_month     PROGMEM       = 103; // адрес месяц
+const unsigned int adr_Mic_Stop_year      PROGMEM       = 104; // адрес год
+const unsigned int adr_Mic_Stop_hour      PROGMEM       = 105; // адрес час
+const unsigned int adr_Mic_Stop_minute    PROGMEM       = 106; // адрес минута
+const unsigned int adr_Mic_Stop_second    PROGMEM       = 107; // адрес секунда
 
 // Продолжительность выполнения теста
-const unsigned int adr_Time_Test_day      PROGMEM       = 40108; // адрес день
-const unsigned int adr_Time_Test_hour     PROGMEM       = 40109; // адрес час
-const unsigned int adr_Time_Test_minute   PROGMEM       = 40110; // адрес минута
-const unsigned int adr_Time_Test_second   PROGMEM       = 40111; // адрес секунда
+const unsigned int adr_Time_Test_day      PROGMEM       = 108; // адрес день
+const unsigned int adr_Time_Test_hour     PROGMEM       = 109; // адрес час
+const unsigned int adr_Time_Test_minute   PROGMEM       = 110; // адрес минута
+const unsigned int adr_Time_Test_second   PROGMEM       = 111; // адрес секунда
 // Адрес текущего файла
-const unsigned int adr_reg_temp_year      PROGMEM       = 40112; // Регистр хранения переменной год  
-const unsigned int adr_reg_temp_mon       PROGMEM       = 40113; // Регистр хранения переменной месяц
-const unsigned int adr_reg_temp_day       PROGMEM       = 40114; // Регистр хранения переменной день 
-const unsigned int adr_reg_file_name      PROGMEM       = 40115; // Регистр хранения счетчик файлов  
-const unsigned int adr_reg_file_tek       PROGMEM       = 40116; // Регистр хранения счетчик файлов  
+const unsigned int adr_reg_temp_year      PROGMEM       = 112; // Регистр хранения переменной год  
+const unsigned int adr_reg_temp_mon       PROGMEM       = 113; // Регистр хранения переменной месяц
+const unsigned int adr_reg_temp_day       PROGMEM       = 114; // Регистр хранения переменной день 
+const unsigned int adr_reg_file_name      PROGMEM       = 115; // Регистр хранения счетчик файлов  
+const unsigned int adr_reg_file_tek       PROGMEM       = 116; // Регистр хранения счетчик файлов  
 
-const unsigned int adr_control_command    PROGMEM       = 40120; // Адрес передачи комманд на выполнение 
-const unsigned int adr_reg_count_err      PROGMEM       = 40121; // Адрес счетчика всех ошибок
+const unsigned int adr_control_command    PROGMEM       = 120; // Адрес передачи комманд на выполнение 
+const unsigned int adr_reg_count_err      PROGMEM       = 121; // Адрес счетчика всех ошибок
 
 const unsigned int adr_set_time           PROGMEM       = 36;    // адрес флаг установки
 
@@ -994,6 +994,30 @@ txt_error132                                  // "Test GGS    ** Signal mag radi
 
 // ========================= Блок программ ============================================
 
+/*
+Новые настройки регистров MODBUS
+
+mb.addCoil(1);   Добавить  регистр   1-1000
+addCoil(word offset, bool value)   //  this->addReg(offset + 1, value?0xFF00:0x0000);
+mb.Coil(1));    
+
+addIsts(word offset, bool value)   // addReg(offset + 10001, value?0xFF00:0x0000);
+mb.addIsts(1,1);
+mb.addIsts(1);
+mb.Ists(1, 1);
+
+mb.addIreg(1);
+addIreg(word offset, word value)   30000 - 39999
+mb.Ireg(1, 1);
+
+addHreg(word offset, word value)  40000-49999
+Hreg(word offset, word value)     40000-49999
+mb.addHreg(1, 1);
+mb.Hreg(1);
+
+*/
+
+//
 void dateTime(uint16_t* date, uint16_t* time)                  // Программа записи времени и даты файла
 {
   DateTime now = RTC.now();
@@ -1119,7 +1143,6 @@ void serialEvent1()
 	//prer_Kmerton_Run = false;
 }
 
-
 int readString(char *buffer, int max_len, int terminator)
 {
   int pos = 0;
@@ -1173,8 +1196,8 @@ void read_Serial2()
 	
 	for (int i = 0; i < 13; i++)
 	{
-        fileName_F[i] = bufferSerial2[i];
-    }
+		fileName_F[i] = bufferSerial2[i];
+	}
 
 	Serial.println(bufferSerial2);
 	Serial.println(fileName_F);
@@ -1221,7 +1244,7 @@ void sendPacketK ()
 	for (int i = 0; i <3; i++)
 		{
 			Serial1.write(regs_out[i]);
-			regBank.set(40001+i,regs_out[i]);
+			mb.addHreg(1+i,regs_out[i]);
 		}
 }
 void waiting_for_replyK()                                  // Чтение данных из Камертона
@@ -1262,7 +1285,7 @@ void waiting_for_replyK()                                  // Чтение данных из К
 	  //if( regBank.get(40007) != regs_temp)
 	  //{
 		 //Serial.println(regBank.get(40004),BIN);
-	     //Serial.println(regBank.get(40005),BIN);
+		 //Serial.println(regBank.get(40005),BIN);
 		 //Serial.println(regBank.get(40006),BIN);
 		 //Serial.println(regBank.get(40007),BIN);
 	  //}
@@ -1272,7 +1295,7 @@ void waiting_for_replyK()                                  // Чтение данных из К
 void Stop_Kamerton ()                  //Если не приходит информация с Камертона - регистры обнулить
   {
 	 for (unsigned char i = 0; i <4; i++)
-	 regBank.set(40004+i,0);
+	 mb.addHreg(4+i,0);
 	// regs_in[i]=0;
   }
 
@@ -1419,7 +1442,7 @@ void UpdateRegs()                                        // Обновить регистры
 	  mcp_Out1.digitalWrite(9, set_rele);               // Реле RL9 XP1 10
 
 	 //-----Установить бит 10                           // Реле RL10 Включение питания на высоковольтный модуль 
-	  set_rele = mb.Coil11);
+	  set_rele = mb.Coil(11);
 	  mcp_Out1.digitalWrite(10, set_rele);    
 
 
@@ -1428,7 +1451,7 @@ void UpdateRegs()                                        // Обновить регистры
 	  mcp_Out1.digitalWrite(11, set_rele);    
 
 	 //-----Установить бит 12
-	  set_rele = regBank.get(13);
+	  set_rele = mb.Coil(13);
 	  mcp_Out1.digitalWrite(12, set_rele);              // XP8 - 2   sensor Тангента ножная
 
 	 //-----Установить бит 13
@@ -1437,7 +1460,7 @@ void UpdateRegs()                                        // Обновить регистры
 
 	 //-----Установить бит 14
 
-	  set_rele = regBank.get(15);
+	  set_rele = mb.Coil(15);
 	  mcp_Out1.digitalWrite(14, set_rele);              // XS1 - 5   PTT Мик
 
 	  //-----Установить бит 15
@@ -1554,42 +1577,42 @@ void UpdateRegs()                                        // Обновить регистры
 	 // regBank.set(adr_reg_count_Mic, count_test_Mic);                   // записать в регистр показания счетчика проходов теста Mic
 	  regBank.set(adr_reg_err_Mic, err_count_Mic);                        // записать в регистр показания счетчика ошибок CTS
 	  */
-	regBank.set(adr_reg_ind_CTS, !mcp_Analog.digitalRead(CTS));
-	regBank.set(adr_reg_ind_DSR, !mcp_Analog.digitalRead(DSR));
-	regBank.set(adr_reg_ind_DCD, !mcp_Analog.digitalRead(DCD));
+	mb.Ists(adr_reg_ind_CTS, !mcp_Analog.digitalRead(CTS));
+	mb.Ists(adr_reg_ind_DSR, !mcp_Analog.digitalRead(DSR));
+	mb.Ists(adr_reg_ind_DCD, !mcp_Analog.digitalRead(DCD));
 
 	  time_control();
 	  prer_Kmerton_On = true;
 }
 void Reg_count_clear()
 {
-	for(unsigned int i = 40200; i<=40319;i++)
+	for(unsigned int i = 200; i<=319;i++)
 	{
-		regBank.set(i,0);
+		mb.Hreg(i,0);
 	}
-		for(unsigned int i = 40400; i<=40519;i++)
+		for(unsigned int i = 400; i<=519;i++)
 	{
-		regBank.set(i,0);
+		mb.Hreg(i,0);
 	}
 	for(int k = 200; k<=319;k++)
 	{
-		regBank.set(k,false);
+		mb.Coil(k,false);
 	}
-	regBank.set(40121,0);
-	regBank.set(adr_control_command,0);
+	mb.Hreg(121,0);
+	mb.Hreg(adr_control_command,0);
 }
 void set_clock()
 {    
-		int day    = regBank.get(adr_set_kontrol_day);  
-		int month  = regBank.get(adr_set_kontrol_month);          
-		int year   = regBank.get(adr_set_kontrol_year);  
-		int hour   = regBank.get(adr_set_kontrol_hour);  
-		int minute = regBank.get(adr_set_kontrol_minute);  
+		int day    = mb.Hreg(adr_set_kontrol_day);  
+		int month  = mb.Hreg(adr_set_kontrol_month);          
+		int year   = mb.Hreg(adr_set_kontrol_year);  
+		int hour   = mb.Hreg(adr_set_kontrol_hour);  
+		int minute = mb.Hreg(adr_set_kontrol_minute);  
 		int second = 0;
-		DateTime set_time = DateTime(year, month, day, hour, minute, second); // Занести данные о времени в строку "set_time"
-		RTC.adjust(set_time);                                                 // Записать время в контроллер часов  
-		regBank.set(adr_set_time, 0);                                         // Записать в регистр признак окончания выполнения команды
-		regBank.set(adr_control_command,0);
+		DateTime set_time = DateTime(year, month, day, hour, minute, second);   // Занести данные о времени в строку "set_time"
+		RTC.adjust(set_time);                                                   // Записать время в контроллер часов  
+		mb.Hreg(adr_set_time, 0);                                               // Записать в регистр признак окончания выполнения команды
+		mb.Hreg(adr_control_command,0);
 }
 void data_clock_exchange()
 {
@@ -1635,18 +1658,18 @@ void data_clock_exchange()
 void time_control() // Программа записи текущего времени в регистры для передачи в ПК
 {
 	DateTime now = RTC.now();
-	regBank.set(adr_kontrol_day  , now.day());
-	regBank.set(adr_kontrol_month, now.month());
-	regBank.set(adr_kontrol_year, now.year());
-	regBank.set(adr_kontrol_hour, now.hour());
-	regBank.set(adr_kontrol_minute, now.minute());
-	regBank.set(adr_kontrol_second, now.second());
+	mb.Hreg(adr_kontrol_day  , now.day());
+	mb.Hreg(adr_kontrol_month, now.month());
+	mb.Hreg(adr_kontrol_year, now.year());
+	mb.Hreg(adr_kontrol_hour, now.hour());
+	mb.Hreg(adr_kontrol_minute, now.minute());
+	mb.Hreg(adr_kontrol_second, now.second());
 }
 void time_control_get()   // Тестовая программа проверки содержания регистров времени
 {
   for (unsigned int i = 0; i < 6; i++)     // 
 	{
-	   Serial.print(regBank.get(40046+i));   
+	   Serial.print(mb.Hreg(46+i));   
 	   Serial.print(" "); 
 	}
 Serial.println();   
@@ -1691,7 +1714,7 @@ void load_list_files()
 		 }
 		delay(1000);
 		Serial.println("Files end");
-  regBank.set(adr_control_command,0);
+        mb.Hreg(adr_control_command,0);
 }
 
 void file_print_date()  //программа  записи даты в файл
@@ -1768,7 +1791,7 @@ void controlFileName()
 	}
 	else 
 	{
-		regBank.set(122,1);                              // Флаг ошибки  открытия файла
+		mb.Coil(122,1);                              // Флаг ошибки  открытия файла
 	}
   }
 
@@ -1776,15 +1799,15 @@ void controlFileName()
    
 	if (temp_file_name == 0)
 	{
-		regBank.set(adr_reg_file_name,temp_file_name);   
+		mb.Hreg(adr_reg_file_name,temp_file_name);   
 	}
 	else
 	{
-		regBank.set(adr_reg_file_name,temp_file_name-1); 
+		mb.Hreg(adr_reg_file_name,temp_file_name-1); 
 	}
 
   delay(200);
-  regBank.set(adr_control_command,0);  
+  mb.Hreg(adr_control_command,0);  
 }
 void FileOpen()
 {
@@ -1804,18 +1827,18 @@ void FileOpen()
 	}
 	else 
 	{
-		regBank.set(122,1);                              // Флаг ошибки  открытия файла
+		mb.Coil(122,1);                              // Флаг ошибки  открытия файла
 	}
   }
 
  
   temp_file_name = ((fileName[BASE_NAME_SIZE]-48)*10) + (fileName[BASE_NAME_SIZE + 1]-48); // преобразование символьного номера файла в числа
-  regBank.set(adr_reg_file_name,temp_file_name);      
+  mb.Hreg(adr_reg_file_name,temp_file_name);      
 //  i2c_eeprom_write_byte(0x50, adr_file_name_count,temp_file_name);                 // при смене даты счетчик номера файла сбросить в "0"
 
   if (!myFile.open(fileName, O_CREAT | O_WRITE | O_EXCL)) //sdError("file.open");
   {
-	regBank.set(122,1);                              // Флаг ошибки  открытия файла
+	mb.Coil(122,1);                              // Флаг ошибки  открытия файла
   }
   else
   {
@@ -1824,24 +1847,24 @@ void FileOpen()
 
 	DateTime now = RTC.now();
 
-	regBank.set(adr_Mic_Start_day , now.day());           // Время старта теста
-	regBank.set(adr_Mic_Start_month, now.month());
-	regBank.set(adr_Mic_Start_year, now.year());
-	regBank.set(adr_Mic_Start_hour, now.hour());
-	regBank.set(adr_Mic_Start_minute, now.minute());
-	regBank.set(adr_Mic_Start_second, now.second());
+	mb.Hreg(adr_Mic_Start_day , now.day());           // Время старта теста
+	mb.Hreg(adr_Mic_Start_month, now.month());
+	mb.Hreg(adr_Mic_Start_year, now.year());
+	mb.Hreg(adr_Mic_Start_hour, now.hour());
+	mb.Hreg(adr_Mic_Start_minute, now.minute());
+	mb.Hreg(adr_Mic_Start_second, now.second());
 	// Уточнить 			
-	regBank.set(adr_Time_Test_day, 0); 
-	regBank.set(adr_Time_Test_hour, 0); 
-	regBank.set(adr_Time_Test_minute, 0); 
-	regBank.set(adr_Time_Test_second, 0); 
+	mb.Hreg(adr_Time_Test_day, 0); 
+	mb.Hreg(adr_Time_Test_hour, 0); 
+	mb.Hreg(adr_Time_Test_minute, 0); 
+	mb.Hreg(adr_Time_Test_second, 0); 
 	myFile.println ("");
 	myFile.print ("Report of test module Audio-1 N ");
 	byte y[4];                                //Чтение из памяти текущих данных счетчика 
-		y[3]= regBank.get(40010);
-		y[2]= regBank.get(40011);
-		y[1]= regBank.get(40012);
-		y[0]= regBank.get(40013);
+		y[3]= mb.Hreg(10);
+		y[2]= mb.Hreg(11);
+		y[1]= mb.Hreg(12);
+		y[0]= mb.Hreg(13);
 		number_audio = (unsigned long&) y;       // Сложить восстановленные текущие данные в count_colwater_old
 	myFile.print (number_audio);
 	myFile.println ("");
@@ -1850,11 +1873,11 @@ void FileOpen()
 	myFile.print ("Start test   ");
 	file_print_date();
 	myFile.println ("");
-	regBank.set(122,0);                              // Флаг индикации открытия файла                                   
+	mb.Coil(122,0);                              // Флаг индикации открытия файла                                   
 //	Serial.println(fileName);
 	delay(100);
    }
-  regBank.set(adr_control_command,0);  
+  mb.Coil(adr_control_command,0);  
 }
 void FileClose()
 {
@@ -1870,16 +1893,16 @@ void FileClose()
 			Serial.println();
 			Serial.print(fileName);
 			Serial.println("  Close  OK!.");
-			regBank.set(123,0);                                  // Флаг закрытия файла
+			mb.Coil(123,0);                                  // Флаг закрытия файла
 		}
 	else 
 		{
 			Serial.println();
 			Serial.print(fileName);
 			Serial.println(" doesn't exist.");  
-			regBank.set(123,1);                              // Флаг ошибки  закрытия файла
+			mb.Coil(123,1);                              // Флаг ошибки  закрытия файла
 		}
-	regBank.set(adr_control_command,0);                                             // Завершить программу    
+	mb.Hreg(adr_control_command,0);                                             // Завершить программу    
 	delay(100);
 }
 
@@ -1947,9 +1970,9 @@ void preob_num_str() // Программа формирования имени файла, состоящего из текуще
 	sprintf(str2, "%s%s",str1, str_day_file);                                  // Сложение 2 строк
 	sprintf(fileName, "%s%s", str2, "00.KAM");                                 // Получение имени файла в file_name
 	//Serial.println(fileName);
-	regBank.set(adr_reg_temp_day, day);  
-	regBank.set(adr_reg_temp_mon, month); 
-	regBank.set(adr_reg_temp_year, year-2000); 
+	mb.Hreg(adr_reg_temp_day, day);  
+	mb.Hreg(adr_reg_temp_mon, month); 
+	mb.Hreg(adr_reg_temp_year, year-2000); 
 	//char* strcpy(char* fileName_p, const char* fileName);
 	//Serial.println(fileName_p);
 }
@@ -1986,7 +2009,7 @@ void control_command()
 	*/
 	UpdateRegs() ;
 
-	int test_n = regBank.get(adr_control_command);                                  //адрес  40120
+	int test_n = mb.Hreg(adr_control_command);                                  //адрес  40120
 	if (test_n != 0)
 	{
 //	Serial.println(test_n);	
@@ -2111,7 +2134,7 @@ void control_command()
 		break;
 	 }
 	// wdt_reset();
-	 regBank.set(adr_control_command,0);
+	 mb.Hreg(adr_control_command,0);
 	}
 }
 
@@ -2125,28 +2148,28 @@ void sensor_all_off()
 	myFile.println(buffer);                                                         //  " ****** Test sensor OFF start! ******" ;      
 	file_print_date();
 	myFile.println();
-	regBank.set(8,1);                                                               // Включить питание Камертон
+	mb.Coil(8,1);                                                               // Включить питание Камертон
 	UpdateRegs(); 
 	delay(500);
-	regBank.set(5,0);                                                               // Микрофон инструктора отключить
-	regBank.set(10,0);                                                              // Микрофон диспетчера отключить
-	regBank.set(13,0);                                                              // XP8 - 2   sensor Тангента ножная
-	regBank.set(14,0);                                                              // XP8 - 1   PTT     Тангента ножная
-	regBank.set(15,0);                                                              // XS1 - 5   PTT Мик CTS
-	regBank.set(16,0);                                                              // XS1 - 6   sensor подключения микрофона
+	mb.Coil(5,0);                                                               // Микрофон инструктора отключить
+	mb.Coil(10,0);                                                              // Микрофон диспетчера отключить
+	mb.Coil(13,0);                                                              // XP8 - 2   sensor Тангента ножная
+	mb.Coil(14,0);                                                              // XP8 - 1   PTT     Тангента ножная
+	mb.Coil(15,0);                                                              // XS1 - 5   PTT Мик CTS
+	mb.Coil(16,0);                                                              // XS1 - 6   sensor подключения микрофона
  
-	regBank.set(17,0);                                                              // J8-12    XP7 4 PTT2 тангента ручная DSR
-	regBank.set(18,0);                                                              // XP1 - 20  HangUp  DCD
-	regBank.set(19,0);                                                              // J8-11     XP7 2 sensor тангента ручная
-	regBank.set(20,0);                                                              // J8-23     XP7 1 PTT1 тангента ручная CTS
-	regBank.set(25,1);                                                              // XP1- 19 HaSs      sensor подключения трубки                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     
-	regBank.set(26,0);                                                              // XP1- 17 HaSPTT    CTS DSR вкл.
-	regBank.set(27,0);                                                              // XP1- 16 HeS2Rs    sensor подключения гарнитуры инструктора с 2 наушниками
-	regBank.set(28,0);                                                              // XP1- 15 HeS2PTT   CTS вкл
-	regBank.set(29,0);                                                              // XP1- 13 HeS2Ls    sensor подключения гарнитуры инструктора 
-	regBank.set(30,0);                                                              // XP1- 6  HeS1PTT   CTS вкл
-	regBank.set(31,0);                                                              // XP1- 5  HeS1Rs    sensor подкючения гарнитуры диспетчера с 2 наушниками
-	regBank.set(32,0);                                                              // XP1- 1  HeS1Ls    sensor подкючения гарнитуры диспетчера
+	mb.Coil(17,0);                                                              // J8-12    XP7 4 PTT2 тангента ручная DSR
+	mb.Coil(18,0);                                                              // XP1 - 20  HangUp  DCD
+	mb.Coil(19,0);                                                              // J8-11     XP7 2 sensor тангента ручная
+	mb.Coil(20,0);                                                              // J8-23     XP7 1 PTT1 тангента ручная CTS
+	mb.Coil(25,1);                                                              // XP1- 19 HaSs      sensor подключения трубки                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     
+	mb.Coil(26,0);                                                              // XP1- 17 HaSPTT    CTS DSR вкл.
+	mb.Coil(27,0);                                                              // XP1- 16 HeS2Rs    sensor подключения гарнитуры инструктора с 2 наушниками
+	mb.Coil(28,0);                                                              // XP1- 15 HeS2PTT   CTS вкл
+	mb.Coil(29,0);                                                              // XP1- 13 HeS2Ls    sensor подключения гарнитуры инструктора 
+	mb.Coil(30,0);                                                              // XP1- 6  HeS1PTT   CTS вкл
+	mb.Coil(31,0);                                                              // XP1- 5  HeS1Rs    sensor подкючения гарнитуры диспетчера с 2 наушниками
+	mb.Coil(32,0);                                                              // XP1- 1  HeS1Ls    sensor подкючения гарнитуры диспетчера
 
 	UpdateRegs(); 
 	delay(500);
@@ -2155,23 +2178,23 @@ void sensor_all_off()
 	byte i52 = regs_in[2];    
 	byte i53 = regs_in[3];   */ 
 
-	byte i50 = regBank.get(40004);    
-	byte i52 = regBank.get(40006);     
-	byte i53 = regBank.get(40007);     
+	byte i50 = mb.Hreg(4);    
+	byte i52 = mb.Hreg(6);     
+	byte i53 = mb.Hreg(7);     
 
 
 
 
 		if(bitRead(i50,2) != 0)                                                     // XP1- 19 HaSs sensor контроля подключения трубки    "Sensor MTT                          XP1- 19 HaSs            OFF - ";
 		  {
-			regcount = regBank.get(40200);                                          // адрес счетчика ошибки                              "Sensor MTT                          XP1- 19 HaSs            OFF - ";
+			regcount = mb.Hreg(200);                                          // адрес счетчика ошибки                              "Sensor MTT                          XP1- 19 HaSs            OFF - ";
 			regcount++;                                                             // увеличить счетчик ошибок sensor отключения трубки  "Sensor MTT                          XP1- 19 HaSs            OFF - ";
-			regBank.set(40200,regcount);                                            // адрес счетчика ошибки                              "Sensor MTT                          XP1- 19 HaSs            OFF - ";  
-			regBank.set(200,1);                                                     // установить флаг ошибки                             "Sensor MTT                          XP1- 19 HaSs            OFF - ";
-			regBank.set(120,1);                                                     // установить общий флаг ошибки
-			regcount_err = regBank.get(adr_reg_count_err);                          // Получить данные счетчика всех ошибок
+			mb.Hreg(200,regcount);                                            // адрес счетчика ошибки                              "Sensor MTT                          XP1- 19 HaSs            OFF - ";  
+			mb.Coil(200,1);                                                     // установить флаг ошибки                             "Sensor MTT                          XP1- 19 HaSs            OFF - ";
+			mb.Coil(120,1);                                                     // установить общий флаг ошибки
+			regcount_err = mb.Hreg(adr_reg_count_err);                          // Получить данные счетчика всех ошибок
 			regcount_err++;                                                         // увеличить счетчик всех ошибок 
-			regBank.set(adr_reg_count_err,regcount_err);                            // Сохранить данные счетчика всех ошибок
+			mb.Hreg(adr_reg_count_err,regcount_err);                            // Сохранить данные счетчика всех ошибок
 			strcpy_P(buffer, (char*)pgm_read_word(&(string_table_err[0])));         // "Sensor MTT                      XP1- 19 HaSs   OFF               - ";  
 			myFile.print(buffer);                                                   // "Sensor MTT                     XP1- 19 HaSs   OFF               - ";  
 			strcpy_P(buffer, (char*)pgm_read_word(&(table_message[0])));            // "    Error! - "; 
@@ -2191,14 +2214,14 @@ void sensor_all_off()
 	
 		if(bitRead(i50,3) != 0)                                                     // J8-11  тангента ручная                           "Sensor tangenta ruchnaja            XP7 - 2                 OFF - ";
 		  {
-			regcount = regBank.get(40201);                                          // адрес счетчика ошибки sensor тангента ручная     "Sensor tangenta ruchnaja            XP7 - 2                 OFF - ";
+			regcount = mb.Hreg(201);                                          // адрес счетчика ошибки sensor тангента ручная     "Sensor tangenta ruchnaja            XP7 - 2                 OFF - ";
 			regcount++;                                                             // увеличить счетчик ошибок sensor тангента ручная  "Sensor tangenta ruchnaja            XP7 - 2                 OFF - ";
-			regBank.set(40201,regcount);                                            // адрес счетчика ошибки sensor тангента ручная     "Sensor tangenta ruchnaja            XP7 - 2                 OFF - ";
-			regBank.set(201,1);                                                     // установить флаг ошибки sensor тангента ручная    "Sensor tangenta ruchnaja            XP7 - 2                 OFF - ";
-			regBank.set(120,1);                                                     // установить общий флаг ошибки
-			regcount_err = regBank.get(adr_reg_count_err);                          // Получить данные счетчика всех ошибок
+			mb.Hreg(201,regcount);                                            // адрес счетчика ошибки sensor тангента ручная     "Sensor tangenta ruchnaja            XP7 - 2                 OFF - ";
+			mb.Coil(201,1);                                                     // установить флаг ошибки sensor тангента ручная    "Sensor tangenta ruchnaja            XP7 - 2                 OFF - ";
+			mb.Coil(120,1);                                                     // установить общий флаг ошибки
+			regcount_err = mb.Hreg(adr_reg_count_err);                          // Получить данные счетчика всех ошибок
 			regcount_err++;                                                         // увеличить счетчик всех ошибок 
-			regBank.set(adr_reg_count_err,regcount_err);                            // Сохранить данные счетчика всех ошибок
+			mb.Hreg(adr_reg_count_err,regcount_err);                            // Сохранить данные счетчика всех ошибок
 			strcpy_P(buffer, (char*)pgm_read_word(&(string_table_err[1])));         // "Sensor tangenta ruchnaja            XP7 - 2                 OFF - ";
 			myFile.print(buffer);                                                   // "Sensor tangenta ruchnaja            XP7 - 2                 OFF - "; 
 			strcpy_P(buffer, (char*)pgm_read_word(&(table_message[0])));            // "    Error! - "; 
@@ -2218,14 +2241,14 @@ void sensor_all_off()
 
 		if(bitRead(i50,4) != 0)                                                     // XP8 - 2   sensor Тангента ножная                  "Sensor tangenta nognaja             XP8 - 2                 OFF - "; 
 		  {
-			regcount = regBank.get(40202);                                          // адрес счетчика ошибки sensor Тангента ножная      "Sensor tangenta nognaja             XP8 - 2                 OFF - "; 
+			regcount = mb.Hreg(202);                                          // адрес счетчика ошибки sensor Тангента ножная      "Sensor tangenta nognaja             XP8 - 2                 OFF - "; 
 			regcount++;                                                             // увеличить счетчик ошибок  sensor Тангента ножная  "Sensor tangenta nognaja             XP8 - 2                 OFF - "; 
-			regBank.set(40202,regcount);                                            // адрес счетчика ошибки  sensor Тангента ножная     "Sensor tangenta nognaja             XP8 - 2                 OFF - "; 
-			regBank.set(202,1);                                                     // установить флаг ошибки sensor Тангента ножная     "Sensor tangenta nognaja             XP8 - 2                 OFF - "; 
-			regBank.set(120,1);                                                     // установить общий флаг ошибки
-			regcount_err = regBank.get(adr_reg_count_err);                          // Получить данные счетчика всех ошибок
+			mb.Hreg(202,regcount);                                            // адрес счетчика ошибки  sensor Тангента ножная     "Sensor tangenta nognaja             XP8 - 2                 OFF - "; 
+			mb.Coil(202,1);                                                     // установить флаг ошибки sensor Тангента ножная     "Sensor tangenta nognaja             XP8 - 2                 OFF - "; 
+			mb.Coil(120,1);                                                     // установить общий флаг ошибки
+			regcount_err = mb.Hreg(adr_reg_count_err);                          // Получить данные счетчика всех ошибок
 			regcount_err++;                                                         // увеличить счетчик всех ошибок 
-			regBank.set(adr_reg_count_err,regcount_err);                            // Сохранить данные счетчика всех ошибок
+			mb.Hreg(adr_reg_count_err,regcount_err);                            // Сохранить данные счетчика всех ошибок
 			strcpy_P(buffer, (char*)pgm_read_word(&(string_table_err[2])));         // "Sensor tangenta nognaja             XP8 - 2                 OFF - ";   
 			myFile.print(buffer);                                                   // "Sensor tangenta nognaja             XP8 - 2                 OFF - ";   
 			strcpy_P(buffer, (char*)pgm_read_word(&(table_message[0])));            // "    Error! - "; 
@@ -2245,14 +2268,14 @@ void sensor_all_off()
 
 		if(bitRead(i52,1) != 0)                                                     // XP1- 16 HeS2Rs    sensor подключения гарнитуры инструктора с 2 наушниками
 		  {
-			regcount = regBank.get(40203);                                          // адрес счетчика ошибки sensor подключения гарнитуры инструктора с 2 наушниками
+			regcount = mb.Hreg(203);                                          // адрес счетчика ошибки sensor подключения гарнитуры инструктора с 2 наушниками
 			regcount++;                                                             // увеличить счетчик ошибок sensor подключения гарнитуры инструктора с 2 наушниками
-			regBank.set(40203,regcount);                                            // адрес счетчика ошибки sensor подключения гарнитуры инструктора с 2 наушниками
-			regBank.set(203,1);                                                     // установить флаг ошибки sensor подключения гарнитуры инструктора с 2 наушниками 
-			regBank.set(120,1);                                                     // установить общий флаг ошибки
-			regcount_err = regBank.get(adr_reg_count_err);                          // Получить данные счетчика всех ошибок
+			mb.Hreg(203,regcount);                                            // адрес счетчика ошибки sensor подключения гарнитуры инструктора с 2 наушниками
+			mb.Coil(203,1);                                                     // установить флаг ошибки sensor подключения гарнитуры инструктора с 2 наушниками 
+			mb.Coil(120,1);                                                     // установить общий флаг ошибки
+			regcount_err = mb.Hreg(adr_reg_count_err);                          // Получить данные счетчика всех ошибок
 			regcount_err++;                                                         // увеличить счетчик всех ошибок 
-			regBank.set(adr_reg_count_err,regcount_err);                            // Сохранить данные счетчика всех ошибок
+			mb.Hreg(adr_reg_count_err,regcount_err);                            // Сохранить данные счетчика всех ошибок
 			strcpy_P(buffer, (char*)pgm_read_word(&(string_table_err[3])));         // "Sensor headset instructor 2         XP1- 16 HeS2Rs          OFF - ";
 			myFile.print(buffer);                                                   // "Sensor headset instructor 2         XP1- 16 HeS2Rs          OFF - ";   
 			strcpy_P(buffer, (char*)pgm_read_word(&(table_message[0])));            // "    Error! - "; 
@@ -2272,14 +2295,14 @@ void sensor_all_off()
 
 		if(bitRead(i52,2) != 0)                                                     // XP1- 13 HeS2Ls    sensor подключения гарнитуры инструктора 
 		  {
-			regcount = regBank.get(40204);                                          // адрес счетчика ошибки sensor подключения гарнитуры инструктора
+			regcount = mb.Hreg(204);                                          // адрес счетчика ошибки sensor подключения гарнитуры инструктора
 			regcount++;                                                             // увеличить счетчик ошибок sensor подключения гарнитуры инструктора
-			regBank.set(40204,regcount);                                            // адрес счетчика ошибки sensor подключения гарнитуры инструктора 
-			regBank.set(204,1);                                                     // установить флаг ошибки sensor подключения гарнитуры инструктора 
-			regBank.set(120,1);                                                     // установить общий флаг ошибки
-			regcount_err = regBank.get(adr_reg_count_err);                          // Получить данные счетчика всех ошибок
+			mb.Hreg(204,regcount);                                            // адрес счетчика ошибки sensor подключения гарнитуры инструктора 
+			mb.Coil(204,1);                                                     // установить флаг ошибки sensor подключения гарнитуры инструктора 
+			mb.Coil(120,1);                                                     // установить общий флаг ошибки
+			regcount_err = mb.Hreg(adr_reg_count_err);                          // Получить данные счетчика всех ошибок
 			regcount_err++;                                                         // увеличить счетчик всех ошибок 
-			regBank.set(adr_reg_count_err,regcount_err);                            // Сохранить данные счетчика всех ошибок
+			mb.Hreg(adr_reg_count_err,regcount_err);                            // Сохранить данные счетчика всех ошибок
 			strcpy_P(buffer, (char*)pgm_read_word(&(string_table_err[4])));         // "Sensor headset instructor           XP1- 13 HeS2Ls          OFF - ";   
 			myFile.print(buffer);                                                   // "Sensor headset instructor           XP1- 13 HeS2Ls          OFF - ";    
 			strcpy_P(buffer, (char*)pgm_read_word(&(table_message[0])));            // "    Error! - "; 
@@ -2299,14 +2322,14 @@ void sensor_all_off()
 
 		if(bitRead(i52,3) != 0)                                                     // XP1- 5  HeS1Rs    sensor подкючения гарнитуры диспетчера с 2 наушниками
 		  {
-			regcount = regBank.get(40205);                                          // адрес счетчика ошибки sensor подкючения гарнитуры диспетчера с 2 наушниками
+			regcount = mb.Hreg(205);                                          // адрес счетчика ошибки sensor подкючения гарнитуры диспетчера с 2 наушниками
 			regcount++;                                                             // увеличить счетчик ошибок sensor подкючения гарнитуры диспетчера с 2 наушниками
-			regBank.set(40205,regcount);                                            // адрес счетчика ошибки sensor подкючения гарнитуры диспетчера с 2 наушниками
-			regBank.set(205,1);                                                     // установить флаг ошибки sensor подкючения гарнитуры диспетчера с 2 наушниками
-			regBank.set(120,1);                                                     // установить общий флаг ошибки
-			regcount_err = regBank.get(adr_reg_count_err);                          // Получить данные счетчика всех ошибок
+			mb.Hreg(205,regcount);                                            // адрес счетчика ошибки sensor подкючения гарнитуры диспетчера с 2 наушниками
+			mb.Coil(205,1);                                                     // установить флаг ошибки sensor подкючения гарнитуры диспетчера с 2 наушниками
+			mb.Coil(120,1);                                                     // установить общий флаг ошибки
+			regcount_err = mb.Hreg(adr_reg_count_err);                          // Получить данные счетчика всех ошибок
 			regcount_err++;                                                         // увеличить счетчик всех ошибок 
-			regBank.set(adr_reg_count_err,regcount_err);                            // Сохранить данные счетчика всех ошибок
+			mb.Hreg(adr_reg_count_err,regcount_err);                            // Сохранить данные счетчика всех ошибок
 			strcpy_P(buffer, (char*)pgm_read_word(&(string_table_err[5])));         // "Sensor headset dispatcher 2         XP1- 13 HeS2Ls          OFF - ";  
 			myFile.print(buffer);                                                   // "Sensor headset dispatcher 2         XP1- 13 HeS2Ls          OFF - ";     
 			strcpy_P(buffer, (char*)pgm_read_word(&(table_message[0])));            // "    Error! - "; 
@@ -2327,14 +2350,14 @@ void sensor_all_off()
 		
 		if(bitRead(i52,4) != 0)                                                     // XP1- 1  HeS1Ls   sensor подкючения гарнитуры диспетчера 
 		  {
-			regcount = regBank.get(40206);                                          // адрес счетчика ошибки sensor подкючения гарнитуры диспетчера
+			regcount = mb.Hreg(206);                                          // адрес счетчика ошибки sensor подкючения гарнитуры диспетчера
 			regcount++;                                                             // увеличить счетчик ошибок sensor подкючения гарнитуры диспетчера 
-			regBank.set(40206,regcount);                                            // адрес счетчика ошибки sensor подкючения гарнитуры диспетчера
-			regBank.set(206,1);                                                     // установить флаг ошибки sensor подкючения гарнитуры диспетчера
-			regBank.set(120,1);                                                     // установить общий флаг ошибки
-			regcount_err = regBank.get(adr_reg_count_err);                          // Получить данные счетчика всех ошибок
+			mb.Hreg(206,regcount);                                            // адрес счетчика ошибки sensor подкючения гарнитуры диспетчера
+			mb.Coil(206,1);                                                     // установить флаг ошибки sensor подкючения гарнитуры диспетчера
+			mb.Coil(120,1);                                                     // установить общий флаг ошибки
+			regcount_err = mb.Hreg(adr_reg_count_err);                          // Получить данные счетчика всех ошибок
 			regcount_err++;                                                         // увеличить счетчик всех ошибок 
-			regBank.set(adr_reg_count_err,regcount_err);                            // Сохранить данные счетчика всех ошибок
+			mb.Hreg(adr_reg_count_err,regcount_err);                            // Сохранить данные счетчика всех ошибок
 			strcpy_P(buffer, (char*)pgm_read_word(&(string_table_err[6])));         // "Sensor headset dispatcher           XP1- 1  HeS1Ls          OFF - "; 
 			myFile.print(buffer);                                                   // "Sensor headset dispatcher           XP1- 1  HeS1Ls          OFF - ";    
 			strcpy_P(buffer, (char*)pgm_read_word(&(table_message[0])));            // "    Error! - "; 
@@ -2354,14 +2377,14 @@ void sensor_all_off()
 
 		if(bitRead(i52,5) != 0)                                                     // XS1 - 6   sensor отключения микрофона
 		  {
-			regcount = regBank.get(40207);                                          // адрес счетчика ошибки sensor подключения микрофона
+			regcount = mb.Hreg(207);                                          // адрес счетчика ошибки sensor подключения микрофона
 			regcount++;                                                             // увеличить счетчик ошибок sensor подключения микрофона
-			regBank.set(40207,regcount);                                            // адрес счетчика ошибки sensor подключения микрофона
-			regBank.set(207,1);                                                     // установить флаг ошибки sensor подключения микрофона
-			regBank.set(120,1);                                                     // установить общий флаг ошибки
-			regcount_err = regBank.get(adr_reg_count_err);                          // Получить данные счетчика всех ошибок
+			mb.Hreg(207,regcount);                                            // адрес счетчика ошибки sensor подключения микрофона
+			mb.Coil(207,1);                                                     // установить флаг ошибки sensor подключения микрофона
+			mb.Coil(120,1);                                                     // установить общий флаг ошибки
+			regcount_err = mb.Hreg(adr_reg_count_err);                          // Получить данные счетчика всех ошибок
 			regcount_err++;                                                         // увеличить счетчик всех ошибок 
-			regBank.set(adr_reg_count_err,regcount_err);                            // Сохранить данные счетчика всех ошибок
+			mb.Hreg(adr_reg_count_err,regcount_err);                            // Сохранить данные счетчика всех ошибок
 			strcpy_P(buffer, (char*)pgm_read_word(&(string_table_err[7])));         // "Sensor microphone                   XS1 - 6                 OFF - "; 
 			myFile.print(buffer);                                                   // "Sensor microphone                   XS1 - 6                 OFF - "; 
 			strcpy_P(buffer, (char*)pgm_read_word(&(table_message[0])));            // "    Error! - "; 
@@ -2381,14 +2404,14 @@ void sensor_all_off()
 
 		if(bitRead(i53,4) != 0)                                                     // Реле RL4 XP1 12  HeS2e   Выключение микрофона инструктора
 		  {
-			regcount = regBank.get(40208);                                          // адрес счетчика ошибки Включение микрофона инструктора
+			regcount =mb.Hreg(208);                                          // адрес счетчика ошибки Включение микрофона инструктора
 			regcount++;                                                             // увеличить счетчик ошибок Включение микрофона инструктора
-			regBank.set(40208,regcount);                                            // адрес счетчика ошибки Включение микрофона инструктора
-			regBank.set(208,1);                                                     // установить флаг ошибки Включение микрофона инструктора
-			regBank.set(120,1);                                                     // установить общий флаг ошибки
-			regcount_err = regBank.get(adr_reg_count_err);                          // Получить данные счетчика всех ошибок
+			mb.Hreg(208,regcount);                                            // адрес счетчика ошибки Включение микрофона инструктора
+			mb.Coil(208,1);                                                     // установить флаг ошибки Включение микрофона инструктора
+			mb.Coil(120,1);                                                     // установить общий флаг ошибки
+			regcount_err = mb.Hreg(adr_reg_count_err);                          // Получить данные счетчика всех ошибок
 			regcount_err++;                                                         // увеличить счетчик всех ошибок 
-			regBank.set(adr_reg_count_err,regcount_err);                            // Сохранить данные счетчика всех ошибок
+			mb.Hreg(adr_reg_count_err,regcount_err);                            // Сохранить данные счетчика всех ошибок
 			strcpy_P(buffer, (char*)pgm_read_word(&(string_table_err[8])));         // "Microphone headset instructor Sw.   XP1 12 HeS2e            OFF - "; 
 			myFile.print(buffer);                                                   // "Microphone headset instructor Sw.   XP1 12 HeS2e            OFF - "; 
 			strcpy_P(buffer, (char*)pgm_read_word(&(table_message[0])));            // "    Error! - "; 
@@ -2408,14 +2431,14 @@ void sensor_all_off()
 
 		if(bitRead(i53,6) != 0)                                                     // Реле RL9 XP1 10 Выключение микрофона диспетчера
 		  {
-			regcount = regBank.get(40209);                                          // адрес счетчика ошибки Выключение микрофона диспетчера
+			regcount = mb.Hreg(209);                                          // адрес счетчика ошибки Выключение микрофона диспетчера
 			regcount++;                                                             // увеличить счетчик ошибок Выключение микрофона диспетчера
-			regBank.set(40209,regcount);                                            // адрес счетчика ошибки Выключение микрофона диспетчера
-			regBank.set(209,1);                                                     // установить флаг ошибки Выключение микрофона диспетчера
-			regBank.set(120,1);                                                     // установить общий флаг ошибки
-			regcount_err = regBank.get(adr_reg_count_err);                          // Получить данные счетчика всех ошибок
+			mb.Hreg(209,regcount);                                            // адрес счетчика ошибки Выключение микрофона диспетчера
+			mb.Coil(209,1);                                                     // установить флаг ошибки Выключение микрофона диспетчера
+			mb.Coil(120,1);                                                     // установить общий флаг ошибки
+			regcount_err = mb.Hreg(adr_reg_count_err);                          // Получить данные счетчика всех ошибок
 			regcount_err++;                                                         // увеличить счетчик всех ошибок 
-			regBank.set(adr_reg_count_err,regcount_err);                            // Сохранить данные счетчика всех ошибок
+			mb.Hreg(adr_reg_count_err,regcount_err);                            // Сохранить данные счетчика всех ошибок
 			strcpy_P(buffer, (char*)pgm_read_word(&(string_table_err[9])));         // "Microphone headset dispatcher Sw.   XP1 12 HeS2e            OFF - ";  
 			myFile.print(buffer);                                                   // "Microphone headset dispatcher Sw.   XP1 12 HeS2e            OFF - ";  
 			strcpy_P(buffer, (char*)pgm_read_word(&(table_message[0])));            // "    Error! - "; 
@@ -2436,7 +2459,7 @@ void sensor_all_off()
 	mcp_Analog.digitalWrite(Front_led_Blue, HIGH); 
 	delay(100);
 
-	regBank.set(adr_control_command,0);                                             // Завершить программу    
+	mb.Hreg(adr_control_command,0);                                             // Завершить программу    
 	//delay(100);
 }
 void sensor_all_on()
@@ -2449,15 +2472,15 @@ void sensor_all_on()
 	myFile.println(buffer);                                                         // " ****** Test sensor ON start! ******";    
 	file_print_date();
 	myFile.println();
-	regBank.set(8,1);                                                               // Включить питание Камертон
+	mb.Coil(8,1);                                                               // Включить питание Камертон
 	UpdateRegs(); 
 	delay(500);
-	regBank.set(5,1);                                                               // Микрофон инструктора включить
-	regBank.set(10,1);                                                              // Микрофон диспетчера включить
-	regBank.set(13,1);                                                              // XP8 - 2   sensor Тангента ножная
-	regBank.set(16,1);                                                              // XS1 - 6   sensor подключения микрофона
-	regBank.set(19,1);                                                              // J8-11     XP7 2 sensor тангента ручная
-	regBank.set(25,0);                                                              // XP1- 19 HaSs      sensor подключения трубки                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     
+	mb.Coil(5,1);                                                               // Микрофон инструктора включить
+	mb.Coil(10,1);                                                              // Микрофон диспетчера включить
+	mb.Coil(13,1);                                                              // XP8 - 2   sensor Тангента ножная
+	mb.Coil(16,1);                                                              // XS1 - 6   sensor подключения микрофона
+	mb.Coil(19,1);                                                              // J8-11     XP7 2 sensor тангента ручная
+	mb.Coil(25,0);                                                              // XP1- 19 HaSs      sensor подключения трубки                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     
 	//regBank.set(27,1);                                                              // XP1- 16 HeS2Rs    sensor подключения гарнитуры инструктора с 2 наушниками
 	//regBank.set(29,1);                                                              // XP1- 13 HeS2Ls    sensor подключения гарнитуры инструктора 
 	//regBank.set(31,1);                                                              // XP1- 5  HeS1Rs    sensor подкючения гарнитуры диспетчера с 2 наушниками
@@ -2466,9 +2489,9 @@ void sensor_all_on()
 	UpdateRegs(); 
 	delay(500);
 
-	byte i50 = regBank.get(40004);    
-	byte i52 = regBank.get(40006);     
-	byte i53 = regBank.get(40007);    
+	byte i50 = mb.Hreg(4);    
+	byte i52 = mb.Hreg(6);     
+	byte i53 = mb.Hreg(7);    
 
 	 //Serial.print(regs_in[0],HEX);
 	 //Serial.print("--");
@@ -2485,11 +2508,11 @@ void sensor_all_on()
 
 		if(bitRead(i50,2) == 0)                                                     // XP1- 19 HaSs sensor контроля подключения трубки    "Sensor MTT                          XP1- 19 HaSs            ON  - ";
 		  {
-			regcount = regBank.get(40210);                                          // адрес счетчика ошибки                              "Sensor MTT                          XP1- 19 HaSs            ON  - ";
+			regcount = mb.Hreg(210);                                          // адрес счетчика ошибки                              "Sensor MTT                          XP1- 19 HaSs            ON  - ";
 			regcount++;                                                             // увеличить счетчик ошибок sensor отключения трубки  "Sensor MTT                          XP1- 19 HaSs            ON  - ";
-			regBank.set(40210,regcount);                                            // адрес счетчика ошибки                              "Sensor MTT                          XP1- 19 HaSs            ON  - ";  
-			regBank.set(210,1);                                                     // установить флаг ошибки                             "Sensor MTT                          XP1- 19 HaSs            ON  - ";
-			regBank.set(120,1);                                                     // установить общий флаг ошибки
+			mb.Hreg(210,regcount);                                            // адрес счетчика ошибки                              "Sensor MTT                          XP1- 19 HaSs            ON  - ";  
+			mb.Coil(210,1);                                                     // установить флаг ошибки                             "Sensor MTT                          XP1- 19 HaSs            ON  - ";
+			mb.Coil(120,1);                                                     // установить общий флаг ошибки
 			strcpy_P(buffer, (char*)pgm_read_word(&(string_table_err[10])));        // "Sensor MTT                      XP1- 19 HaSs   ON                - ";  
 			myFile.print(buffer);                                                   // "Sensor MTT                      XP1- 19 HaSs   ON                - ";  
 			strcpy_P(buffer, (char*)pgm_read_word(&(table_message[0])));            // "    Error! - "; 
@@ -2509,11 +2532,11 @@ void sensor_all_on()
 	
 		if(bitRead(i50,3) == 0)                                                     // J8-11  тангента ручная                           "Sensor tangenta ruchnaja            XP7 - 2                 ON  - ";
 		  {
-			regcount = regBank.get(40211);                                          // адрес счетчика ошибки sensor тангента ручная     "Sensor tangenta ruchnaja            XP7 - 2                 ON  - ";
+			regcount = mb.Hreg(211);                                          // адрес счетчика ошибки sensor тангента ручная     "Sensor tangenta ruchnaja            XP7 - 2                 ON  - ";
 			regcount++;                                                             // увеличить счетчик ошибок sensor тангента ручная  "Sensor tangenta ruchnaja            XP7 - 2                 ON  - ";
-			regBank.set(40211,regcount);                                            // адрес счетчика ошибки sensor тангента ручная     "Sensor tangenta ruchnaja            XP7 - 2                 ON  - ";
-			regBank.set(211,1);                                                     // установить флаг ошибки sensor тангента ручная    "Sensor tangenta ruchnaja            XP7 - 2                 ON  - ";
-			regBank.set(120,1);                                                     // установить общий флаг ошибки
+			mb.Hreg(211,regcount);                                            // адрес счетчика ошибки sensor тангента ручная     "Sensor tangenta ruchnaja            XP7 - 2                 ON  - ";
+			mb.Coil(211,1);                                                     // установить флаг ошибки sensor тангента ручная    "Sensor tangenta ruchnaja            XP7 - 2                 ON  - ";
+			mb.Coil(120,1);                                                     // установить общий флаг ошибки
 			strcpy_P(buffer, (char*)pgm_read_word(&(string_table_err[11])));        // "Sensor tangenta ruchnaja            XP7 - 2                 ON  - ";
 			myFile.print(buffer);                                                   // "Sensor tangenta ruchnaja            XP7 - 2                 ON  - "; 
 			strcpy_P(buffer, (char*)pgm_read_word(&(table_message[0])));            // "    Error! - "; 
@@ -2533,11 +2556,11 @@ void sensor_all_on()
 
 		if(bitRead(i50,4) == 0)                                                     // XP8 - 2   sensor Тангента ножная                  "Sensor tangenta nognaja             XP8 - 2                 ON  - "; 
 		  {
-			regcount = regBank.get(40212);                                          // адрес счетчика ошибки sensor Тангента ножная      "Sensor tangenta nognaja             XP8 - 2                 ON  - "; 
+			regcount = mb.Hreg(212);                                          // адрес счетчика ошибки sensor Тангента ножная      "Sensor tangenta nognaja             XP8 - 2                 ON  - "; 
 			regcount++;                                                             // увеличить счетчик ошибок  sensor Тангента ножная  "Sensor tangenta nognaja             XP8 - 2                 ON  - "; 
-			regBank.set(40212,regcount);                                            // адрес счетчика ошибки  sensor Тангента ножная     "Sensor tangenta nognaja             XP8 - 2                 ON  - "; 
-			regBank.set(212,1);                                                     // установить флаг ошибки sensor Тангента ножная     "Sensor tangenta nognaja             XP8 - 2                 ON  - "; 
-			regBank.set(120,1);                                                     // установить общий флаг ошибки
+			mb.Hreg(212,regcount);                                            // адрес счетчика ошибки  sensor Тангента ножная     "Sensor tangenta nognaja             XP8 - 2                 ON  - "; 
+			mb.Coil(212,1);                                                     // установить флаг ошибки sensor Тангента ножная     "Sensor tangenta nognaja             XP8 - 2                 ON  - "; 
+			mb.Coil(120,1);                                                     // установить общий флаг ошибки
 			strcpy_P(buffer, (char*)pgm_read_word(&(string_table_err[12])));        // "Sensor tangenta nognaja             XP8 - 2                 ON  - ";   
 			myFile.print(buffer);                                                   // "Sensor tangenta nognaja             XP8 - 2                 ON  - ";   
 			strcpy_P(buffer, (char*)pgm_read_word(&(table_message[0])));            // "    Error! - "; 
@@ -2723,11 +2746,11 @@ void sensor_all_on()
 */
 		if(bitRead(i52,5) == 0)                                                     // XS1 - 6   sensor включения микрофона
 		  {
-			regcount = regBank.get(40217);                                          // адрес счетчика ошибки sensor подключения микрофона
+			regcount = mb.Hreg(217);                                          // адрес счетчика ошибки sensor подключения микрофона
 			regcount++;                                                             // увеличить счетчик ошибок sensor подключения микрофона
-			regBank.set(40217,regcount);                                            // адрес счетчика ошибки sensor подключения микрофона
-			regBank.set(217,1);                                                     // установить флаг ошибки sensor подключения микрофона
-			regBank.set(120,1);                                                     // установить общий флаг ошибки
+			mb.Hreg(217,regcount);                                            // адрес счетчика ошибки sensor подключения микрофона
+			mb.Coil(217,1);                                                     // установить флаг ошибки sensor подключения микрофона
+			mb.Coil(120,1);                                                     // установить общий флаг ошибки
 			strcpy_P(buffer, (char*)pgm_read_word(&(string_table_err[17])));        // "Sensor microphone                   XS1 - 6                 ON  - "; 
 			myFile.print(buffer);                                                   // "Sensor microphone                   XS1 - 6                 ON  - "; 
 			strcpy_P(buffer, (char*)pgm_read_word(&(table_message[0])));            // "    Error! - "; 
@@ -2747,11 +2770,11 @@ void sensor_all_on()
 
 		if(bitRead(i53,4) == 0)                                                     // Реле RL4 XP1 12  HeS2e   Включение микрофона инструктора
 		  {
-			regcount = regBank.get(40218);                                          // адрес счетчика ошибки Включение микрофона инструктора
+			regcount = mb.Hreg(218);                                          // адрес счетчика ошибки Включение микрофона инструктора
 			regcount++;                                                             // увеличить счетчик ошибок Включение микрофона инструктора
-			regBank.set(40218,regcount);                                            // адрес счетчика ошибки Включение микрофона инструктора
-			regBank.set(218,1);                                                     // установить флаг ошибки Включение микрофона инструктора
-			regBank.set(120,1);                                                     // установить общий флаг ошибки
+			mb.Hreg(218,regcount);                                            // адрес счетчика ошибки Включение микрофона инструктора
+			mb.Coil(218,1);                                                     // установить флаг ошибки Включение микрофона инструктора
+			mb.Coil(120,1);                                                     // установить общий флаг ошибки
 			strcpy_P(buffer, (char*)pgm_read_word(&(string_table_err[18])));        // "Microphone headset instructor Sw.   XP1 12 HeS2e            ON  - "; 
 			myFile.print(buffer);                                                   // "Microphone headset instructor Sw.   XP1 12 HeS2e            ON  - "; 
 			strcpy_P(buffer, (char*)pgm_read_word(&(table_message[0])));            // "    Error! - "; 
@@ -2771,11 +2794,11 @@ void sensor_all_on()
 
 		if(bitRead(i53,6) == 0)                                                     // Реле RL9 XP1 10 Выключение микрофона диспетчера
 		  {
-			regcount = regBank.get(40219);                                          // адрес счетчика ошибки Включение микрофона диспетчера
+			regcount = mb.Hreg(219);                                          // адрес счетчика ошибки Включение микрофона диспетчера
 			regcount++;                                                             // увеличить счетчик ошибок Включение микрофона диспетчера
-			regBank.set(40219,regcount);                                            // адрес счетчика ошибки Включение микрофона диспетчера
-			regBank.set(219,1);                                                     // установить флаг ошибки Включение микрофона диспетчера
-			regBank.set(120,1);                                                     // установить общий флаг ошибки
+			mb.Hreg(219,regcount);                                            // адрес счетчика ошибки Включение микрофона диспетчера
+			mb.Coil(219,1);                                                     // установить флаг ошибки Включение микрофона диспетчера
+			mb.Coil(120,1);                                                     // установить общий флаг ошибки
 			strcpy_P(buffer, (char*)pgm_read_word(&(string_table_err[19])));        // "Microphone headset dispatcher Sw.   XP1 12 HeS2e            ON  - ";  
 			myFile.print(buffer);                                                   // "Microphone headset dispatcher Sw.   XP1 12 HeS2e            ON  - ";  
 			strcpy_P(buffer, (char*)pgm_read_word(&(table_message[0])));            // "    Error! - "; 
@@ -2795,8 +2818,8 @@ void sensor_all_on()
 
 
 
-	regBank.set(5,0);                                                               // Микрофон инструктора отключить
-	regBank.set(10,0);                                                              // Микрофон диспетчера отключить
+	mb.Coil(5,0);                                                               // Микрофон инструктора отключить
+	mb.Coil(10,0);                                                              // Микрофон диспетчера отключить
 
 
 
@@ -3442,16 +3465,16 @@ if(test_sens == false)
 	mcp_Analog.digitalWrite(Front_led_Blue, HIGH); 
 	delay(500);
 	UpdateRegs(); 
-	regBank.set(adr_control_command,0);                                             // Завершить программу    
+	mb.Hreg(adr_control_command,0);                                             // Завершить программу    
 	//delay(100);
 }
 
 void set_rezistor()
 {
-	int mwt = regBank.get(40060);             // Адрес хранения величины сигнала
+	int mwt = mb.Hreg(60);             // Адрес хранения величины сигнала
 	resistor(1, mwt);
 	resistor(2, mwt);
-	regBank.set(adr_control_command,0);
+	mb.Hreg(adr_control_command,0);
 }
 
 void test_headset_instructor()
@@ -3470,46 +3493,46 @@ void test_headset_instructor()
 	// ++++++++++++++++++++++++++++++++++ Подать сигнал на вход микрофона ++++++++++++++++++++++++++++++++++++++++++++++++++++
 	resistor(1, i2c_eeprom_read_byte(deviceaddress,adr_porog_instruktor + 0));                                                                // Установить уровень сигнала 30 мв
 	resistor(2, i2c_eeprom_read_byte(deviceaddress,adr_porog_instruktor + 1));                                                                // Установить уровень сигнала 30 мв
-	regBank.set(2,1);                                                               // Подать сигнал на вход микрофона инструктора  Mic2p
+	mb.Coil(2,1);                                                               // Подать сигнал на вход микрофона инструктора  Mic2p
 	UpdateRegs();                                                                   // Выполнить команду
 	delay(500);
-	wdt_reset();
+
 	strcpy_P(buffer, (char*)pgm_read_word(&(table_message[4])));                    // "Signal headset instructor microphone 30mv     ON"            ;   
 	if (test_repeat == false)  myFile.println(buffer);                              // "Signal headset instructor microphone 30mv     ON"            ;   
 	//++++++++++++++++++++++++++++++++++ Проверить отсутствие сигнала на линиях FrontL FrontR +++++++++++++++++++++++++++++++++
-	measure_vol_min(analog_FrontL,   40230,230,i2c_eeprom_read_byte(deviceaddress,adr_porog_instruktor + 2));                                 // Измерить уровень сигнала на выходе FrontL    "Test headset instructor ** Signal FrontL                    OFF - ";
-	measure_vol_min(analog_FrontR,   40231,231,i2c_eeprom_read_byte(deviceaddress,adr_porog_instruktor + 3));                                 // Измерить уровень сигнала на выходе FrontR    "Test headset instructor ** Signal FrontR                    OFF - ";
+	measure_vol_min(analog_FrontL,   230,230,i2c_eeprom_read_byte(deviceaddress,adr_porog_instruktor + 2));                                 // Измерить уровень сигнала на выходе FrontL    "Test headset instructor ** Signal FrontL                    OFF - ";
+	measure_vol_min(analog_FrontR,   231,231,i2c_eeprom_read_byte(deviceaddress,adr_porog_instruktor + 3));                                 // Измерить уровень сигнала на выходе FrontR    "Test headset instructor ** Signal FrontR                    OFF - ";
 	//++++++++++++++++++++++++++++++++++ Проверить отсутствие сигнала на "Маг"  линиях Radio, Phane +++++++++++++++++++++++++++
-	measure_vol_min(analog_LineL,    40232,232,i2c_eeprom_read_byte(deviceaddress,adr_porog_instruktor + 4));                                 // Измерить уровень сигнала на выходе LineL     "Test headset instructor ** Signal LineL                     OFF - ";
-	measure_vol_min(analog_LineR,    40233,233,i2c_eeprom_read_byte(deviceaddress,adr_porog_instruktor + 5));                                 // Измерить уровень сигнала на выходе LineR     "Test headset instructor ** Signal LineR                     OFF - ";
-	measure_vol_min(analog_mag_radio,40234,234,i2c_eeprom_read_byte(deviceaddress,adr_porog_instruktor + 6));                                 // Измерить уровень сигнала на выходе mag radio "Test headset instructor ** Signal mag radio                 OFF - "; 
-	measure_vol_min(analog_mag_phone,40235,235,i2c_eeprom_read_byte(deviceaddress,adr_porog_instruktor + 7));                                 // Измерить уровень сигнала на выходе mag phone "Test headset instructor ** Signal mag phone                 OFF - ";
+	measure_vol_min(analog_LineL,    232,232,i2c_eeprom_read_byte(deviceaddress,adr_porog_instruktor + 4));                                 // Измерить уровень сигнала на выходе LineL     "Test headset instructor ** Signal LineL                     OFF - ";
+	measure_vol_min(analog_LineR,    233,233,i2c_eeprom_read_byte(deviceaddress,adr_porog_instruktor + 5));                                 // Измерить уровень сигнала на выходе LineR     "Test headset instructor ** Signal LineR                     OFF - ";
+	measure_vol_min(analog_mag_radio,234,234,i2c_eeprom_read_byte(deviceaddress,adr_porog_instruktor + 6));                                 // Измерить уровень сигнала на выходе mag radio "Test headset instructor ** Signal mag radio                 OFF - "; 
+	measure_vol_min(analog_mag_phone,235,235,i2c_eeprom_read_byte(deviceaddress,adr_porog_instruktor + 7));                                 // Измерить уровень сигнала на выходе mag phone "Test headset instructor ** Signal mag phone                 OFF - ";
 	//++++++++++++++++++++++++++++++++++ Проверить отсутствие сигнала на линиях ГГС +++++++++++++++++++++++++++++++++++++++++++
-	measure_vol_min(analog_ggs,      40236,236,i2c_eeprom_read_byte(deviceaddress,adr_porog_instruktor + 8));                                 // Измерить уровень сигнала на выходе GGS       "Test headset instructor ** Signal GGS                       OFF - ";
-	measure_vol_min(analog_gg_radio1,40237,237,i2c_eeprom_read_byte(deviceaddress,adr_porog_instruktor + 9));                                 // Измерить уровень сигнала на выходе GG Radio1 "Test headset instructor ** Signal GG Radio1                 OFF - ";
-	measure_vol_min(analog_gg_radio2,40238,238,i2c_eeprom_read_byte(deviceaddress,adr_porog_instruktor + 10));                                // Измерить уровень сигнала на выходе GG Radio2 "Test headset instructor ** Signal GG Radio2                 OFF - ";
+	measure_vol_min(analog_ggs,      236,236,i2c_eeprom_read_byte(deviceaddress,adr_porog_instruktor + 8));                                 // Измерить уровень сигнала на выходе GGS       "Test headset instructor ** Signal GGS                       OFF - ";
+	measure_vol_min(analog_gg_radio1,237,237,i2c_eeprom_read_byte(deviceaddress,adr_porog_instruktor + 9));                                 // Измерить уровень сигнала на выходе GG Radio1 "Test headset instructor ** Signal GG Radio1                 OFF - ";
+	measure_vol_min(analog_gg_radio2,238,238,i2c_eeprom_read_byte(deviceaddress,adr_porog_instruktor + 10));                                // Измерить уровень сигнала на выходе GG Radio2 "Test headset instructor ** Signal GG Radio2                 OFF - ";
 
 	//++++++++++++++++++++++++++++++++++++++++ Включить микрофон инструктора ++++++++++++++++++++++++++++++++++++++++++++++++++
 												   //
-	regBank.set(5,1);                                                               // Подать управляющую команду на вывод 12 ХР1 HeS2e (Включить микрофон)
-	regBank.set(28,1);                                                              // XP1- 15 HeS2PTT Включить PTT инструктора
-	regBank.set(16,0);                                                              // Сенсор микрофона отключить
-	regBank.set(15,0);                                                              // РТТ микрофона отключить
-	regBank.set(29,1);                                                              // ВКЛ XP1- 13 HeS2Ls Кнопка  ВКЛ флаг подключения гарнитуры инструктора 
+	mb.Coil(5,1);                                                               // Подать управляющую команду на вывод 12 ХР1 HeS2e (Включить микрофон)
+	mb.Coil(28,1);                                                              // XP1- 15 HeS2PTT Включить PTT инструктора
+	mb.Coil(16,0);                                                              // Сенсор микрофона отключить
+	mb.Coil(15,0);                                                              // РТТ микрофона отключить
+	mb.Coil(29,1);                                                              // ВКЛ XP1- 13 HeS2Ls Кнопка  ВКЛ флаг подключения гарнитуры инструктора 
 	UpdateRegs();                                                                   // 
 	delay(500); 
 	wdt_reset();    //
-	byte i53 = regBank.get(40007);                                                  // Получить текущее состояние Камертона
+	byte i53 = mb.Hreg(7);                                                  // Получить текущее состояние Камертона
 		if(bitRead(i53,4) == 0)                                                     // Реле RL4 XP1 12  HeS2e   Включение микрофона инструктора
 		  {
-			regcount = regBank.get(40218);                                          // адрес счетчика ошибки Включение микрофона инструктора
+			regcount = mb.Hreg(218);                                          // адрес счетчика ошибки Включение микрофона инструктора
 			regcount++;                                                             // увеличить счетчик ошибок Включение микрофона инструктора
-			regBank.set(40218,regcount);                                            // адрес счетчика ошибки Включение микрофона инструктора
-			regBank.set(218,1);                                                     // установить флаг ошибки Включение микрофона инструктора
-			regBank.set(120,1);                                                     // установить общий флаг ошибки
-			regcount_err = regBank.get(adr_reg_count_err);                          // Получить данные счетчика всех ошибок
+			mb.Hreg(218,regcount);                                            // адрес счетчика ошибки Включение микрофона инструктора
+			mb.Coil(218,1);                                                     // установить флаг ошибки Включение микрофона инструктора
+			mb.Coil(120,1);                                                     // установить общий флаг ошибки
+			regcount_err = mb.Hreg(adr_reg_count_err);                          // Получить данные счетчика всех ошибок
 			regcount_err++;                                                         // увеличить счетчик всех ошибок 
-			regBank.set(adr_reg_count_err,regcount_err);                            // Сохранить данные счетчика всех ошибок
+			mb.Hreg(adr_reg_count_err,regcount_err);                            // Сохранить данные счетчика всех ошибок
 			strcpy_P(buffer, (char*)pgm_read_word(&(string_table_err[18])));        // "Microphone headset instructor Sw.   XP1 12 HeS2e            ON  - "; 
 			myFile.print(buffer);                                                   // "Microphone headset instructor Sw.   XP1 12 HeS2e            ON  - "; 
 			strcpy_P(buffer, (char*)pgm_read_word(&(table_message[0])));            // "    Error! - "; 
@@ -3529,31 +3552,31 @@ void test_headset_instructor()
 	strcpy_P(buffer, (char*)pgm_read_word(&(table_message[5])));                    // "Microphone headset instructor signal          ON"            ;  
 	if (test_repeat == false) myFile.println(buffer);                               // "Microphone headset instructor signal          ON"            ;    Звуковой сигнал подан на вход микрофона инструктора
 	delay(500);
-	wdt_reset();
+
 	//+++++++++++++++++++++++++++ Проверить наличие сигнала на линиях LineL  mag phone  ++++++++++++++++++++++++++++++++++
-	measure_vol_max(analog_LineL,    40224,224,i2c_eeprom_read_byte(deviceaddress,adr_porog_instruktor + 11));                                // Измерить уровень сигнала на выходе LineL      "Test headset instructor ** Signal LineL                     ON  - ";
-	measure_vol_max(analog_mag_phone,40226,226,i2c_eeprom_read_byte(deviceaddress,adr_porog_instruktor + 12));                                // Измерить уровень сигнала на выходе mag phone  "Test headset instructor ** Signal Mag phone                 ON  - ";
+	measure_vol_max(analog_LineL,    224,224,i2c_eeprom_read_byte(deviceaddress,adr_porog_instruktor + 11));                                // Измерить уровень сигнала на выходе LineL      "Test headset instructor ** Signal LineL                     ON  - ";
+	measure_vol_max(analog_mag_phone,226,226,i2c_eeprom_read_byte(deviceaddress,adr_porog_instruktor + 12));                                // Измерить уровень сигнала на выходе mag phone  "Test headset instructor ** Signal Mag phone                 ON  - ";
 
    //++++++++++++++++++++++++++++++++++ Проверить отсутствие сигнала на линиях +++++++++++++++++++++++++++++++++++++++++++
-	measure_vol_min(analog_FrontL,   40230,230,i2c_eeprom_read_byte(deviceaddress,adr_porog_instruktor + 2));                                 // Измерить уровень сигнала на выходе FrontL    "Test headset instructor ** Signal FrontL                    OFF - ";
-	measure_vol_min(analog_FrontR,   40231,231,i2c_eeprom_read_byte(deviceaddress,adr_porog_instruktor + 3));                                 // Измерить уровень сигнала на выходе FrontR    "Test headset instructor ** Signal FrontR                    OFF - ";
-	measure_vol_min(analog_LineR,    40233,233,i2c_eeprom_read_byte(deviceaddress,adr_porog_instruktor + 4));                                 // Измерить уровень сигнала на выходе LineR     "Test headset instructor ** Signal LineR                     OFF - ";
+	measure_vol_min(analog_FrontL,   230,230,i2c_eeprom_read_byte(deviceaddress,adr_porog_instruktor + 2));                                 // Измерить уровень сигнала на выходе FrontL    "Test headset instructor ** Signal FrontL                    OFF - ";
+	measure_vol_min(analog_FrontR,   231,231,i2c_eeprom_read_byte(deviceaddress,adr_porog_instruktor + 3));                                 // Измерить уровень сигнала на выходе FrontR    "Test headset instructor ** Signal FrontR                    OFF - ";
+	measure_vol_min(analog_LineR,    233,233,i2c_eeprom_read_byte(deviceaddress,adr_porog_instruktor + 4));                                 // Измерить уровень сигнала на выходе LineR     "Test headset instructor ** Signal LineR                     OFF - ";
 	//++++++++++++++++++++++++++++++++++ Проверить отсутствие сигнала на линиях ГГС +++++++++++++++++++++++++++++++++++++++++++
-	measure_vol_min(analog_ggs,      40236,236,i2c_eeprom_read_byte(deviceaddress,adr_porog_instruktor + 5));                                 // Измерить уровень сигнала на выходе GGS       "Test headset instructor ** Signal GGS                       OFF - ";
-	measure_vol_min(analog_gg_radio1,40237,237,i2c_eeprom_read_byte(deviceaddress,adr_porog_instruktor + 6));                                 // Измерить уровень сигнала на выходе GG Radio1 "Test headset instructor ** Signal GG Radio1                 OFF - ";
-	measure_vol_min(analog_gg_radio2,40238,238,i2c_eeprom_read_byte(deviceaddress,adr_porog_instruktor + 7));                                 // Измерить уровень сигнала на выходе GG Radio2 "Test headset instructor ** Signal GG Radio2                 OFF - ";
-	wdt_reset();
-	regBank.set(29,0);                                                              // XP1- 13 HeS2Ls  Отключить сенсор инструктора
-	regBank.set(27,0);                                                              // XP1- 16 HeS2Rs  Отключить сенсор инструктора c 2  наушниками
-	regBank.set(16,0);                                                              // XP1- 16 HeS2Rs  Отключить сенсор инструктора c 2  наушниками
-	regBank.set(15,0);                                                              // РТТ микрофона отключить
-	regBank.set(5,0);                                                               // Подать управляющую команду на вывод 12 ХР1 HeS2e (Выключить микрофон инструктора)
-	regBank.set(28,0);                                                              // XP1- 15 HeS2Ls Отключить PTT инструктора
-	regBank.set(2,0);                                                               // Выключить сигнал на вход микрофона инструктора  Mic2p
+	measure_vol_min(analog_ggs,      236,236,i2c_eeprom_read_byte(deviceaddress,adr_porog_instruktor + 5));                                 // Измерить уровень сигнала на выходе GGS       "Test headset instructor ** Signal GGS                       OFF - ";
+	measure_vol_min(analog_gg_radio1,237,237,i2c_eeprom_read_byte(deviceaddress,adr_porog_instruktor + 6));                                 // Измерить уровень сигнала на выходе GG Radio1 "Test headset instructor ** Signal GG Radio1                 OFF - ";
+	measure_vol_min(analog_gg_radio2,238,238,i2c_eeprom_read_byte(deviceaddress,adr_porog_instruktor + 7));                                 // Измерить уровень сигнала на выходе GG Radio2 "Test headset instructor ** Signal GG Radio2                 OFF - ";
+
+	mb.Coil(29,0);                                                              // XP1- 13 HeS2Ls  Отключить сенсор инструктора
+	mb.Coil(27,0);                                                              // XP1- 16 HeS2Rs  Отключить сенсор инструктора c 2  наушниками
+	mb.Coil(16,0);                                                              // XP1- 16 HeS2Rs  Отключить сенсор инструктора c 2  наушниками
+	mb.Coil(15,0);                                                              // РТТ микрофона отключить
+	mb.Coil(5,0);                                                               // Подать управляющую команду на вывод 12 ХР1 HeS2e (Выключить микрофон инструктора)
+	mb.Coil(28,0);                                                              // XP1- 15 HeS2Ls Отключить PTT инструктора
+	mb.Coil(2,0);                                                               // Выключить сигнал на вход микрофона инструктора  Mic2p
 	UpdateRegs();     
 	mcp_Analog.digitalWrite(Front_led_Blue, HIGH); 
 	delay(100);
-	regBank.set(adr_control_command,0);                                             // Завершить программу    
+	mb.Hreg(adr_control_command,0);                                             // Завершить программу    
 	//delay(100);
 }
 void test_headset_dispatcher()
@@ -3571,47 +3594,46 @@ void test_headset_dispatcher()
 	// ++++++++++++++++++++++++++++++++++ Подать сигнал на вход микрофона ++++++++++++++++++++++++++++++++++++++++++++++++++++
 	resistor(1, i2c_eeprom_read_byte(deviceaddress,adr_porog_dispatcher + 0));                                                                // Установить уровень сигнала 30 мв
 	resistor(2, i2c_eeprom_read_byte(deviceaddress,adr_porog_dispatcher + 1));                                                                // Установить уровень сигнала 30 мв
-	regBank.set(1,1);                                                               // Подать сигнал на вход микрофона диспетчера Mic1p
+	mb.Coil(1,1);                                                               // Подать сигнал на вход микрофона диспетчера Mic1p
 	UpdateRegs();                                                                   // Выполнить команду
 	delay(1000);
-	wdt_reset();
 	strcpy_P(buffer, (char*)pgm_read_word(&(table_message[13])));                   // "Signal headset dispatcher microphone 30mv     ON"            ;    
 	if (test_repeat == false)  myFile.println(buffer);                              // "Signal headset dispatcher microphone 30mv     ON"            ;   
 	//++++++++++++++++++++++++++++++++++ Проверить отсутствие сигнала на линиях FrontL FrontR +++++++++++++++++++++++++++++++++
-	measure_vol_min(analog_FrontL,   40240,240,i2c_eeprom_read_byte(deviceaddress,adr_porog_dispatcher + 2));                                 // Измерить уровень сигнала на выходе FrontL    "Test headset dispatcher ** Signal FrontL                    OFF - ";
-	measure_vol_min(analog_FrontR,   40241,241,i2c_eeprom_read_byte(deviceaddress,adr_porog_dispatcher + 3));                                 // Измерить уровень сигнала на выходе FrontR    "Test headset dispatcher ** Signal FrontR                    OFF - ";
+	measure_vol_min(analog_FrontL,   240,240,i2c_eeprom_read_byte(deviceaddress,adr_porog_dispatcher + 2));                                 // Измерить уровень сигнала на выходе FrontL    "Test headset dispatcher ** Signal FrontL                    OFF - ";
+	measure_vol_min(analog_FrontR,   241,241,i2c_eeprom_read_byte(deviceaddress,adr_porog_dispatcher + 3));                                 // Измерить уровень сигнала на выходе FrontR    "Test headset dispatcher ** Signal FrontR                    OFF - ";
 	//++++++++++++++++++++++++++++++++++ Проверить отсутствие сигнала на "Маг"  линиях Radio, Phane +++++++++++++++++++++++++++
-	measure_vol_min(analog_LineL,    40242,242,i2c_eeprom_read_byte(deviceaddress,adr_porog_dispatcher + 4));                                 // Измерить уровень сигнала на выходе LineL     "Test headset dispatcher ** Signal LineL                     OFF - ";
-	measure_vol_min(analog_LineR,    40243,243,i2c_eeprom_read_byte(deviceaddress,adr_porog_dispatcher + 5));                                 // Измерить уровень сигнала на выходе LineR     "Test headset dispatcher ** Signal LineR                     OFF - ";
-	measure_vol_min(analog_mag_radio,40244,244,i2c_eeprom_read_byte(deviceaddress,adr_porog_dispatcher + 6));                                 // Измерить уровень сигнала на выходе mag radio "Test headset dispatcher ** Signal mag radio                 OFF - ";
-	measure_vol_min(analog_mag_phone,40245,245,i2c_eeprom_read_byte(deviceaddress,adr_porog_dispatcher + 7));                                 // Измерить уровень сигнала на выходе mag phone "Test headset dispatcher ** Signal mag phone                 OFF - ";
+	measure_vol_min(analog_LineL,    242,242,i2c_eeprom_read_byte(deviceaddress,adr_porog_dispatcher + 4));                                 // Измерить уровень сигнала на выходе LineL     "Test headset dispatcher ** Signal LineL                     OFF - ";
+	measure_vol_min(analog_LineR,    243,243,i2c_eeprom_read_byte(deviceaddress,adr_porog_dispatcher + 5));                                 // Измерить уровень сигнала на выходе LineR     "Test headset dispatcher ** Signal LineR                     OFF - ";
+	measure_vol_min(analog_mag_radio,244,244,i2c_eeprom_read_byte(deviceaddress,adr_porog_dispatcher + 6));                                 // Измерить уровень сигнала на выходе mag radio "Test headset dispatcher ** Signal mag radio                 OFF - ";
+	measure_vol_min(analog_mag_phone,245,245,i2c_eeprom_read_byte(deviceaddress,adr_porog_dispatcher + 7));                                 // Измерить уровень сигнала на выходе mag phone "Test headset dispatcher ** Signal mag phone                 OFF - ";
 	//++++++++++++++++++++++++++++++++++ Проверить отсутствие сигнала на линиях ГГС +++++++++++++++++++++++++++++++++++++++++++
-	measure_vol_min(analog_ggs,      40246,246,i2c_eeprom_read_byte(deviceaddress,adr_porog_dispatcher + 8));                                 // Измерить уровень сигнала на выходе GGS       "Test headset dispatcher ** Signal GGS                       OFF - ";
-	measure_vol_min(analog_gg_radio1,40247,247,i2c_eeprom_read_byte(deviceaddress,adr_porog_dispatcher + 9));                                 // Измерить уровень сигнала на выходе GG Radio1 "Test headset dispatcher ** Signal GG Radio1                 OFF - ";
-	measure_vol_min(analog_gg_radio2,40248,248,i2c_eeprom_read_byte(deviceaddress,adr_porog_dispatcher + 10));                                 // Измерить уровень сигнала на выходе GG Radio2 "Test headset dispatcher ** Signal GG Radio2                 OFF - ";
+	measure_vol_min(analog_ggs,      246,246,i2c_eeprom_read_byte(deviceaddress,adr_porog_dispatcher + 8));                                 // Измерить уровень сигнала на выходе GGS       "Test headset dispatcher ** Signal GGS                       OFF - ";
+	measure_vol_min(analog_gg_radio1,247,247,i2c_eeprom_read_byte(deviceaddress,adr_porog_dispatcher + 9));                                 // Измерить уровень сигнала на выходе GG Radio1 "Test headset dispatcher ** Signal GG Radio1                 OFF - ";
+	measure_vol_min(analog_gg_radio2,248,248,i2c_eeprom_read_byte(deviceaddress,adr_porog_dispatcher + 10));                                 // Измерить уровень сигнала на выходе GG Radio2 "Test headset dispatcher ** Signal GG Radio2                 OFF - ";
 	//++++++++++++++++++++++++++++++++++++++++ Включить микрофон инструктора ++++++++++++++++++++++++++++++++++++++++++++++++++
 //	myFile.println("");                                                             //
-	regBank.set(10,1);                                                              // Подать управляющую команду на вывод XP1 10 Включение микрофона диспетчера
-	regBank.set(30,1);                                                              // XP1- 6  HeS1PTT   Включить PTT диспетчера
-	regBank.set(16,0);                                                              // Сенсор микрофона отключить
-	regBank.set(15,0);                                                              // РТТ микрофона отключить
-	regBank.set(31,1);                                                              // XP1- 5  HeS1Rs    sensor подкючения гарнитуры диспетчера с 2 наушниками
-	regBank.set(32,1);                                                              // XP1- 1  HeS1Ls    sensor подкючения гарнитуры диспетчера
+	mb.Coil(10,1);                                                              // Подать управляющую команду на вывод XP1 10 Включение микрофона диспетчера
+	mb.Coil(30,1);                                                              // XP1- 6  HeS1PTT   Включить PTT диспетчера
+	mb.Coil(16,0);                                                              // Сенсор микрофона отключить
+	mb.Coil(15,0);                                                              // РТТ микрофона отключить
+	mb.Coil(31,1);                                                              // XP1- 5  HeS1Rs    sensor подкючения гарнитуры диспетчера с 2 наушниками
+	mb.Coil(32,1);                                                              // XP1- 1  HeS1Ls    sensor подкючения гарнитуры диспетчера
 
 	UpdateRegs();                                                                   // 
 	delay(500);                                                                     //
 
-	byte i53 = regBank.get(40007);     
+	byte i53 = mb.Hreg(7);     
 		if(bitRead(i53,6) == 0)                                                      // Проверка  включения микрофона диспетчера
 		  {
-			regcount = regBank.get(40182);                                          // адрес счетчика ошибки включения микрофона диспетчера          "Microphone headset dispatcher Sw.   XP1 10 HeS1e            ON  - "; 
+			regcount = mb.Hreg(182);                                          // адрес счетчика ошибки включения микрофона диспетчера          "Microphone headset dispatcher Sw.   XP1 10 HeS1e            ON  - "; 
 			regcount++;                                                             // увеличить счетчик ошибок включения микрофона диспетчера       "Microphone headset dispatcher Sw.   XP1 10 HeS1e            ON  - "; 
-			regBank.set(40182,regcount);                                            // адрес счетчика ошибки включения микрофона диспетчера
-			regBank.set(182,1);                                                     // установить флаг ошибки
-			regBank.set(120,1);                                                     // установить общий флаг ошибки
-			regcount_err = regBank.get(adr_reg_count_err);                          // Получить данные счетчика всех ошибок
+			mb.Hreg(182,regcount);                                            // адрес счетчика ошибки включения микрофона диспетчера
+			mb.Coil(182,1);                                                     // установить флаг ошибки
+			mb.Coil(120,1);                                                     // установить общий флаг ошибки
+			regcount_err = mb.Hreg(adr_reg_count_err);                          // Получить данные счетчика всех ошибок
 			regcount_err++;                                                         // увеличить счетчик всех ошибок 
-			regBank.set(adr_reg_count_err,regcount_err);                            // Сохранить данные счетчика всех ошибок
+			mb.Hreg(adr_reg_count_err,regcount_err);                            // Сохранить данные счетчика всех ошибок
 			resistor(1, 255);                                                       // Установить уровень сигнала в исходное состояниe
 			resistor(2, 255);                                                       // Установить уровень сигнала в исходное состояниe
 			strcpy_P(buffer, (char*)pgm_read_word(&(string_table_err[19])));        // "Microphone headset dispatcher Sw.   XP1 10 HeS1e            ON  - "; 
@@ -3633,30 +3655,30 @@ void test_headset_dispatcher()
 	strcpy_P(buffer, (char*)pgm_read_word(&(table_message[14])));                   // "Microphone headset dispatcher signal          ON" 
 	if (test_repeat == false) myFile.println(buffer);                               // "Microphone dispatcher signal ON"  Звуковой сигнал подан на вход микрофона диспетчера
 	delay(500);
-	wdt_reset();
+
 	//+++++++++++++++++++++++++++ Проверить наличие сигнала на линиях LineL  mag phone  ++++++++++++++++++++++++++++++++++
-	measure_vol_max(analog_LineL,    40227,227,i2c_eeprom_read_byte(deviceaddress,adr_porog_dispatcher + 11));                                // Измерить уровень сигнала на выходе LineL     "Test headset dispatcher ** Signal LineL                     ON  - ";
-	measure_vol_max(analog_mag_phone,40229,229,i2c_eeprom_read_byte(deviceaddress,adr_porog_dispatcher + 12));                                // Измерить уровень сигнала на выходе mag phone "Test headset dispatcher ** Signal Mag phone                 ON  - ";
+	measure_vol_max(analog_LineL,    227,227,i2c_eeprom_read_byte(deviceaddress,adr_porog_dispatcher + 11));                                // Измерить уровень сигнала на выходе LineL     "Test headset dispatcher ** Signal LineL                     ON  - ";
+	measure_vol_max(analog_mag_phone,229,229,i2c_eeprom_read_byte(deviceaddress,adr_porog_dispatcher + 12));                                // Измерить уровень сигнала на выходе mag phone "Test headset dispatcher ** Signal Mag phone                 ON  - ";
 
    //++++++++++++++++++++++++++++++++++ Проверить отсутствие сигнала на линиях +++++++++++++++++++++++++++++++++++++++++++
-	measure_vol_min(analog_FrontL,   40240,240,i2c_eeprom_read_byte(deviceaddress,adr_porog_dispatcher + 2));                                 // Измерить уровень сигнала на выходе FrontL    "Test headset dispatcher ** Signal FrontL                    OFF - ";
-	measure_vol_min(analog_FrontR,   40241,241,i2c_eeprom_read_byte(deviceaddress,adr_porog_dispatcher + 3));                                 // Измерить уровень сигнала на выходе FrontR    "Test headset dispatcher ** Signal FrontR                    OFF - ";
-	measure_vol_min(analog_LineR,    40243,243,i2c_eeprom_read_byte(deviceaddress,adr_porog_dispatcher + 4));                                 // Измерить уровень сигнала на выходе LineR     "Test headset dispatcher ** Signal LineR                     OFF - ";
-	measure_vol_min(analog_ggs,      40246,246,i2c_eeprom_read_byte(deviceaddress,adr_porog_dispatcher + 5));                                 // Измерить уровень сигнала на выходе GGS       "Test headset dispatcher ** Signal GGS                       OFF - ";
-	measure_vol_min(analog_gg_radio1,40247,247,i2c_eeprom_read_byte(deviceaddress,adr_porog_dispatcher + 6));                                 // Измерить уровень сигнала на выходе GG Radio1 "Test headset dispatcher ** Signal GG Radio1                 OFF - ";
-	measure_vol_min(analog_gg_radio2,40248,248,i2c_eeprom_read_byte(deviceaddress,adr_porog_dispatcher + 7));                                 // Измерить уровень сигнала на выходе GG Radio2 "Test headset dispatcher ** Signal GG Radio2                 OFF - ";
-	wdt_reset();
-	regBank.set(31,0);                                                              // XP1- 5  HeS1Rs   Отключить sensor подкючения гарнитуры диспетчера с 2 наушниками
-	regBank.set(32,0);                                                              // XP1- 1  HeS1Ls   Отключить  sensor подкючения гарнитуры диспетчера
-	regBank.set(15,0);                                                              // РТТ микрофона отключить
-	regBank.set(10,0);                                                              // Подать управляющую команду на вывод XP1 10  (Выключить микрофон диспетчера)
-	regBank.set(30,0);                                                              // XP1- 6  HeS1PTT   Отключить PTT диспетчера
-	regBank.set(28,0);                                                              // XP1- 15 HeS2PTT   CTS вкл PTT Инструктора
-	regBank.set(1,0);                                                               // Отключить сигнал на вход микрофона диспетчера Mic1p
+	measure_vol_min(analog_FrontL,   240,240,i2c_eeprom_read_byte(deviceaddress,adr_porog_dispatcher + 2));                                 // Измерить уровень сигнала на выходе FrontL    "Test headset dispatcher ** Signal FrontL                    OFF - ";
+	measure_vol_min(analog_FrontR,   241,241,i2c_eeprom_read_byte(deviceaddress,adr_porog_dispatcher + 3));                                 // Измерить уровень сигнала на выходе FrontR    "Test headset dispatcher ** Signal FrontR                    OFF - ";
+	measure_vol_min(analog_LineR,    243,243,i2c_eeprom_read_byte(deviceaddress,adr_porog_dispatcher + 4));                                 // Измерить уровень сигнала на выходе LineR     "Test headset dispatcher ** Signal LineR                     OFF - ";
+	measure_vol_min(analog_ggs,      246,246,i2c_eeprom_read_byte(deviceaddress,adr_porog_dispatcher + 5));                                 // Измерить уровень сигнала на выходе GGS       "Test headset dispatcher ** Signal GGS                       OFF - ";
+	measure_vol_min(analog_gg_radio1,247,247,i2c_eeprom_read_byte(deviceaddress,adr_porog_dispatcher + 6));                                 // Измерить уровень сигнала на выходе GG Radio1 "Test headset dispatcher ** Signal GG Radio1                 OFF - ";
+	measure_vol_min(analog_gg_radio2,248,248,i2c_eeprom_read_byte(deviceaddress,adr_porog_dispatcher + 7));                                 // Измерить уровень сигнала на выходе GG Radio2 "Test headset dispatcher ** Signal GG Radio2                 OFF - ";
+
+	mb.Coil(31,0);                                                              // XP1- 5  HeS1Rs   Отключить sensor подкючения гарнитуры диспетчера с 2 наушниками
+	mb.Coil(32,0);                                                              // XP1- 1  HeS1Ls   Отключить  sensor подкючения гарнитуры диспетчера
+	mb.Coil(15,0);                                                              // РТТ микрофона отключить
+	mb.Coil(10,0);                                                              // Подать управляющую команду на вывод XP1 10  (Выключить микрофон диспетчера)
+	mb.Coil(30,0);                                                              // XP1- 6  HeS1PTT   Отключить PTT диспетчера
+	mb.Coil(28,0);                                                              // XP1- 15 HeS2PTT   CTS вкл PTT Инструктора
+	mb.Coil(1,0);                                                               // Отключить сигнал на вход микрофона диспетчера Mic1p
 	UpdateRegs(); 
 	mcp_Analog.digitalWrite(Front_led_Blue, HIGH); 
 	delay(100);
-	regBank.set(adr_control_command,0);                                             // Завершить программу    
+	mb.Hreg(adr_control_command,0);                                             // Завершить программу    
 	//delay(100);
  }
 void test_MTT()
@@ -3671,68 +3693,66 @@ void test_MTT()
 	test_MTT_off();                                                                 // Отключить реле и сенсоры, прверить отключение
 	test_MTT_on();                                                                  // Включить необходимые сенсоры, проверить состояние
 //	myFile.println("");
-	regBank.set(25,0);                                                              //  XP1- 19 HaSs  sensor подключения трубки    MTT включить должно быть в "0"
+	mb.Coil(25,0);                                                              //  XP1- 19 HaSs  sensor подключения трубки    MTT включить должно быть в "0"
 	strcpy_P(buffer, (char*)pgm_read_word(&(table_message[30])));
 	if (test_repeat == false)  myFile.println(buffer);                              // "Command sensor ON MTT  send!         
-	regBank.set(18,0);                                                              // XP1 - 20  HangUp  DCD Трубку поднять DCD должно быть в "0"
+	mb.Coil(18,0);                                                              // XP1 - 20  HangUp  DCD Трубку поднять DCD должно быть в "0"
 	UpdateRegs();                                                                   // Выполнить команду
 	delay(1000);
-	wdt_reset();
+
 	strcpy_P(buffer, (char*)pgm_read_word(&(table_message[32])));
 	if (test_repeat == false)  myFile.println(buffer);                              // "Command  HangUp MTT OFF send!"
 	// ++++++++++++++++++++++++++++++++++ Проверить исправность канала динамиков на отсутствие наводок ++++++++++++++++++++++++
-	measure_vol_min(analog_FrontL,    40250,250,i2c_eeprom_read_byte(deviceaddress,adr_porog_MTT + 2));                                // Измерить уровень сигнала на выходе FrontL    "Test MTT ** Signal FrontL                                   OFF - ";
-	measure_vol_min(analog_FrontR,    40251,251,i2c_eeprom_read_byte(deviceaddress,adr_porog_MTT + 3));                                // Измерить уровень сигнала на выходе FrontR    "Test MTT ** Signal FrontR                                   OFF - ";
-	measure_vol_min(analog_LineL,     40252,252,i2c_eeprom_read_byte(deviceaddress,adr_porog_MTT + 4));                                // Измерить уровень сигнала на выходе LineL     "Test MTT ** Signal LineL                                    OFF - ";
-	measure_vol_min(analog_LineR,     40253,253,i2c_eeprom_read_byte(deviceaddress,adr_porog_MTT + 5));                                // Измерить уровень сигнала на выходе LineR     "Test MTT ** Signal LineR                                    OFF - ";
-	measure_vol_min(analog_mag_radio, 40254,254,i2c_eeprom_read_byte(deviceaddress,adr_porog_MTT + 6));                                // Измерить уровень сигнала на выходе mag radio "Test MTT ** Signal mag radio                                OFF - ";
-	measure_vol_min(analog_mag_phone, 40255,255,i2c_eeprom_read_byte(deviceaddress,adr_porog_MTT + 7));                                // Измерить уровень сигнала на выходе mag phone "Test MTT ** Signal mag phone                                OFF - ";
-	measure_vol_min(analog_ggs,       40256,256,i2c_eeprom_read_byte(deviceaddress,adr_porog_MTT + 8));                                // Измерить уровень сигнала на выходе GGS       "Test MTT ** Signal GGS                                      OFF - ";
-	measure_vol_min(analog_gg_radio1, 40257,257,i2c_eeprom_read_byte(deviceaddress,adr_porog_MTT + 9));                                // Измерить уровень сигнала на выходе GG Radio1 "Test MTT ** Signal GG Radio1                                OFF - ";
-	measure_vol_min(analog_gg_radio2, 40258,258,i2c_eeprom_read_byte(deviceaddress,adr_porog_MTT + 10));                                // Измерить уровень сигнала на выходе GG Radio2 "Test MTT ** Signal GG Radio2                                OFF - ";
+	measure_vol_min(analog_FrontL,    250,250,i2c_eeprom_read_byte(deviceaddress,adr_porog_MTT + 2));                                // Измерить уровень сигнала на выходе FrontL    "Test MTT ** Signal FrontL                                   OFF - ";
+	measure_vol_min(analog_FrontR,    251,251,i2c_eeprom_read_byte(deviceaddress,adr_porog_MTT + 3));                                // Измерить уровень сигнала на выходе FrontR    "Test MTT ** Signal FrontR                                   OFF - ";
+	measure_vol_min(analog_LineL,     252,252,i2c_eeprom_read_byte(deviceaddress,adr_porog_MTT + 4));                                // Измерить уровень сигнала на выходе LineL     "Test MTT ** Signal LineL                                    OFF - ";
+	measure_vol_min(analog_LineR,     253,253,i2c_eeprom_read_byte(deviceaddress,adr_porog_MTT + 5));                                // Измерить уровень сигнала на выходе LineR     "Test MTT ** Signal LineR                                    OFF - ";
+	measure_vol_min(analog_mag_radio, 254,254,i2c_eeprom_read_byte(deviceaddress,adr_porog_MTT + 6));                                // Измерить уровень сигнала на выходе mag radio "Test MTT ** Signal mag radio                                OFF - ";
+	measure_vol_min(analog_mag_phone, 255,255,i2c_eeprom_read_byte(deviceaddress,adr_porog_MTT + 7));                                // Измерить уровень сигнала на выходе mag phone "Test MTT ** Signal mag phone                                OFF - ";
+	measure_vol_min(analog_ggs,       256,256,i2c_eeprom_read_byte(deviceaddress,adr_porog_MTT + 8));                                // Измерить уровень сигнала на выходе GGS       "Test MTT ** Signal GGS                                      OFF - ";
+	measure_vol_min(analog_gg_radio1, 257,257,i2c_eeprom_read_byte(deviceaddress,adr_porog_MTT + 9));                                // Измерить уровень сигнала на выходе GG Radio1 "Test MTT ** Signal GG Radio1                                OFF - ";
+	measure_vol_min(analog_gg_radio2, 258,258,i2c_eeprom_read_byte(deviceaddress,adr_porog_MTT + 10));                                // Измерить уровень сигнала на выходе GG Radio2 "Test MTT ** Signal GG Radio2                                OFF - ";
 
 	// ++++++++++++++++++++++++++++++++++ Подать сигнал на вход микрофона MTT +++++++++++++++++++++++++++++++++++++++++++++++++
 	resistor(1,i2c_eeprom_read_byte(deviceaddress,adr_porog_MTT + 0));                                                               // Установить уровень сигнала 60 мв
 	resistor(2,i2c_eeprom_read_byte(deviceaddress,adr_porog_MTT + 1));                                                               // Установить уровень сигнала 60 мв
-	regBank.set(3,1);                                                               // Включить сигнал на вход микрофона трубки Mic3p
+	mb.Coil(3,1);                                                               // Включить сигнал на вход микрофона трубки Mic3p
 	UpdateRegs();                                                                   // Выполнить команду
 	delay(500);
-	wdt_reset();
 	strcpy_P(buffer, (char*)pgm_read_word(&(table_message[33])));                   // "Signal MTT microphone 30mv                    ON"            ;
 	if (test_repeat == false) myFile.println(buffer);                               // "Signal MTT microphone 30mv                    ON"            ;
 	//++++++++++++++++++++++++++++++++++ Проверить отсутствие сигнала на линиях  +++++++++++++++++++++++++++++++++
-	measure_vol_min(analog_FrontL,    40250,250,i2c_eeprom_read_byte(deviceaddress,adr_porog_MTT + 11));                                // Измерить уровень сигнала на выходе FrontL    "Test MTT ** Signal FrontL                                   OFF - ";
-	measure_vol_min(analog_FrontR,    40251,251,i2c_eeprom_read_byte(deviceaddress,adr_porog_MTT + 12));                                // Измерить уровень сигнала на выходе FrontR    "Test MTT ** Signal FrontR                                   OFF - ";
-	measure_vol_min(analog_mag_radio, 40254,254,i2c_eeprom_read_byte(deviceaddress,adr_porog_MTT + 13));                                // Измерить уровень сигнала на выходе mag radio   "Test MTT ** Signal mag radio                                OFF - ";
-	measure_vol_min(analog_ggs,       40256,256,i2c_eeprom_read_byte(deviceaddress,adr_porog_MTT + 14));                                // Измерить уровень сигнала на выходе GGS       "Test MTT ** Signal GGS                                      OFF - ";
-	measure_vol_min(analog_gg_radio1, 40257,257,i2c_eeprom_read_byte(deviceaddress,adr_porog_MTT + 15));                                // Измерить уровень сигнала на выходе GG Radio1 "Test MTT ** Signal GG Radio1                                OFF - ";
-	measure_vol_min(analog_gg_radio2, 40258,258,i2c_eeprom_read_byte(deviceaddress,adr_porog_MTT + 16));                                // Измерить уровень сигнала на выходе GG Radio2 "Test MTT ** Signal GG Radio2                                OFF - ";
+	measure_vol_min(analog_FrontL,    250,250,i2c_eeprom_read_byte(deviceaddress,adr_porog_MTT + 11));                                // Измерить уровень сигнала на выходе FrontL    "Test MTT ** Signal FrontL                                   OFF - ";
+	measure_vol_min(analog_FrontR,    251,251,i2c_eeprom_read_byte(deviceaddress,adr_porog_MTT + 12));                                // Измерить уровень сигнала на выходе FrontR    "Test MTT ** Signal FrontR                                   OFF - ";
+	measure_vol_min(analog_mag_radio, 254,254,i2c_eeprom_read_byte(deviceaddress,adr_porog_MTT + 13));                                // Измерить уровень сигнала на выходе mag radio   "Test MTT ** Signal mag radio                                OFF - ";
+	measure_vol_min(analog_ggs,       256,256,i2c_eeprom_read_byte(deviceaddress,adr_porog_MTT + 14));                                // Измерить уровень сигнала на выходе GGS       "Test MTT ** Signal GGS                                      OFF - ";
+	measure_vol_min(analog_gg_radio1, 257,257,i2c_eeprom_read_byte(deviceaddress,adr_porog_MTT + 15));                                // Измерить уровень сигнала на выходе GG Radio1 "Test MTT ** Signal GG Radio1                                OFF - ";
+	measure_vol_min(analog_gg_radio2, 258,258,i2c_eeprom_read_byte(deviceaddress,adr_porog_MTT + 16));                                // Измерить уровень сигнала на выходе GG Radio2 "Test MTT ** Signal GG Radio2                                OFF - ";
 	// ++++++++++++++++++++++++++++++++++ Проверить наличие сигнала  ++++++++++++++++++++++++++++++++++++
 	//measure_vol_max(analog_LineL,    40260,260,35);                                 // "Test MTT ** Signal LineL                                    ON  - ";  
-	measure_vol_max(analog_LineR,    40261,261,i2c_eeprom_read_byte(deviceaddress,adr_porog_MTT + 17));                                 // "Test MTT ** Signal LineR                                    ON  - ";  
-	measure_vol_max(analog_mag_phone,40262,262,i2c_eeprom_read_byte(deviceaddress,adr_porog_MTT + 18));                                 // Измерить уровень сигнала на выходе mag phone  "Test MTT ** Signal Mag phone                                ON  - ";
+	measure_vol_max(analog_LineR,     261,261,i2c_eeprom_read_byte(deviceaddress,adr_porog_MTT + 17));                                 // "Test MTT ** Signal LineR                                    ON  - ";  
+	measure_vol_max(analog_mag_phone, 262,262,i2c_eeprom_read_byte(deviceaddress,adr_porog_MTT + 18));                                 // Измерить уровень сигнала на выходе mag phone  "Test MTT ** Signal Mag phone                                ON  - ";
 	// +++++++++++++++++++++ Проверка реагирования вывода ГГС на сигнал HangUp  DCD ON +++++++++++++++++++++++++++++++++
-	regBank.set(3,0);                                                               // Отключить сигнал на вход микрофона трубки Mic3p
-	regBank.set(6,1);                                                               // Реле RL5. Подать звук Front L, Front R
+	mb.Coil(3,0);                                                               // Отключить сигнал на вход микрофона трубки Mic3p
+	mb.Coil(6,1);                                                               // Реле RL5. Подать звук Front L, Front R
 	UpdateRegs();                                                                   // Выполнить команду
 	delay(500);
-//	wdt_reset();
+
 	strcpy_P(buffer, (char*)pgm_read_word(&(table_message[35])));                   //   
 	if (test_repeat == false) myFile.println(buffer);                               // "Signal FrontL, FrontR  ON                             - "
-	measure_vol_min(analog_ggs,       40256,256,i2c_eeprom_read_byte(deviceaddress,adr_porog_MTT + 19));                    // Измерить уровень сигнала на выходе GGS       "Test MTT ** Signal GGS                                      OFF - ";
-	regBank.set(18,1);                                                              // XP1 - 20  HangUp  DCD ON
+	measure_vol_min(analog_ggs,       256,256,i2c_eeprom_read_byte(deviceaddress,adr_porog_MTT + 19));                    // Измерить уровень сигнала на выходе GGS       "Test MTT ** Signal GGS                                      OFF - ";
+	mb.Coil(18,1);                                                              // XP1 - 20  HangUp  DCD ON
 	UpdateRegs();                                                                   // Выполнить команду
 	delay(500);
-	wdt_reset();
 	strcpy_P(buffer, (char*)pgm_read_word(&(table_message[32])));                   // "Command HangUp ON  MTT                           send!"      ;
 	if (test_repeat == false) myFile.println(buffer);                               // "Command HangUp ON  MTT                           send!"      ;
-	measure_vol_max(analog_ggs,      40259,259,i2c_eeprom_read_byte(deviceaddress,adr_porog_MTT + 20));                                //  Измерить уровень сигнала на выходе GGS       "Test MTT ** Signal GGS             On      
-	regBank.set(18,0);                                                              // XP1 - 20  HangUp  DCD ON  Положить трубку
-	regBank.set(26,0);                                                              // XP1- 17 HaSPTT    CTS DSR вкл. Отключить PTT MTT
-	regBank.set(25,1);                                                              //  XP1- 19 HaSs  sensor подключения трубки    MTT отключить должно быть в "1"
-	regBank.set(6,0);                                                               // Реле RL5. Отключить звук Front L, Front R
+	measure_vol_max(analog_ggs,      259,259,i2c_eeprom_read_byte(deviceaddress,adr_porog_MTT + 20));                                //  Измерить уровень сигнала на выходе GGS       "Test MTT ** Signal GGS             On      
+	mb.Coil(18,0);                                                              // XP1 - 20  HangUp  DCD ON  Положить трубку
+	mb.Coil(26,0);                                                              // XP1- 17 HaSPTT    CTS DSR вкл. Отключить PTT MTT
+	mb.Coil(25,1);                                                              //  XP1- 19 HaSs  sensor подключения трубки    MTT отключить должно быть в "1"
+	mb.Coil(6,0);                                                               // Реле RL5. Отключить звук Front L, Front R
 	UpdateRegs();                                                                   // Выполнить команду
-	regBank.set(adr_control_command,0);                                             // Завершить программу    
+	mb.Hreg(adr_control_command,0);                                             // Завершить программу    
 	mcp_Analog.digitalWrite(Front_led_Blue, HIGH); 
 	delay(200);
 }
@@ -3745,9 +3765,9 @@ void test_tangR()
 	myFile.println(buffer);                              //
 	file_print_date();
 	myFile.println("");
-	regBank.set(17,0);                                                              // J8-12     XP7 4 PTT2 тангента ручная DSR
-	regBank.set(19,0);                                                              // J8-11     XP7 2 sensor тангента ручная
-	regBank.set(20,0);                                                              // J8-23     XP7 1 PTT1 тангента ручная CTS
+	mb.Coil(17,0);                                                              // J8-12     XP7 4 PTT2 тангента ручная DSR
+	mb.Coil(19,0);                                                              // J8-11     XP7 2 sensor тангента ручная
+	mb.Coil(20,0);                                                              // J8-23     XP7 1 PTT1 тангента ручная CTS
 	UpdateRegs();                                                                   // Выполнить команду
 	delay(400);
 	strcpy_P(buffer, (char*)pgm_read_word(&(table_message[37])));                   // "Command sensor OFF tangenta ruchnaja             send!"      ;
@@ -3764,8 +3784,8 @@ void test_tangR()
 			regcount = regBank.get(40274);                                          // адрес счетчика ошибки sensor тангента ручная     "Command sensor tangenta ruchnaja                            OFF - ";
 			regcount++;                                                             // увеличить счетчик ошибок sensor тангента ручная  "Command sensor tangenta ruchnaja                            OFF - ";
 			regBank.set(40274,regcount);                                            // адрес счетчика ошибки sensor тангента ручная     "Command sensor tangenta ruchnaja                            OFF - ";
-			regBank.set(274,1);                                                     // установить флаг ошибки sensor тангента ручная
-			regBank.set(120,1);                                                     // установить общий флаг ошибки
+			mb.Coil(274,1);                                                     // установить флаг ошибки sensor тангента ручная
+			mb.Coil(120,1);                                                     // установить общий флаг ошибки
 			regcount_err = regBank.get(adr_reg_count_err);                          // Получить данные счетчика всех ошибок
 			regcount_err++;                                                         // увеличить счетчик всех ошибок 
 			regBank.set(adr_reg_count_err,regcount_err);                            // Сохранить данные счетчика всех ошибок
@@ -3793,8 +3813,8 @@ void test_tangR()
 			regcount = regBank.get(40270);                                          // адрес счетчика ошибки                                  "Command PTT1 tangenta ruchnaja (CTS)                        OFF - ";
 			regcount++;                                                             // увеличить счетчик ошибок
 			regBank.set(40270,regcount);                                            // адрес счетчика ошибки 
-			regBank.set(270,1);                                                     // установить флаг ошибки
-			regBank.set(120,1);                                                     // установить общий флаг ошибки
+			mb.Coil(270,1);                                                     // установить флаг ошибки
+			mb.Coil(120,1);                                                     // установить общий флаг ошибки
 			regcount_err = regBank.get(adr_reg_count_err);                          // Получить данные счетчика всех ошибок
 			regcount_err++;                                                         // увеличить счетчик всех ошибок 
 			regBank.set(adr_reg_count_err,regcount_err);                            // Сохранить данные счетчика всех ошибок
@@ -3822,8 +3842,8 @@ void test_tangR()
 			regcount = regBank.get(40271);                                          // адрес счетчика ошибки  PTT  MTT (DSR)                "Command PTT2 tangenta ruchnaja (DCR)                        OFF - ";
 			regcount++;                                                             // увеличить счетчик ошибок
 			regBank.set(40271,regcount);                                            // адрес счетчика ошибки  PTT  MTT (DSR)                 "Command PTT2 tangenta ruchnaja (DCR)                        OFF - ";
-			regBank.set(271,1);                                                     // установить флаг ошибки
-			regBank.set(120,1);                                                     // установить общий флаг ошибки
+			mb.Coil(271,1);                                                     // установить флаг ошибки
+			mb.Coil(120,1);                                                     // установить общий флаг ошибки
 			regcount_err = regBank.get(adr_reg_count_err);                          // Получить данные счетчика всех ошибок
 			regcount_err++;                                                         // увеличить счетчик всех ошибок 
 			regBank.set(adr_reg_count_err,regcount_err);                            // Сохранить данные счетчика всех ошибок
@@ -3847,10 +3867,10 @@ void test_tangR()
 	regBank.set(19,1);                                                              // J8-11     XP7 2 sensor тангента ручная
 	strcpy_P(buffer, (char*)pgm_read_word(&(table_message[40])));                   // "Command sensor ON  tangenta ruchnaja             send!"      ;
 	if (test_repeat == false) myFile.println(buffer);                               // "Command sensor ON  tangenta ruchnaja             send!"      ;
-	regBank.set(17,1);                                                              // J8-12     XP7 4 PTT2 тангента ручная DSR
+	mb.Coil(17,1);                                                              // J8-12     XP7 4 PTT2 тангента ручная DSR
 	strcpy_P(buffer, (char*)pgm_read_word(&(table_message[41])));                   // "Command PTT1   ON  tangenta ruchnaja             send!"      ;
 	if (test_repeat == false) myFile.println(buffer);                               // "Command PTT1   ON  tangenta ruchnaja             send!"      ;
-	regBank.set(20,1);                                                              // J8-23     XP7 1 PTT1 тангента ручная CTS
+	mb.Coil(20,1);                                                              // J8-23     XP7 1 PTT1 тангента ручная CTS
 	strcpy_P(buffer, (char*)pgm_read_word(&(table_message[42])));                   // "Command PTT2   ON  tangenta ruchnaja             send!"      ;
 	if (test_repeat == false) myFile.println(buffer);                               //
 
@@ -3863,8 +3883,8 @@ void test_tangR()
 			regcount = regBank.get(40275);                                          // адрес счетчика ошибки sensor тангента ручная       "Command sensor tangenta ruchnaja                            ON  - ";
 			regcount++;                                                             // увеличить счетчик ошибок sensor тангента ручная    "Command sensor tangenta ruchnaja                            ON  - ";
 			regBank.set(40275,regcount);                                            // адрес счетчика ошибки sensor тангента ручная
-			regBank.set(275,1);                                                     // установить флаг ошибки sensor тангента ручная
-			regBank.set(120,1);                                                     // установить общий флаг ошибки
+			mb.Coil(275,1);                                                     // установить флаг ошибки sensor тангента ручная
+			mb.Coil(120,1);                                                     // установить общий флаг ошибки
 			regcount_err = regBank.get(adr_reg_count_err);                          // Получить данные счетчика всех ошибок
 			regcount_err++;                                                         // увеличить счетчик всех ошибок 
 			regBank.set(adr_reg_count_err,regcount_err);                            // Сохранить данные счетчика всех ошибок
@@ -3891,8 +3911,8 @@ void test_tangR()
 			regcount = regBank.get(40272);                                          // адрес счетчика ошибки PTT  MTT (CTS)                      "Command PTT1 tangenta ruchnaja (CTS)                        ON  - ";
 			regcount++;                                                             // увеличить счетчик ошибок
 			regBank.set(40272,regcount);                                            // адрес счетчика ошибки PTT  MTT (CTS)
-			regBank.set(272,1);                                                     // установить флаг ошибки
-			regBank.set(120,1);                                                     // установить общий флаг ошибки
+			mb.Coil(272,1);                                                     // установить флаг ошибки
+			mb.Coil(120,1);                                                     // установить общий флаг ошибки
 			regcount_err = regBank.get(adr_reg_count_err);                          // Получить данные счетчика всех ошибок
 			regcount_err++;                                                         // увеличить счетчик всех ошибок 
 			regBank.set(adr_reg_count_err,regcount_err);                            // Сохранить данные счетчика всех ошибок
@@ -3920,8 +3940,8 @@ void test_tangR()
 			regcount = regBank.get(40273);                                          // адрес счетчика ошибки  PTT  MTT (DSR)                   "Command PTT2 tangenta ruchnaja (DCR)                        ON  - "; 
 			regcount++;                                                             // увеличить счетчик ошибок
 			regBank.set(40273,regcount);                                            // адрес счетчика ошибки  PTT  MTT (DSR)                    "Command PTT2 tangenta ruchnaja (DCR)                        ON  - ";
-			regBank.set(273,1);                                                     // установить флаг ошибки
-			regBank.set(120,1);                                                     // установить общий флаг ошибки
+			mb.Coil(273,1);                                                     // установить флаг ошибки
+			mb.Coil(120,1);                                                     // установить общий флаг ошибки
 			regcount_err = regBank.get(adr_reg_count_err);                          // Получить данные счетчика всех ошибок
 			regcount_err++;                                                         // увеличить счетчик всех ошибок 
 			regBank.set(adr_reg_count_err,regcount_err);                            // Сохранить данные счетчика всех ошибок
@@ -3941,9 +3961,9 @@ void test_tangR()
 			myFile.println(buffer);                                                 // "Command PTT2 tangenta ruchnaja (DCR)                        ON  - ";  - Pass
 		   }
 		  }
-	regBank.set(17,0);                                                              // J8-12     XP7 4 PTT2 тангента ручная DSR
-	regBank.set(19,0);                                                              // J8-11     XP7 2 sensor тангента ручная
-	regBank.set(20,0);                                                              // J8-23     XP7 1 PTT1 тангента ручная CTS
+	mb.Coil(17,0);                                                              // J8-12     XP7 4 PTT2 тангента ручная DSR
+	mb.Coil(19,0);                                                              // J8-11     XP7 2 sensor тангента ручная
+	mb.Coil(20,0);                                                              // J8-23     XP7 1 PTT1 тангента ручная CTS
 	UpdateRegs();                                                                   // Выполнить команду
 	regBank.set(adr_control_command,0);                                             // Завершить программу    
 	mcp_Analog.digitalWrite(Front_led_Blue, HIGH); 
@@ -3958,8 +3978,8 @@ void test_tangN()
 	myFile.println(buffer);                                                         // "Command sensor OFF tangenta nognaja              send!"      ;
 	file_print_date();
 	myFile.println("");
-	regBank.set(13,0);                                                              // XP8 - 2   sensor Тангента ножная
-	regBank.set(14,0);                                                              // XP8 - 1   PTT Тангента ножная
+	mb.Coil(13,0);                                                              // XP8 - 2   sensor Тангента ножная
+	mb.Coil(14,0);                                                              // XP8 - 1   PTT Тангента ножная
 	UpdateRegs();                                                                   // Выполнить команду
 	delay(400);
 	strcpy_P(buffer, (char*)pgm_read_word(&(table_message[44])));                   // "Command sensor OFF tangenta nognaja              send!"      ;
@@ -3976,8 +3996,8 @@ void test_tangN()
 			regcount = regBank.get(40276);                                          // адрес счетчика ошибки sensor тангента ручная     "Command sensor tangenta nognaja                             OFF - ";
 			regcount++;                                                             // увеличить счетчик ошибок sensor тангента ручная  "Command sensor tangenta nognaja                             OFF - ";
 			regBank.set(40276,regcount);                                            // адрес счетчика ошибки sensor тангента ручная     "Command sensor tangenta nognaja                             OFF - ";
-			regBank.set(276,1);                                                     // установить флаг ошибки sensor тангента ручная
-			regBank.set(120,1);                                                     // установить общий флаг ошибки
+			mb.Coil(276,1);                                                     // установить флаг ошибки sensor тангента ручная
+			mb.Coil(120,1);                                                     // установить общий флаг ошибки
 			regcount_err = regBank.get(adr_reg_count_err);                          // Получить данные счетчика всех ошибок
 			regcount_err++;                                                         // увеличить счетчик всех ошибок 
 			regBank.set(adr_reg_count_err,regcount_err);                            // Сохранить данные счетчика всех ошибок
@@ -4005,8 +4025,8 @@ void test_tangN()
 			regcount = regBank.get(40278);                                          // адрес счетчика ошибки 
 			regcount++;                                                             // увеличить счетчик ошибок
 			regBank.set(40278,regcount);                                            // адрес счетчика ошибки                          "Command PTT tangenta nognaja (CTS)                          OFF - ";
-			regBank.set(278,1);                                                     // установить флаг ошибки
-			regBank.set(120,1);                                                     // установить общий флаг ошибки
+			mb.Coil(278,1);                                                     // установить флаг ошибки
+			mb.Coil(120,1);                                                     // установить общий флаг ошибки
 			regcount_err = regBank.get(adr_reg_count_err);                          // Получить данные счетчика всех ошибок
 			regcount_err++;                                                         // увеличить счетчик всех ошибок 
 			regBank.set(adr_reg_count_err,regcount_err);                            // Сохранить данные счетчика всех ошибок
@@ -4028,10 +4048,10 @@ void test_tangN()
 		 }
 
 
-	regBank.set(13,1);                                                              // XP8 2 sensor тангента ножная
+	mb.Coil(13,1);                                                              // XP8 2 sensor тангента ножная
 	strcpy_P(buffer, (char*)pgm_read_word(&(table_message[46])));                   // "Command sensor ON  tangenta ruchnaja             send!"      ;
 	if (test_repeat == false) myFile.println(buffer);                               // "Command sensor ON  tangenta ruchnaja             send!"      ;
-	regBank.set(14,1);                                                              // J8-12     XP7 4 PTT2 тангента ручная DSR
+	mb.Coil(14,1);                                                              // J8-12     XP7 4 PTT2 тангента ручная DSR
 	strcpy_P(buffer, (char*)pgm_read_word(&(table_message[47])));                   // "Command PTT1   ON  tangenta ruchnaja             send!"      ;
 	if (test_repeat == false) myFile.println(buffer);                               // "Command PTT1   ON  tangenta ruchnaja             send!"      ;
 
@@ -4049,8 +4069,8 @@ void test_tangN()
 			regcount = regBank.get(40277);                                          // адрес счетчика ошибки sensor тангента ручная       "Command sensor tangenta nognaja                             ON  - ";
 			regcount++;                                                             // увеличить счетчик ошибок sensor тангента ручная    "Command sensor tangenta nognaja                             ON  - ";
 			regBank.set(40277,regcount);                                            // адрес счетчика ошибки sensor тангента ручная
-			regBank.set(277,1);                                                     // установить флаг ошибки sensor тангента ручная
-			regBank.set(120,1);                                                     // установить общий флаг ошибки
+			mb.Coil(277,1);                                                     // установить флаг ошибки sensor тангента ручная
+			mb.Coil(120,1);                                                     // установить общий флаг ошибки
 			regcount_err = regBank.get(adr_reg_count_err);                          // Получить данные счетчика всех ошибок
 			regcount_err++;                                                         // увеличить счетчик всех ошибок 
 			regBank.set(adr_reg_count_err,regcount_err);                            // Сохранить данные счетчика всех ошибок
@@ -4077,8 +4097,8 @@ void test_tangN()
 			regcount = regBank.get(40279);                                          // адрес счетчика ошибки                 "Command PTT tangenta nognaja (CTS)                          ON  - ";          
 			regcount++;                                                             // увеличить счетчик ошибок
 			regBank.set(40279,regcount);                                            // адрес счетчика ошибки                  "Command PTT tangenta nognaja (CTS)                          ON  - ";
-			regBank.set(279,1);                                                     // установить флаг ошибки
-			regBank.set(120,1);                                                     // установить общий флаг ошибки
+			mb.Coil(279,1);                                                     // установить флаг ошибки
+			mb.Coil(120,1);                                                     // установить общий флаг ошибки
 			regcount_err = regBank.get(adr_reg_count_err);                          // Получить данные счетчика всех ошибок
 			regcount_err++;                                                         // увеличить счетчик всех ошибок 
 			regBank.set(adr_reg_count_err,regcount_err);                            // Сохранить данные счетчика всех ошибок
@@ -4099,8 +4119,8 @@ void test_tangN()
 		   }
 		  }
 
-	regBank.set(14,0);                                                              //   XP8 1 PTT тангента  
-	regBank.set(13,0);                                                              //   XP8 2 sensor тангента  
+	mb.Coil(14,0);                                                              //   XP8 1 PTT тангента  
+	mb.Coil(13,0);                                                              //   XP8 2 sensor тангента  
 	UpdateRegs();                                                                   // Выполнить команду
 	mcp_Analog.digitalWrite(Front_led_Blue, HIGH); 
 	regBank.set(adr_control_command,0);                                             // Завершить программу    
@@ -4115,16 +4135,16 @@ void test_mikrophon()
 	myFile.println(buffer);                                                         // " ****** Test miсrophone start! ******"                       ;
 	file_print_date();
 	myFile.println("");
-	regBank.set(15,0);                                                              // XS1 - 5   PTT Мик CTS
-	regBank.set(16,0);                                                              // XS1 - 6   sensor подключения микрофона
+	mb.Coil(15,0);                                                              // XS1 - 5   PTT Мик CTS
+	mb.Coil(16,0);                                                              // XS1 - 6   sensor подключения микрофона
 
-	regBank.set(14,0);    // XP8 - 1   PTT Тангента ножная
-	regBank.set(17,0);    // J8-12     XP7 4 PTT2   Танг. р.
-	regBank.set(18,0);    // XP1 - 20  HangUp  DCD
-	regBank.set(20,0);    // J8-23     XP7 1 PTT1 Танг. р.
-	regBank.set(26,0);    // XP1- 17 HaSPTT    CTS DSR вкл.  
-	regBank.set(28,0);    // XP1- 15 HeS2PTT   CTS вкл PTT Инструктора
-	regBank.set(30,0);    // XP1- 6  HeS1PTT   CTS вкл   РТТ Диспетчера
+	mb.Coil(14,0);    // XP8 - 1   PTT Тангента ножная
+	mb.Coil(17,0);    // J8-12     XP7 4 PTT2   Танг. р.
+	mb.Coil(18,0);    // XP1 - 20  HangUp  DCD
+	mb.Coil(20,0);    // J8-23     XP7 1 PTT1 Танг. р.
+	mb.Coil(26,0);    // XP1- 17 HaSPTT    CTS DSR вкл.  
+	mb.Coil(28,0);    // XP1- 15 HeS2PTT   CTS вкл PTT Инструктора
+	mb.Coil(30,0);    // XP1- 6  HeS1PTT   CTS вкл   РТТ Диспетчера
 
 	strcpy_P(buffer, (char*)pgm_read_word(&(table_message[58])));                   // "Command sensor OFF microphone                    send!"      ;  
 	if (test_repeat == false) myFile.println(buffer);                               //
@@ -4132,7 +4152,6 @@ void test_mikrophon()
 	if (test_repeat == false) myFile.println(buffer);                               //
 	UpdateRegs();                                                                   // Выполнить команду
 	delay(500);
-	wdt_reset();
 
 	 // +++++++++++++++++++++++++++++++++++++++ Проверка  на отключение сенсора и  PTT microphone ++++++++++++++++++++++++++++++++++++++++++++
 //		byte i50 = regBank.get(40004);    
@@ -4145,8 +4164,8 @@ void test_mikrophon()
 			regcount = regBank.get(40207);                                          // адрес счетчика ошибки sensor подключения микрофона
 			regcount++;                                                             // увеличить счетчик ошибок sensor подключения микрофона
 			regBank.set(40207,regcount);                                            // адрес счетчика ошибки sensor подключения микрофона
-			regBank.set(207,1);                                                     // установить флаг ошибки sensor подключения микрофона
-			regBank.set(120,1);                                                     // установить общий флаг ошибки
+			mb.Coil(207,1);                                                     // установить флаг ошибки sensor подключения микрофона
+			mb.Coil(120,1);                                                     // установить общий флаг ошибки
 			regcount_err = regBank.get(adr_reg_count_err);                          // Получить данные счетчика всех ошибок
 			regcount_err++;                                                         // увеличить счетчик всех ошибок 
 			regBank.set(adr_reg_count_err,regcount_err);                            // Сохранить данные счетчика всех ошибок
@@ -4169,15 +4188,15 @@ void test_mikrophon()
 
 	 UpdateRegs(); 
 	 delay(500);
-	 wdt_reset();
+
 	  // 2)  Проверка  на отключение PTT microphone
 		if(regBank.get(adr_reg_ind_CTS) != 0)                                       // Проверка  на отключение "Test microphone PTT  (CTS)                                  OFF - ";
 		  {
 			regcount = regBank.get(40264);                                          // адрес счетчика ошибки       "Test microphone PTT  (CTS)                                  OFF - ";
 			regcount++;                                                             // увеличить счетчик ошибок
 			regBank.set(40264,regcount);                                            // адрес счетчика ошибки 
-			regBank.set(264,1);                                                     // установить флаг ошибки
-			regBank.set(120,1);                                                     // установить общий флаг ошибки
+			mb.Coil(264,1);                                                     // установить флаг ошибки
+			mb.Coil(120,1);                                                     // установить общий флаг ошибки
 			regcount_err = regBank.get(adr_reg_count_err);                          // Получить данные счетчика всех ошибок
 			regcount_err++;                                                         // увеличить счетчик всех ошибок 
 			regBank.set(adr_reg_count_err,regcount_err);                            // Сохранить данные счетчика всех ошибок
@@ -4199,12 +4218,12 @@ void test_mikrophon()
 		 }
 
 	 // +++++++++++++++++++++++++++++++++++++++ Проверка  на включение сенсора  microphone ++++++++++++++++++++++++++++++++++++++++++++
-	regBank.set(16,1);                                                              // XS1 - 6   sensor подключения микрофона
+	mb.Coil(16,1);                                                              // XS1 - 6   sensor подключения микрофона
 	strcpy_P(buffer, (char*)pgm_read_word(&(table_message[59])));                   // "Command sensor ON  microphone                    send!"      ; 
 	if (test_repeat == false) myFile.println(buffer);                               //
 	UpdateRegs();                                                                   // Выполнить команду
 	delay(500);
-	wdt_reset();
+
 	//	byte i50 = regBank.get(40004);    
 	i52 = regBank.get(40006);     
 	//byte i53 = regBank.get(40007);     
@@ -4216,8 +4235,8 @@ void test_mikrophon()
 			regcount = regBank.get(40217);                                          // адрес счетчика ошибки sensor подключения микрофона
 			regcount++;                                                             // увеличить счетчик ошибок sensor подключения микрофона
 			regBank.set(40217,regcount);                                            // адрес счетчика ошибки sensor подключения микрофона
-			regBank.set(217,1);                                                     // установить флаг ошибки sensor подключения микрофона
-			regBank.set(120,1);                                                     // установить общий флаг ошибки
+			mb.Coil(217,1);                                                     // установить флаг ошибки sensor подключения микрофона
+			mb.Coil(120,1);                                                     // установить общий флаг ошибки
 			regcount_err = regBank.get(adr_reg_count_err);                          // Получить данные счетчика всех ошибок
 			regcount_err++;                                                         // увеличить счетчик всех ошибок 
 			regBank.set(adr_reg_count_err,regcount_err);                            // Сохранить данные счетчика всех ошибок
@@ -4238,16 +4257,15 @@ void test_mikrophon()
 			}
 		  }
 	  // +++++++++++++++++++++++++++++++++++++++ Проверка  на включение  PTT microphone ++++++++++++++++++++++++++++++++++++++++++++
-	regBank.set(15,1);                                                              // XS1 - 5   PTT Мик CTS
-	regBank.set(16,0);                                                              // XS1 - 6   sensor подключения микрофона
+	mb.Coil(15,1);                                                              // XS1 - 5   PTT Мик CTS
+	mb.Coil(16,0);                                                              // XS1 - 6   sensor подключения микрофона
 	strcpy_P(buffer, (char*)pgm_read_word(&(table_message[57])));                   // "Command PTT    ON  microphone                    send!"      ; 
 	if (test_repeat == false) myFile.println(buffer);                               //
 	strcpy_P(buffer, (char*)pgm_read_word(&(table_message[58])));                   // "Command sensor OFF microphone                    send!"      ;  
 	if (test_repeat == false) myFile.println(buffer);                               //
 	UpdateRegs();                                                                   // Выполнить команду
 	delay(500);
-	wdt_reset();
-	//byte i50 = regBank.get(40004);    
+  
 	i52 = regBank.get(40006);     
 	//byte i53 = regBank.get(40007);     
 	//i52 = regs_in[2];    
@@ -4257,8 +4275,8 @@ void test_mikrophon()
 			regcount = regBank.get(40217);                                          // адрес счетчика ошибки sensor подключения микрофона
 			regcount++;                                                             // увеличить счетчик ошибок sensor подключения микрофона
 			regBank.set(40217,regcount);                                            // адрес счетчика ошибки sensor подключения микрофона
-			regBank.set(217,1);                                                     // установить флаг ошибки sensor подключения микрофона
-			regBank.set(120,1);                                                     // установить общий флаг ошибки
+			mb.Coil(217,1);                                                     // установить флаг ошибки sensor подключения микрофона
+			mb.Coil(120,1);                                                     // установить общий флаг ошибки
 			regcount_err = regBank.get(adr_reg_count_err);                          // Получить данные счетчика всех ошибок
 			regcount_err++;                                                         // увеличить счетчик всех ошибок 
 			regBank.set(adr_reg_count_err,regcount_err);                            // Сохранить данные счетчика всех ошибок
@@ -4281,15 +4299,15 @@ void test_mikrophon()
 
 	 UpdateRegs(); 
 	 delay(500);
-	 wdt_reset();
+
 	  // 2)  Проверка  на включение  PTT microphone
 		if(regBank.get(adr_reg_ind_CTS) == 0)                                       // Проверка  на включение      "Test microphone PTT  (CTS)                                  ON  
 		  {
 			regcount = regBank.get(40266);                                          // адрес счетчика ошибки       "Test microphone PTT  (CTS)                                  ON  - ";
 			regcount++;                                                             // увеличить счетчик ошибок
 			regBank.set(40266,regcount);                                            // адрес счетчика ошибки 
-			regBank.set(266,1);                                                     // установить флаг ошибки
-			regBank.set(120,1);                                                     // установить общий флаг ошибки
+			mb.Coil(266,1);                                                     // установить флаг ошибки
+			mb.Coil(120,1);                                                     // установить общий флаг ошибки
 			regcount_err = regBank.get(adr_reg_count_err);                          // Получить данные счетчика всех ошибок
 			regcount_err++;                                                         // увеличить счетчик всех ошибок 
 			regBank.set(adr_reg_count_err,regcount_err);                            // Сохранить данные счетчика всех ошибок
@@ -4311,21 +4329,21 @@ void test_mikrophon()
 		 }
 
 	// ++++++++++++++++++++++++++++++++++ Проверить исправность канала  на отсутствие наводок ++++++++++++++++++++++++
-	measure_vol_min(analog_FrontL,    40320,320,i2c_eeprom_read_byte(deviceaddress,adr_porog_Microphone + 2));                                // Измерить уровень сигнала на выходе FrontL    "Test Microphone ** Signal FrontL                                   OFF - ";
-	measure_vol_min(analog_FrontR,    40321,321,i2c_eeprom_read_byte(deviceaddress,adr_porog_Microphone + 3));                                // Измерить уровень сигнала на выходе FrontR    "Test Microphone ** Signal FrontR                                   OFF - ";
-	measure_vol_min(analog_LineL,     40322,322,i2c_eeprom_read_byte(deviceaddress,adr_porog_Microphone + 4));                                // Измерить уровень сигнала на выходе FrontR    "Test Microphone ** Signal LineL                                    OFF - ";
-	measure_vol_min(analog_LineR,     40323,323,i2c_eeprom_read_byte(deviceaddress,adr_porog_Microphone + 5));                                // Измерить уровень сигнала на выходе LineR     "Test Microphone ** Signal LineR                                    OFF - ";
-	measure_vol_min(analog_mag_radio, 40324,324,i2c_eeprom_read_byte(deviceaddress,adr_porog_Microphone + 6));                                // Измерить уровень сигнала на выходе mag radio "Test Microphone ** Signal mag radio                                OFF - ";
-	measure_vol_min(analog_mag_phone, 40325,325,i2c_eeprom_read_byte(deviceaddress,adr_porog_Microphone + 7));                                // Измерить уровень сигнала на выходе mag phone "Test Microphone ** Signal mag phone                                OFF - ";
-	measure_vol_min(analog_ggs,       40326,326,i2c_eeprom_read_byte(deviceaddress,adr_porog_Microphone + 8));                                // Измерить уровень сигнала на выходе GGS       "Test Microphone ** Signal GGS                                      OFF - ";
-	measure_vol_min(analog_gg_radio1, 40327,327,i2c_eeprom_read_byte(deviceaddress,adr_porog_Microphone + 9));                                // Измерить уровень сигнала на выходе GG Radio1 "Test Microphone ** Signal GG Radio1                                OFF - ";
-	measure_vol_min(analog_gg_radio2, 40328,328,i2c_eeprom_read_byte(deviceaddress,adr_porog_Microphone + 10));                                // Измерить уровень сигнала на выходе GG Radio2 "Test Microphone ** Signal GG Radio2     
+	measure_vol_min(analog_FrontL,    320,320,i2c_eeprom_read_byte(deviceaddress,adr_porog_Microphone + 2));                                // Измерить уровень сигнала на выходе FrontL    "Test Microphone ** Signal FrontL                                   OFF - ";
+	measure_vol_min(analog_FrontR,    321,321,i2c_eeprom_read_byte(deviceaddress,adr_porog_Microphone + 3));                                // Измерить уровень сигнала на выходе FrontR    "Test Microphone ** Signal FrontR                                   OFF - ";
+	measure_vol_min(analog_LineL,     322,322,i2c_eeprom_read_byte(deviceaddress,adr_porog_Microphone + 4));                                // Измерить уровень сигнала на выходе FrontR    "Test Microphone ** Signal LineL                                    OFF - ";
+	measure_vol_min(analog_LineR,     323,323,i2c_eeprom_read_byte(deviceaddress,adr_porog_Microphone + 5));                                // Измерить уровень сигнала на выходе LineR     "Test Microphone ** Signal LineR                                    OFF - ";
+	measure_vol_min(analog_mag_radio, 324,324,i2c_eeprom_read_byte(deviceaddress,adr_porog_Microphone + 6));                                // Измерить уровень сигнала на выходе mag radio "Test Microphone ** Signal mag radio                                OFF - ";
+	measure_vol_min(analog_mag_phone, 325,325,i2c_eeprom_read_byte(deviceaddress,adr_porog_Microphone + 7));                                // Измерить уровень сигнала на выходе mag phone "Test Microphone ** Signal mag phone                                OFF - ";
+	measure_vol_min(analog_ggs,       326,326,i2c_eeprom_read_byte(deviceaddress,adr_porog_Microphone + 8));                                // Измерить уровень сигнала на выходе GGS       "Test Microphone ** Signal GGS                                      OFF - ";
+	measure_vol_min(analog_gg_radio1, 327,327,i2c_eeprom_read_byte(deviceaddress,adr_porog_Microphone + 9));                                // Измерить уровень сигнала на выходе GG Radio1 "Test Microphone ** Signal GG Radio1                                OFF - ";
+	measure_vol_min(analog_gg_radio2, 328,328,i2c_eeprom_read_byte(deviceaddress,adr_porog_Microphone + 10));                                // Измерить уровень сигнала на выходе GG Radio2 "Test Microphone ** Signal GG Radio2     
 
 
 		// ++++++++++++++++++++++++++++++++++ Подать сигнал на вход микрофона +++++++++++++++++++++++++++++++++++++++++++++++++
 	resistor(1,i2c_eeprom_read_byte(deviceaddress,adr_porog_Microphone + 0));                                                                // Установить уровень сигнала 60 мв
 	resistor(2,i2c_eeprom_read_byte(deviceaddress,adr_porog_Microphone + 1));                                                                // Установить уровень сигнала 60 мв
-	regBank.set(9,1);                                                               // Включить сигнал на вход микрофона Реле RL8 Звук на микрофон
+	mb.Coil(9,1);                                                               // Включить сигнал на вход микрофона Реле RL8 Звук на микрофон
 	UpdateRegs();                                                                   // Выполнить команду
 	delay(500);
 	UpdateRegs();                                                                   // Выполнить команду
@@ -4334,18 +4352,18 @@ void test_mikrophon()
 	strcpy_P(buffer, (char*)pgm_read_word(&(table_message[55])));                   // "Signal miсrophone 30  mV                      ON"     
 	if (test_repeat == false) myFile.println(buffer);                               //
 
-	measure_vol_max(analog_mag_phone,40298,298,i2c_eeprom_read_byte(deviceaddress,adr_porog_Microphone + 11));                                // Измерить уровень сигнала на выходе mag phone  "Test Microphone ** Signal Mag phone      
-	measure_vol_max(analog_LineL,    40299,299,i2c_eeprom_read_byte(deviceaddress,adr_porog_Microphone + 12));                                // Измерить уровень сигнала на выходе "Test Microphone ** Signal LineL                      ON  - ";  
-	measure_vol_min(analog_FrontL,    40320,320,i2c_eeprom_read_byte(deviceaddress,adr_porog_Microphone + 13));                                // Измерить уровень сигнала на выходе FrontL    "Test Microphone ** Signal FrontL                                   OFF - ";
-	measure_vol_min(analog_FrontR,    40321,321,i2c_eeprom_read_byte(deviceaddress,adr_porog_Microphone + 14));                                // Измерить уровень сигнала на выходе FrontR    "Test Microphone ** Signal FrontR                                   OFF - ";
-	measure_vol_min(analog_LineR,     40323,323,i2c_eeprom_read_byte(deviceaddress,adr_porog_Microphone + 15));                                // Измерить уровень сигнала на выходе LineR     "Test Microphone ** Signal LineR                                    OFF - ";
-	measure_vol_min(analog_mag_radio, 40324,324,i2c_eeprom_read_byte(deviceaddress,adr_porog_Microphone + 16));                                // Измерить уровень сигнала на выходе mag radio "Test Microphone ** Signal mag radio                                OFF - ";
-	measure_vol_min(analog_ggs,       40326,326,i2c_eeprom_read_byte(deviceaddress,adr_porog_Microphone + 17));                                // Измерить уровень сигнала на выходе GGS       "Test Microphone ** Signal GGS                                      OFF - ";
-	measure_vol_min(analog_gg_radio1, 40327,327,i2c_eeprom_read_byte(deviceaddress,adr_porog_Microphone + 18));                                // Измерить уровень сигнала на выходе GG Radio1 "Test Microphone ** Signal GG Radio1                                OFF - ";
-	measure_vol_min(analog_gg_radio2, 40328,328,i2c_eeprom_read_byte(deviceaddress,adr_porog_Microphone + 19));                                // Измерить уровень сигнала на выходе GG Radio2 "Test Microphone ** Signal GG Radio2     
+	measure_vol_max(analog_mag_phone, 298,298,i2c_eeprom_read_byte(deviceaddress,adr_porog_Microphone + 11));                                // Измерить уровень сигнала на выходе mag phone  "Test Microphone ** Signal Mag phone      
+	measure_vol_max(analog_LineL,     299,299,i2c_eeprom_read_byte(deviceaddress,adr_porog_Microphone + 12));                                // Измерить уровень сигнала на выходе "Test Microphone ** Signal LineL                      ON  - ";  
+	measure_vol_min(analog_FrontL,    320,320,i2c_eeprom_read_byte(deviceaddress,adr_porog_Microphone + 13));                                // Измерить уровень сигнала на выходе FrontL    "Test Microphone ** Signal FrontL                                   OFF - ";
+	measure_vol_min(analog_FrontR,    321,321,i2c_eeprom_read_byte(deviceaddress,adr_porog_Microphone + 14));                                // Измерить уровень сигнала на выходе FrontR    "Test Microphone ** Signal FrontR                                   OFF - ";
+	measure_vol_min(analog_LineR,     323,323,i2c_eeprom_read_byte(deviceaddress,adr_porog_Microphone + 15));                                // Измерить уровень сигнала на выходе LineR     "Test Microphone ** Signal LineR                                    OFF - ";
+	measure_vol_min(analog_mag_radio, 324,324,i2c_eeprom_read_byte(deviceaddress,adr_porog_Microphone + 16));                                // Измерить уровень сигнала на выходе mag radio "Test Microphone ** Signal mag radio                                OFF - ";
+	measure_vol_min(analog_ggs,       326,326,i2c_eeprom_read_byte(deviceaddress,adr_porog_Microphone + 17));                                // Измерить уровень сигнала на выходе GGS       "Test Microphone ** Signal GGS                                      OFF - ";
+	measure_vol_min(analog_gg_radio1, 327,327,i2c_eeprom_read_byte(deviceaddress,adr_porog_Microphone + 18));                                // Измерить уровень сигнала на выходе GG Radio1 "Test Microphone ** Signal GG Radio1                                OFF - ";
+	measure_vol_min(analog_gg_radio2, 328,328,i2c_eeprom_read_byte(deviceaddress,adr_porog_Microphone + 19));                                // Измерить уровень сигнала на выходе GG Radio2 "Test Microphone ** Signal GG Radio2     
 
-	regBank.set(15,0);                                                              // XS1 - 5   PTT Мик CTS
-	regBank.set(16,1);                                                              // XS1 - 6   sensor подключения микрофона
+	mb.Coil(15,0);                                                              // XS1 - 5   PTT Мик CTS
+	mb.Coil(16,1);                                                              // XS1 - 6   sensor подключения микрофона
 	strcpy_P(buffer, (char*)pgm_read_word(&(table_message[56])));                   // "Command PTT    OFF microphone                    send!"      ;
 	if (test_repeat == false) myFile.println(buffer);                               //
 	strcpy_P(buffer, (char*)pgm_read_word(&(table_message[59])));                   // "Command sensor ON  microphone                    send!"      ; 
@@ -4361,8 +4379,8 @@ void test_mikrophon()
 			regcount = regBank.get(40264);                                          // адрес счетчика ошибки       "Test microphone PTT  (CTS)                                  OFF - ";
 			regcount++;                                                             // увеличить счетчик ошибок
 			regBank.set(40264,regcount);                                            // адрес счетчика ошибки 
-			regBank.set(264,1);                                                     // установить флаг ошибки
-			regBank.set(120,1);                                                     // установить общий флаг ошибки
+			mb.Coil(264,1);                                                     // установить флаг ошибки
+			mb.Coil(120,1);                                                     // установить общий флаг ошибки
 			regcount_err = regBank.get(adr_reg_count_err);                          // Получить данные счетчика всех ошибок
 			regcount_err++;                                                         // увеличить счетчик всех ошибок 
 			regBank.set(adr_reg_count_err,regcount_err);                            // Сохранить данные счетчика всех ошибок
@@ -4383,19 +4401,19 @@ void test_mikrophon()
 		  }
 		 }
 
-	measure_vol_max(analog_mag_phone,40298,298,i2c_eeprom_read_byte(deviceaddress,adr_porog_Microphone + 11));                                // Измерить уровень сигнала на выходе mag phone  "Test Microphone ** Signal Mag phone      
-	measure_vol_max(analog_LineL,    40299,299,i2c_eeprom_read_byte(deviceaddress,adr_porog_Microphone + 12));                                // Измерить уровень сигнала на выходе "Test Microphone ** Signal LineL                      ON  - ";  
-	measure_vol_min(analog_FrontL,    40320,320,i2c_eeprom_read_byte(deviceaddress,adr_porog_Microphone + 13));                                // Измерить уровень сигнала на выходе FrontL    "Test Microphone ** Signal FrontL                                   OFF - ";
-	measure_vol_min(analog_FrontR,    40321,321,i2c_eeprom_read_byte(deviceaddress,adr_porog_Microphone + 14));                                // Измерить уровень сигнала на выходе FrontR    "Test Microphone ** Signal FrontR                                   OFF - ";
-	measure_vol_min(analog_LineR,     40323,323,i2c_eeprom_read_byte(deviceaddress,adr_porog_Microphone + 15));                                // Измерить уровень сигнала на выходе LineR     "Test Microphone ** Signal LineR                                    OFF - ";
-	measure_vol_min(analog_mag_radio, 40324,324,i2c_eeprom_read_byte(deviceaddress,adr_porog_Microphone + 16));                                // Измерить уровень сигнала на выходе mag radio "Test Microphone ** Signal mag radio                                OFF - ";
-	measure_vol_min(analog_ggs,       40326,326,i2c_eeprom_read_byte(deviceaddress,adr_porog_Microphone + 17));                                // Измерить уровень сигнала на выходе GGS       "Test Microphone ** Signal GGS                                      OFF - ";
-	measure_vol_min(analog_gg_radio1, 40327,327,i2c_eeprom_read_byte(deviceaddress,adr_porog_Microphone + 18));                                // Измерить уровень сигнала на выходе GG Radio1 "Test Microphone ** Signal GG Radio1                                OFF - ";
-	measure_vol_min(analog_gg_radio2, 40328,328,i2c_eeprom_read_byte(deviceaddress,adr_porog_Microphone + 19));   
+	measure_vol_max(analog_mag_phone, 298,298,i2c_eeprom_read_byte(deviceaddress,adr_porog_Microphone + 11));                                // Измерить уровень сигнала на выходе mag phone  "Test Microphone ** Signal Mag phone      
+	measure_vol_max(analog_LineL,     299,299,i2c_eeprom_read_byte(deviceaddress,adr_porog_Microphone + 12));                                // Измерить уровень сигнала на выходе "Test Microphone ** Signal LineL                      ON  - ";  
+	measure_vol_min(analog_FrontL,    320,320,i2c_eeprom_read_byte(deviceaddress,adr_porog_Microphone + 13));                                // Измерить уровень сигнала на выходе FrontL    "Test Microphone ** Signal FrontL                                   OFF - ";
+	measure_vol_min(analog_FrontR,    321,321,i2c_eeprom_read_byte(deviceaddress,adr_porog_Microphone + 14));                                // Измерить уровень сигнала на выходе FrontR    "Test Microphone ** Signal FrontR                                   OFF - ";
+	measure_vol_min(analog_LineR,     323,323,i2c_eeprom_read_byte(deviceaddress,adr_porog_Microphone + 15));                                // Измерить уровень сигнала на выходе LineR     "Test Microphone ** Signal LineR                                    OFF - ";
+	measure_vol_min(analog_mag_radio, 324,324,i2c_eeprom_read_byte(deviceaddress,adr_porog_Microphone + 16));                                // Измерить уровень сигнала на выходе mag radio "Test Microphone ** Signal mag radio                                OFF - ";
+	measure_vol_min(analog_ggs,       326,326,i2c_eeprom_read_byte(deviceaddress,adr_porog_Microphone + 17));                                // Измерить уровень сигнала на выходе GGS       "Test Microphone ** Signal GGS                                      OFF - ";
+	measure_vol_min(analog_gg_radio1, 327,327,i2c_eeprom_read_byte(deviceaddress,adr_porog_Microphone + 18));                                // Измерить уровень сигнала на выходе GG Radio1 "Test Microphone ** Signal GG Radio1                                OFF - ";
+	measure_vol_min(analog_gg_radio2, 328,328,i2c_eeprom_read_byte(deviceaddress,adr_porog_Microphone + 19));   
 
-	regBank.set(9,0);                                                               // Отключить сигнал на вход микрофона Реле RL8 Звук на микрофон
-	regBank.set(16,0);                                                              // XS1 - 6   sensor подключения микрофона
-	regBank.set(15,0);                                                              // XS1 - 5   PTT Мик CTS
+	mb.Coil(9,0);                                                               // Отключить сигнал на вход микрофона Реле RL8 Звук на микрофон
+	mb.Coil(16,0);                                                              // XS1 - 6   sensor подключения микрофона
+	mb.Coil(15,0);                                                              // XS1 - 5   PTT Мик CTS
 	UpdateRegs();     
 	mcp_Analog.digitalWrite(Front_led_Blue, HIGH); 
 	delay(200);
@@ -4419,8 +4437,8 @@ void testGGS()
 	myFile.println(buffer);                                                         // " ****** Test GGS start! ******"      ;
 	file_print_date();
 	myFile.println("");
-	regBank.set(25,1);                                                              // XP1- 19 HaSs      sensor подключения трубки  
-	regBank.set(18,0);     
+	mb.Coil(25,1);                                                              // XP1- 19 HaSs      sensor подключения трубки  
+	mb.Coil(18,0);     
 	strcpy_P(buffer, (char*)pgm_read_word(&(table_message[27])));                  // "Command sensor OFF  MTT                           send!"      ;
 	if (test_repeat == false) myFile.println(buffer);                                                         // "Command sensor ON  MTT                           send!"      ;
 	strcpy_P(buffer, (char*)pgm_read_word(&(table_message[29])));                  // "Command HangUp OFF MTT                              send! "      ;
@@ -4445,8 +4463,8 @@ void testGGS()
 			regcount = regBank.get(40200);                                          // адрес счетчика ошибки                              "Sensor MTT                          XP1- 19 HaSs            OFF - ";
 			regcount++;                                                             // увеличить счетчик ошибок sensor отключения трубки  "Sensor MTT                          XP1- 19 HaSs            OFF - ";
 			regBank.set(40200,regcount);                                            // адрес счетчика ошибки                              "Sensor MTT                          XP1- 19 HaSs            OFF - ";  
-			regBank.set(200,1);                                                     // установить флаг ошибки                             "Sensor MTT                          XP1- 19 HaSs            OFF - ";
-			regBank.set(120,1);                                                     // установить общий флаг ошибки
+			mb.Coil(200,1);                                                     // установить флаг ошибки                             "Sensor MTT                          XP1- 19 HaSs            OFF - ";
+			mb.Coil(120,1);                                                     // установить общий флаг ошибки
 			regcount_err = regBank.get(adr_reg_count_err);                          // Получить данные счетчика всех ошибок
 			regcount_err++;                                                         // увеличить счетчик всех ошибок 
 			regBank.set(adr_reg_count_err,regcount_err);                            // Сохранить данные счетчика всех ошибок
@@ -4471,8 +4489,8 @@ void testGGS()
 			regcount = regBank.get(40267);                                          // адрес счетчика ошибки отключения HangUp  DCD  "Test MTT HangUp (DCD)                                       OFF - ";
 			regcount++;                                                             // увеличить счетчик ошибок
 			regBank.set(40267,regcount);                                            // адрес счетчика ошибки отключения HangUp  DCD   "Test MTT HangUp (DCD)                                       OFF - ";
-			regBank.set(267,1);                                                     // установить флаг ошибки отключения HangUp  DCD   "Test MTT HangUp (DCD)                                       OFF - ";
-			regBank.set(120,1);                                                     // установить общий флаг ошибки
+			mb.Coil(267,1);                                                     // установить флаг ошибки отключения HangUp  DCD   "Test MTT HangUp (DCD)                                       OFF - ";
+			mb.Coil(120,1);                                                     // установить общий флаг ошибки
 			regcount_err = regBank.get(adr_reg_count_err);                          // Получить данные счетчика всех ошибок
 			regcount_err++;                                                         // увеличить счетчик всех ошибок 
 			regBank.set(adr_reg_count_err,regcount_err);                            // Сохранить данные счетчика всех ошибок
@@ -4494,18 +4512,18 @@ void testGGS()
 		 }
 
 	//+++++++++++++++++++++++++++++++++++   Проверка отсутствия сигнала на выходах +++++++++++++++++++++++++++++++++++++++++++++++++++++++
-	measure_vol_min(analog_FrontL,    40280,280,i2c_eeprom_read_byte(deviceaddress,adr_porog_GGS + 2));                                // Измерить уровень сигнала на выходе "Test GGS ** Signal FrontL                                   OFF - ";
-	measure_vol_min(analog_FrontR,    40281,281,i2c_eeprom_read_byte(deviceaddress,adr_porog_GGS + 3));                                // Измерить уровень сигнала на выходе "Test GGS ** Signal FrontR                                   OFF - ";
-	measure_vol_min(analog_LineL,     40282,282,i2c_eeprom_read_byte(deviceaddress,adr_porog_GGS + 4));                                // Измерить уровень сигнала на выходе "Test GGS ** Signal LineL                                    OFF - ";
-	measure_vol_min(analog_LineR,     40283,283,i2c_eeprom_read_byte(deviceaddress,adr_porog_GGS + 5));                                // Измерить уровень сигнала на выходе "Test GGS ** Signal LineR                                    OFF - ";
-	measure_vol_min(analog_mag_radio, 40284,284,i2c_eeprom_read_byte(deviceaddress,adr_porog_GGS + 6));                                // Измерить уровень сигнала на выходе "Test GGS ** Signal mag radio                                OFF - ";
-	measure_vol_min(analog_mag_phone, 40285,285,i2c_eeprom_read_byte(deviceaddress,adr_porog_GGS + 7));                                // Измерить уровень сигнала на выходе "Test GGS ** Signal mag phone                                OFF - ";
-	measure_vol_min(analog_ggs,       40286,286,i2c_eeprom_read_byte(deviceaddress,adr_porog_GGS + 8));                                // Измерить уровень сигнала на выходе "Test GGS ** Signal GGS                                      OFF - ";
-	measure_vol_min(analog_gg_radio1, 40287,287,i2c_eeprom_read_byte(deviceaddress,adr_porog_GGS + 9));                                // Измерить уровень сигнала на выходе "Test GGS ** Signal GG Radio1                                OFF - ";
-	measure_vol_min(analog_gg_radio2, 40288,288,i2c_eeprom_read_byte(deviceaddress,adr_porog_GGS + 10));                                // Измерить уровень сигнала на выходе "Test GGS ** Signal GG Radio2                                OFF - ";
+	measure_vol_min(analog_FrontL,    280,280,i2c_eeprom_read_byte(deviceaddress,adr_porog_GGS + 2));                                // Измерить уровень сигнала на выходе "Test GGS ** Signal FrontL                                   OFF - ";
+	measure_vol_min(analog_FrontR,    281,281,i2c_eeprom_read_byte(deviceaddress,adr_porog_GGS + 3));                                // Измерить уровень сигнала на выходе "Test GGS ** Signal FrontR                                   OFF - ";
+	measure_vol_min(analog_LineL,     282,282,i2c_eeprom_read_byte(deviceaddress,adr_porog_GGS + 4));                                // Измерить уровень сигнала на выходе "Test GGS ** Signal LineL                                    OFF - ";
+	measure_vol_min(analog_LineR,     283,283,i2c_eeprom_read_byte(deviceaddress,adr_porog_GGS + 5));                                // Измерить уровень сигнала на выходе "Test GGS ** Signal LineR                                    OFF - ";
+	measure_vol_min(analog_mag_radio, 284,284,i2c_eeprom_read_byte(deviceaddress,adr_porog_GGS + 6));                                // Измерить уровень сигнала на выходе "Test GGS ** Signal mag radio                                OFF - ";
+	measure_vol_min(analog_mag_phone, 285,285,i2c_eeprom_read_byte(deviceaddress,adr_porog_GGS + 7));                                // Измерить уровень сигнала на выходе "Test GGS ** Signal mag phone                                OFF - ";
+	measure_vol_min(analog_ggs,       286,286,i2c_eeprom_read_byte(deviceaddress,adr_porog_GGS + 8));                                // Измерить уровень сигнала на выходе "Test GGS ** Signal GGS                                      OFF - ";
+	measure_vol_min(analog_gg_radio1, 287,287,i2c_eeprom_read_byte(deviceaddress,adr_porog_GGS + 9));                                // Измерить уровень сигнала на выходе "Test GGS ** Signal GG Radio1                                OFF - ";
+	measure_vol_min(analog_gg_radio2, 288,288,i2c_eeprom_read_byte(deviceaddress,adr_porog_GGS + 10));                                // Измерить уровень сигнала на выходе "Test GGS ** Signal GG Radio2                                OFF - ";
 	//----------------------------------------------------------------------------------------------------------------------------------------
 
-	regBank.set(6,1);                                                               // Реле RL5 Звук Front L, Front R
+	mb.Coil(6,1);                                                               // Реле RL5 Звук Front L, Front R
 	strcpy_P(buffer, (char*)pgm_read_word(&(table_message[49])));                   // "Signal GGS  FrontL, FrontR   0,7V             ON"   
 	if (test_repeat == false) myFile.println(buffer);              
 	delay(500);
@@ -4513,17 +4531,17 @@ void testGGS()
 	delay(500);
 	UpdateRegs(); 
 
-	measure_vol_max(analog_FrontL,    40290,290,i2c_eeprom_read_byte(deviceaddress,adr_porog_GGS + 11));                                // Измерить уровень сигнала на выходе "Test GGS ** Signal FrontL                                   ON  - ";
-	measure_vol_max(analog_FrontR,    40291,291,i2c_eeprom_read_byte(deviceaddress,adr_porog_GGS + 12));                                // Измерить уровень сигнала на выходе "Test GGS ** Signal FrontR                                   ON  - ";
-	measure_vol_min(analog_LineL,     40282,282,i2c_eeprom_read_byte(deviceaddress,adr_porog_GGS + 13));                                // Измерить уровень сигнала на выходе "Test GGS ** Signal LineL                                    OFF - ";
-	measure_vol_min(analog_LineR,     40283,283,i2c_eeprom_read_byte(deviceaddress,adr_porog_GGS + 14));                                // Измерить уровень сигнала на выходе "Test GGS ** Signal LineR                                    OFF - ";
-	measure_vol_max(analog_mag_radio, 40332,332,i2c_eeprom_read_byte(deviceaddress,adr_porog_GGS + 15));         
-	measure_vol_max(analog_mag_phone, 40292,292,i2c_eeprom_read_byte(deviceaddress,adr_porog_GGS + 16));                                // Измерить уровень сигнала на выходе "Test GGS ** Signal mag phone                                ON  - ";
-	measure_vol_max(analog_ggs,       40289,289,i2c_eeprom_read_byte(deviceaddress,adr_porog_GGS + 17));                               // Измерить уровень сигнала на выходе "Test GGS ** Signal GGS                                      ON  - ";
-	measure_vol_min(analog_gg_radio1, 40287,287,i2c_eeprom_read_byte(deviceaddress,adr_porog_GGS + 18));                                // Измерить уровень сигнала на выходе "Test GGS ** Signal GG Radio1                                OFF - ";
-	measure_vol_min(analog_gg_radio2, 40288,288,i2c_eeprom_read_byte(deviceaddress,adr_porog_GGS + 19));                                // Измерить уровень сигнала на выходе "Test GGS ** Signal GG Radio2                                OFF - ";
+	measure_vol_max(analog_FrontL,    290,290,i2c_eeprom_read_byte(deviceaddress,adr_porog_GGS + 11));                                // Измерить уровень сигнала на выходе "Test GGS ** Signal FrontL                                   ON  - ";
+	measure_vol_max(analog_FrontR,    291,291,i2c_eeprom_read_byte(deviceaddress,adr_porog_GGS + 12));                                // Измерить уровень сигнала на выходе "Test GGS ** Signal FrontR                                   ON  - ";
+	measure_vol_min(analog_LineL,     282,282,i2c_eeprom_read_byte(deviceaddress,adr_porog_GGS + 13));                                // Измерить уровень сигнала на выходе "Test GGS ** Signal LineL                                    OFF - ";
+	measure_vol_min(analog_LineR,     283,283,i2c_eeprom_read_byte(deviceaddress,adr_porog_GGS + 14));                                // Измерить уровень сигнала на выходе "Test GGS ** Signal LineR                                    OFF - ";
+	measure_vol_max(analog_mag_radio, 332,332,i2c_eeprom_read_byte(deviceaddress,adr_porog_GGS + 15));         
+	measure_vol_max(analog_mag_phone, 292,292,i2c_eeprom_read_byte(deviceaddress,adr_porog_GGS + 16));                                // Измерить уровень сигнала на выходе "Test GGS ** Signal mag phone                                ON  - ";
+	measure_vol_max(analog_ggs,       289,289,i2c_eeprom_read_byte(deviceaddress,adr_porog_GGS + 17));                               // Измерить уровень сигнала на выходе "Test GGS ** Signal GGS                                      ON  - ";
+	measure_vol_min(analog_gg_radio1, 287,287,i2c_eeprom_read_byte(deviceaddress,adr_porog_GGS + 18));                                // Измерить уровень сигнала на выходе "Test GGS ** Signal GG Radio1                                OFF - ";
+	measure_vol_min(analog_gg_radio2, 288,288,i2c_eeprom_read_byte(deviceaddress,adr_porog_GGS + 19));                                // Измерить уровень сигнала на выходе "Test GGS ** Signal GG Radio2                                OFF - ";
 
-	regBank.set(25,0);                                                                          // XP1- 19 HaSs      sensor подключения трубки          
+	mb.Coil(25,0);                                                                          // XP1- 19 HaSs      sensor подключения трубки          
 	UpdateRegs();                                                                               // Выполнить команду
 	delay(500);
 	UpdateRegs(); 
@@ -4538,8 +4556,8 @@ void testGGS()
 			regcount = regBank.get(40210);                                          // адрес счетчика ошибки                              "Sensor MTT                          XP1- 19 HaSs            ON  - ";
 			regcount++;                                                             // увеличить счетчик ошибок sensor отключения трубки  "Sensor MTT                          XP1- 19 HaSs            ON  - ";
 			regBank.set(40210,regcount);                                            // адрес счетчика ошибки                              "Sensor MTT                          XP1- 19 HaSs            ON  - ";  
-			regBank.set(210,1);                                                     // установить флаг ошибки                             "Sensor MTT                          XP1- 19 HaSs            ON  - ";
-			regBank.set(120,1);                                                     // установить общий флаг ошибки
+			mb.Coil(210,1);                                                     // установить флаг ошибки                             "Sensor MTT                          XP1- 19 HaSs            ON  - ";
+			mb.Coil(120,1);                                                     // установить общий флаг ошибки
 			strcpy_P(buffer, (char*)pgm_read_word(&(string_table_err[10])));        // "Sensor MTT                      XP1- 19 HaSs   ON                - ";  
 			myFile.print(buffer);                                                   // "Sensor MTT                      XP1- 19 HaSs   ON                - ";  
 			strcpy_P(buffer, (char*)pgm_read_word(&(table_message[0])));            // "    Error! - "; 
@@ -4562,8 +4580,8 @@ void testGGS()
 			regcount = regBank.get(40267);                                          // адрес счетчика ошибки отключения HangUp  DCD  "Test MTT HangUp (DCD)                                       OFF - ";
 			regcount++;                                                             // увеличить счетчик ошибок
 			regBank.set(40267,regcount);                                            // адрес счетчика ошибки отключения HangUp  DCD   "Test MTT HangUp (DCD)                                       OFF - ";
-			regBank.set(267,1);                                                     // установить флаг ошибки отключения HangUp  DCD   "Test MTT HangUp (DCD)                                       OFF - ";
-			regBank.set(120,1);                                                     // установить общий флаг ошибки
+			mb.Coil(267,1);                                                     // установить флаг ошибки отключения HangUp  DCD   "Test MTT HangUp (DCD)                                       OFF - ";
+			mb.Coil(120,1);                                                     // установить общий флаг ошибки
 			regcount_err = regBank.get(adr_reg_count_err);                          // Получить данные счетчика всех ошибок
 			regcount_err++;                                                         // увеличить счетчик всех ошибок 
 			regBank.set(adr_reg_count_err,regcount_err);                            // Сохранить данные счетчика всех ошибок
@@ -4584,18 +4602,18 @@ void testGGS()
 			   }             
 		 }
 		//+++++++++++++++++++++++++++++++++++   Проверка отсутствия сигнала на выходах +++++++++++++++++++++++++++++++++++++++++++++++++++++++
-		measure_vol_max(analog_FrontL,    40290,290,i2c_eeprom_read_byte(deviceaddress,adr_porog_GGS + 11));                                // Измерить уровень сигнала на выходе "Test GGS ** Signal FrontL                                   ON  - ";
-		measure_vol_max(analog_FrontR,    40291,291,i2c_eeprom_read_byte(deviceaddress,adr_porog_GGS + 12));                              // Измерить уровень сигнала на выходе "Test GGS ** Signal FrontR                                   OFF - ";
-		measure_vol_min(analog_LineL,     40282,282,i2c_eeprom_read_byte(deviceaddress,adr_porog_GGS + 4));                                // Измерить уровень сигнала на выходе "Test GGS ** Signal LineL                                    OFF - ";
-		measure_vol_min(analog_LineR,     40283,283,i2c_eeprom_read_byte(deviceaddress,adr_porog_GGS + 5));                                // Измерить уровень сигнала на выходе "Test GGS ** Signal LineR                                    OFF - ";
-		measure_vol_max(analog_mag_radio, 40332,332,i2c_eeprom_read_byte(deviceaddress,adr_porog_GGS + 6));                                // Измерить уровень сигнала на выходе "Test GGS ** Signal mag radio                                OFF - ";
-		measure_vol_max(analog_mag_phone, 40292,292,i2c_eeprom_read_byte(deviceaddress,adr_porog_GGS + 7));                              // Измерить уровень сигнала на выходе "Test GGS ** Signal mag phone                                OFF - ";
-		measure_vol_min(analog_ggs,       40286,286,i2c_eeprom_read_byte(deviceaddress,adr_porog_GGS + 8));                                // Измерить уровень сигнала на выходе "Test GGS ** Signal GGS                                      OFF - ";
-		measure_vol_min(analog_gg_radio1, 40287,287,i2c_eeprom_read_byte(deviceaddress,adr_porog_GGS + 9));                                // Измерить уровень сигнала на выходе "Test GGS ** Signal GG Radio1                                OFF - ";
-		measure_vol_min(analog_gg_radio2, 40288,288,i2c_eeprom_read_byte(deviceaddress,adr_porog_GGS + 10));                                // Измерить уровень сигнала на выходе "Test GGS ** Signal GG Radio2                                OFF - ";
+		measure_vol_max(analog_FrontL,    290,290,i2c_eeprom_read_byte(deviceaddress,adr_porog_GGS + 11));                                // Измерить уровень сигнала на выходе "Test GGS ** Signal FrontL                                   ON  - ";
+		measure_vol_max(analog_FrontR,    291,291,i2c_eeprom_read_byte(deviceaddress,adr_porog_GGS + 12));                              // Измерить уровень сигнала на выходе "Test GGS ** Signal FrontR                                   OFF - ";
+		measure_vol_min(analog_LineL,     282,282,i2c_eeprom_read_byte(deviceaddress,adr_porog_GGS + 4));                                // Измерить уровень сигнала на выходе "Test GGS ** Signal LineL                                    OFF - ";
+		measure_vol_min(analog_LineR,     283,283,i2c_eeprom_read_byte(deviceaddress,adr_porog_GGS + 5));                                // Измерить уровень сигнала на выходе "Test GGS ** Signal LineR                                    OFF - ";
+		measure_vol_max(analog_mag_radio, 332,332,i2c_eeprom_read_byte(deviceaddress,adr_porog_GGS + 6));                                // Измерить уровень сигнала на выходе "Test GGS ** Signal mag radio                                OFF - ";
+		measure_vol_max(analog_mag_phone, 292,292,i2c_eeprom_read_byte(deviceaddress,adr_porog_GGS + 7));                              // Измерить уровень сигнала на выходе "Test GGS ** Signal mag phone                                OFF - ";
+		measure_vol_min(analog_ggs,       286,286,i2c_eeprom_read_byte(deviceaddress,adr_porog_GGS + 8));                                // Измерить уровень сигнала на выходе "Test GGS ** Signal GGS                                      OFF - ";
+		measure_vol_min(analog_gg_radio1, 287,287,i2c_eeprom_read_byte(deviceaddress,adr_porog_GGS + 9));                                // Измерить уровень сигнала на выходе "Test GGS ** Signal GG Radio1                                OFF - ";
+		measure_vol_min(analog_gg_radio2, 288,288,i2c_eeprom_read_byte(deviceaddress,adr_porog_GGS + 10));                                // Измерить уровень сигнала на выходе "Test GGS ** Signal GG Radio2                                OFF - ";
 		//----------------------------------------------------------------------------------------------------------------------------------------
 
-	regBank.set(18,1);                                                              // XP1 - 20  HangUp  DCD ON
+	mb.Coil(18,1);                                                              // XP1 - 20  HangUp  DCD ON
 	strcpy_P(buffer, (char*)pgm_read_word(&(table_message[32])));                   // "Command HangUp ON  MTT                           send!"      ;
 	if (test_repeat == false) myFile.println(buffer);                               // "Command HangUp ON  MTT                           send!"      ;
 
@@ -4608,8 +4626,8 @@ void testGGS()
 			regcount = regBank.get(40268);                                          // адрес счетчика ошибки отключения HangUp  DCD "Test MTT HangUp (DCD)                                       ON  - ";
 			regcount++;                                                             // увеличить счетчик ошибок
 			regBank.set(40268,regcount);                                            // адрес счетчика ошибки отключения HangUp  DCD "Test MTT HangUp (DCD)                                       ON  - ";
-			regBank.set(268,1);                                                     // установить флаг ошибки отключения HangUp  DCD "Test MTT HangUp (DCD)                                       ON  - ";
-			regBank.set(120,1);                                                     // установить общий флаг ошибки
+			mb.Coil(268,1);                                                     // установить флаг ошибки отключения HangUp  DCD "Test MTT HangUp (DCD)                                       ON  - ";
+			mb.Coil(120,1);                                                     // установить общий флаг ошибки
 			regcount_err = regBank.get(adr_reg_count_err);                          // Получить данные счетчика всех ошибок
 			regcount_err++;                                                         // увеличить счетчик всех ошибок 
 			regBank.set(adr_reg_count_err,regcount_err);                            // Сохранить данные счетчика всех ошибок
@@ -4630,17 +4648,17 @@ void testGGS()
 			   }
 		 }
 
-	measure_vol_max(analog_FrontL,    40290,290,i2c_eeprom_read_byte(deviceaddress,adr_porog_GGS + 11));                                // Измерить уровень сигнала на выходе "Test GGS ** Signal FrontL                                   ON  - ";
-	measure_vol_max(analog_FrontR,    40291,291,i2c_eeprom_read_byte(deviceaddress,adr_porog_GGS + 12));                                // Измерить уровень сигнала на выходе "Test GGS ** Signal FrontR                                   ON  - ";
-	measure_vol_min(analog_LineL,     40282,282,i2c_eeprom_read_byte(deviceaddress,adr_porog_GGS + 13));                                // Измерить уровень сигнала на выходе "Test GGS ** Signal LineL                                    OFF - ";
-	measure_vol_min(analog_LineR,     40283,283,i2c_eeprom_read_byte(deviceaddress,adr_porog_GGS + 14));                                // Измерить уровень сигнала на выходе "Test GGS ** Signal LineR                                    OFF - ";
-	measure_vol_max(analog_mag_radio, 40332,332,i2c_eeprom_read_byte(deviceaddress,adr_porog_GGS + 15));         
-	measure_vol_max(analog_mag_phone, 40292,292,i2c_eeprom_read_byte(deviceaddress,adr_porog_GGS + 16));                                // Измерить уровень сигнала на выходе "Test GGS ** Signal mag phone                                ON  - ";
-	measure_vol_max(analog_ggs,       40289,289,i2c_eeprom_read_byte(deviceaddress,adr_porog_GGS + 17));                               // Измерить уровень сигнала на выходе "Test GGS ** Signal GGS                                      ON  - ";
-	measure_vol_min(analog_gg_radio1, 40287,287,i2c_eeprom_read_byte(deviceaddress,adr_porog_GGS + 18));                                // Измерить уровень сигнала на выходе "Test GGS ** Signal GG Radio1                                OFF - ";
-	measure_vol_min(analog_gg_radio2, 40288,288,i2c_eeprom_read_byte(deviceaddress,adr_porog_GGS + 19));                                // Измерить уровень сигнала на выходе "Test GGS ** Signal GG Radio2                                OFF - ";
+	measure_vol_max(analog_FrontL,    290,290,i2c_eeprom_read_byte(deviceaddress,adr_porog_GGS + 11));                                // Измерить уровень сигнала на выходе "Test GGS ** Signal FrontL                                   ON  - ";
+	measure_vol_max(analog_FrontR,    291,291,i2c_eeprom_read_byte(deviceaddress,adr_porog_GGS + 12));                                // Измерить уровень сигнала на выходе "Test GGS ** Signal FrontR                                   ON  - ";
+	measure_vol_min(analog_LineL,     282,282,i2c_eeprom_read_byte(deviceaddress,adr_porog_GGS + 13));                                // Измерить уровень сигнала на выходе "Test GGS ** Signal LineL                                    OFF - ";
+	measure_vol_min(analog_LineR,     283,283,i2c_eeprom_read_byte(deviceaddress,adr_porog_GGS + 14));                                // Измерить уровень сигнала на выходе "Test GGS ** Signal LineR                                    OFF - ";
+	measure_vol_max(analog_mag_radio, 332,332,i2c_eeprom_read_byte(deviceaddress,adr_porog_GGS + 15));         
+	measure_vol_max(analog_mag_phone, 292,292,i2c_eeprom_read_byte(deviceaddress,adr_porog_GGS + 16));                                // Измерить уровень сигнала на выходе "Test GGS ** Signal mag phone                                ON  - ";
+	measure_vol_max(analog_ggs,       289,289,i2c_eeprom_read_byte(deviceaddress,adr_porog_GGS + 17));                               // Измерить уровень сигнала на выходе "Test GGS ** Signal GGS                                      ON  - ";
+	measure_vol_min(analog_gg_radio1, 287,287,i2c_eeprom_read_byte(deviceaddress,adr_porog_GGS + 18));                                // Измерить уровень сигнала на выходе "Test GGS ** Signal GG Radio1                                OFF - ";
+	measure_vol_min(analog_gg_radio2, 288,288,i2c_eeprom_read_byte(deviceaddress,adr_porog_GGS + 19));                                // Измерить уровень сигнала на выходе "Test GGS ** Signal GG Radio2                                OFF - ";
 
-	regBank.set(6,0);                                                               // Реле RL5 Звук Front L, Front R
+	mb.Coil(6,0);                                                               // Реле RL5 Звук Front L, Front R
 	UpdateRegs();    
 	mcp_Analog.digitalWrite(Front_led_Blue, HIGH); 
 	delay(100);
@@ -4654,43 +4672,43 @@ void test_GG_Radio1()
 	myFile.println(buffer);                                                         // " ****** Test Radio1 start! ******"                           ;
 	file_print_date();
 	myFile.println("");
-	regBank.set(4,0);                                                               // Реле RL3 Звук  LFE  "Маг."
+	mb.Coil(4,0);                                                               // Реле RL3 Звук  LFE  "Маг."
 	resistor(1,i2c_eeprom_read_byte(deviceaddress,adr_porog_Radio1 + 0));                                                               // Установить уровень сигнала 300 мв
 	resistor(2,i2c_eeprom_read_byte(deviceaddress,adr_porog_Radio1 + 1));                                                               // Установить уровень сигнала 300 мв
 	UpdateRegs();                                                                   // Выполнить команду
 	delay(500);
 	UpdateRegs(); 
 	delay(500);
-	wdt_reset();
+
 	//+++++++++++++++++++++++++++++++++++   Проверка отсутствия сигнала на выходах +++++++++++++++++++++++++++++++++++++++++++++++++++++++
-	measure_vol_min(analog_FrontL,    40300,300,i2c_eeprom_read_byte(deviceaddress,adr_porog_Radio1 + 2));                                // Измерить уровень сигнала на выходе "Test Radio1 ** Signal FrontL                                OFF - ";
-	measure_vol_min(analog_FrontR,    40301,301,i2c_eeprom_read_byte(deviceaddress,adr_porog_Radio1 + 3));                                // Измерить уровень сигнала на выходе "Test Radio1 ** Signal FrontR                                OFF - ";
-	measure_vol_min(analog_LineL,     40302,302,i2c_eeprom_read_byte(deviceaddress,adr_porog_Radio1 + 4));                                // Измерить уровень сигнала на выходе "Test Radio1 ** Signal LineL                                 OFF - ";
-	measure_vol_min(analog_LineR,     40303,303,i2c_eeprom_read_byte(deviceaddress,adr_porog_Radio1 + 5));                                // Измерить уровень сигнала на выходе "Test Radio1 ** Signal LineR                                 OFF - ";
-	measure_vol_min(analog_mag_radio, 40304,304,i2c_eeprom_read_byte(deviceaddress,adr_porog_Radio1 + 6));                                // Измерить уровень сигнала на выходе "Test Radio1 ** Signal mag radio                             OFF - ";
-	measure_vol_min(analog_mag_phone, 40305,305,i2c_eeprom_read_byte(deviceaddress,adr_porog_Radio1 + 7));                                // Измерить уровень сигнала на выходе "Test Radio1 ** Signal mag phone                             OFF - ";
-	measure_vol_min(analog_ggs,       40306,306,i2c_eeprom_read_byte(deviceaddress,adr_porog_Radio1 + 8));                                // Измерить уровень сигнала на выходе "Test Radio1 ** Signal GGS                                   OFF - ";
-	measure_vol_min(analog_gg_radio1, 40307,307,i2c_eeprom_read_byte(deviceaddress,adr_porog_Radio1 + 9));                                // Измерить уровень сигнала на выходе "Test Radio1 ** Signal GG Radio1                             OFF - ";
-	measure_vol_min(analog_gg_radio2, 40308,308,i2c_eeprom_read_byte(deviceaddress,adr_porog_Radio1 + 10));                                // Измерить уровень сигнала на выходе "Test Radio1 ** Signal GG Radio2                             OFF - ";
+	measure_vol_min(analog_FrontL,    300,300,i2c_eeprom_read_byte(deviceaddress,adr_porog_Radio1 + 2));                                // Измерить уровень сигнала на выходе "Test Radio1 ** Signal FrontL                                OFF - ";
+	measure_vol_min(analog_FrontR,    301,301,i2c_eeprom_read_byte(deviceaddress,adr_porog_Radio1 + 3));                                // Измерить уровень сигнала на выходе "Test Radio1 ** Signal FrontR                                OFF - ";
+	measure_vol_min(analog_LineL,     302,302,i2c_eeprom_read_byte(deviceaddress,adr_porog_Radio1 + 4));                                // Измерить уровень сигнала на выходе "Test Radio1 ** Signal LineL                                 OFF - ";
+	measure_vol_min(analog_LineR,     303,303,i2c_eeprom_read_byte(deviceaddress,adr_porog_Radio1 + 5));                                // Измерить уровень сигнала на выходе "Test Radio1 ** Signal LineR                                 OFF - ";
+	measure_vol_min(analog_mag_radio, 304,304,i2c_eeprom_read_byte(deviceaddress,adr_porog_Radio1 + 6));                                // Измерить уровень сигнала на выходе "Test Radio1 ** Signal mag radio                             OFF - ";
+	measure_vol_min(analog_mag_phone, 305,305,i2c_eeprom_read_byte(deviceaddress,adr_porog_Radio1 + 7));                                // Измерить уровень сигнала на выходе "Test Radio1 ** Signal mag phone                             OFF - ";
+	measure_vol_min(analog_ggs,       306,306,i2c_eeprom_read_byte(deviceaddress,adr_porog_Radio1 + 8));                                // Измерить уровень сигнала на выходе "Test Radio1 ** Signal GGS                                   OFF - ";
+	measure_vol_min(analog_gg_radio1, 307,307,i2c_eeprom_read_byte(deviceaddress,adr_porog_Radio1 + 9));                                // Измерить уровень сигнала на выходе "Test Radio1 ** Signal GG Radio1                             OFF - ";
+	measure_vol_min(analog_gg_radio2, 308,308,i2c_eeprom_read_byte(deviceaddress,adr_porog_Radio1 + 10));                                // Измерить уровень сигнала на выходе "Test Radio1 ** Signal GG Radio2                             OFF - ";
 
 	strcpy_P(buffer, (char*)pgm_read_word(&(table_message[51])));                   // "Signal Radio1 300 mV    LFE                   ON"            ;
 	if (test_repeat == false) myFile.println(buffer);                               // "Signal Radio1 300 mV    LFE                   ON"            ;
-	regBank.set(4,1);                                                               //  Реле RL3 Звук  LFE  "Маг."
+	mb.Coil(4,1);                                                               //  Реле RL3 Звук  LFE  "Маг."
 	UpdateRegs();                                                                   // Выполнить команду
 	delay(500);
 	UpdateRegs();  
-	wdt_reset();
+
 //	Serial.println("test_GG_Radio1 - on ");
-	measure_vol_min(analog_FrontL,    40300,300,i2c_eeprom_read_byte(deviceaddress,adr_porog_Radio1 + 11));                                // Измерить уровень сигнала на выходе "Test Radio1 ** Signal FrontL                                OFF - ";
-	measure_vol_min(analog_FrontR,    40301,301,i2c_eeprom_read_byte(deviceaddress,adr_porog_Radio1 + 12));                                // Измерить уровень сигнала на выходе "Test Radio1 ** Signal FrontR                                OFF - ";
-	measure_vol_min(analog_LineL,     40302,302,i2c_eeprom_read_byte(deviceaddress,adr_porog_Radio1 + 13));                                // Измерить уровень сигнала на выходе "Test Radio1 ** Signal LineL                                 OFF - ";
-	measure_vol_min(analog_LineR,     40303,303,i2c_eeprom_read_byte(deviceaddress,adr_porog_Radio1 + 14));                                // Измерить уровень сигнала на выходе "Test Radio1 ** Signal LineR                                 OFF - ";
-	measure_vol_max(analog_mag_radio, 40330,330,i2c_eeprom_read_byte(deviceaddress,adr_porog_Radio1 + 15));  // !!                             // Измерить уровень сигнала на выходе "Test Radio1 ** Signal mag radio                             OFF - ";
-	measure_vol_min(analog_mag_phone, 40305,305,i2c_eeprom_read_byte(deviceaddress,adr_porog_Radio1 + 16));                                // Измерить уровень сигнала на выходе "Test Radio1 ** Signal mag phone                             OFF - ";
-	measure_vol_min(analog_ggs,       40306,306,i2c_eeprom_read_byte(deviceaddress,adr_porog_Radio1 + 17));                                // Измерить уровень сигнала на выходе "Test Radio1 ** Signal GGS                                   OFF - ";
-	measure_vol_max(analog_gg_radio1, 40309,309,i2c_eeprom_read_byte(deviceaddress,adr_porog_Radio1 + 18));                               // Измерить уровень сигнала на выходе "Test Radio1 ** Signal Radio1                                ON  - ";
-	measure_vol_min(analog_gg_radio2, 40308,308,i2c_eeprom_read_byte(deviceaddress,adr_porog_Radio1 + 19));                                // Измерить уровень сигнала на выходе "Test Radio1 ** Signal GG Radio2                             OFF - ";
-	regBank.set(4,0);                                                               // Реле RL3 Звук  LFE  "Маг."
+	measure_vol_min(analog_FrontL,    300,300,i2c_eeprom_read_byte(deviceaddress,adr_porog_Radio1 + 11));                                // Измерить уровень сигнала на выходе "Test Radio1 ** Signal FrontL                                OFF - ";
+	measure_vol_min(analog_FrontR,    301,301,i2c_eeprom_read_byte(deviceaddress,adr_porog_Radio1 + 12));                                // Измерить уровень сигнала на выходе "Test Radio1 ** Signal FrontR                                OFF - ";
+	measure_vol_min(analog_LineL,     302,302,i2c_eeprom_read_byte(deviceaddress,adr_porog_Radio1 + 13));                                // Измерить уровень сигнала на выходе "Test Radio1 ** Signal LineL                                 OFF - ";
+	measure_vol_min(analog_LineR,     303,303,i2c_eeprom_read_byte(deviceaddress,adr_porog_Radio1 + 14));                                // Измерить уровень сигнала на выходе "Test Radio1 ** Signal LineR                                 OFF - ";
+	measure_vol_max(analog_mag_radio, 330,330,i2c_eeprom_read_byte(deviceaddress,adr_porog_Radio1 + 15));  // !!                             // Измерить уровень сигнала на выходе "Test Radio1 ** Signal mag radio                             OFF - ";
+	measure_vol_min(analog_mag_phone, 305,305,i2c_eeprom_read_byte(deviceaddress,adr_porog_Radio1 + 16));                                // Измерить уровень сигнала на выходе "Test Radio1 ** Signal mag phone                             OFF - ";
+	measure_vol_min(analog_ggs,       306,306,i2c_eeprom_read_byte(deviceaddress,adr_porog_Radio1 + 17));                                // Измерить уровень сигнала на выходе "Test Radio1 ** Signal GGS                                   OFF - ";
+	measure_vol_max(analog_gg_radio1, 309,309,i2c_eeprom_read_byte(deviceaddress,adr_porog_Radio1 + 18));                               // Измерить уровень сигнала на выходе "Test Radio1 ** Signal Radio1                                ON  - ";
+	measure_vol_min(analog_gg_radio2, 308,308,i2c_eeprom_read_byte(deviceaddress,adr_porog_Radio1 + 19));                                // Измерить уровень сигнала на выходе "Test Radio1 ** Signal GG Radio2                             OFF - ";
+	mb.Coil(4,0);                                                               // Реле RL3 Звук  LFE  "Маг."
 	UpdateRegs();     
 	mcp_Analog.digitalWrite(Front_led_Blue, HIGH); 
 	delay(100);
@@ -4704,33 +4722,31 @@ void test_GG_Radio2()
 	myFile.println(buffer);                                                         // " ****** Test Radio2 start! ******"                           ;
 	file_print_date();
 	myFile.println("");
-	regBank.set(7,0);                                                               // Реле RL3 Звук  LFE  "Маг."
+	mb.Coil(7,0);                                                               // Реле RL3 Звук  LFE  "Маг."
 	resistor(1,i2c_eeprom_read_byte(deviceaddress,adr_porog_Radio2 + 0));                                                               // Установить уровень сигнала 300 мв
 	resistor(2,i2c_eeprom_read_byte(deviceaddress,adr_porog_Radio2 + 1));                                                               // Установить уровень сигнала 300 мв
 	UpdateRegs();                                                                   // Выполнить команду
 	delay(500);
 	UpdateRegs(); 
 	delay(500);
-	wdt_reset();
+
 	//+++++++++++++++++++++++++++++++++++   Проверка отсутствия сигнала на выходах +++++++++++++++++++++++++++++++++++++++++++++++++++++++
-	measure_vol_min(analog_FrontL,    40310,310,i2c_eeprom_read_byte(deviceaddress,adr_porog_Radio2 + 2));                                // Измерить уровень сигнала на выходе "Test Radio2 ** Signal FrontL                                OFF - ";
-	measure_vol_min(analog_FrontR,    40311,311,i2c_eeprom_read_byte(deviceaddress,adr_porog_Radio2 + 3));                                // Измерить уровень сигнала на выходе "Test Radio2 ** Signal FrontR                                OFF - ";
-	measure_vol_min(analog_LineL,     40312,312,i2c_eeprom_read_byte(deviceaddress,adr_porog_Radio2 + 4));                                // Измерить уровень сигнала на выходе "Test Radio2 ** Signal LineL                                 OFF - ";
-	measure_vol_min(analog_LineR,     40313,313,i2c_eeprom_read_byte(deviceaddress,adr_porog_Radio2 + 5));                                // Измерить уровень сигнала на выходе "Test Radio2 ** Signal LineR                                 OFF - ";
-	measure_vol_min(analog_mag_radio, 40314,314,i2c_eeprom_read_byte(deviceaddress,adr_porog_Radio2 + 6));                                // Измерить уровень сигнала на выходе "Test Radio2 ** Signal mag radio                             OFF - ";
-	measure_vol_min(analog_mag_phone, 40315,315,i2c_eeprom_read_byte(deviceaddress,adr_porog_Radio2 + 7));                                // Измерить уровень сигнала на выходе "Test Radio2 ** Signal mag phone                             OFF - ";
-	measure_vol_min(analog_ggs,       40316,316,i2c_eeprom_read_byte(deviceaddress,adr_porog_Radio2 + 8));                                // Измерить уровень сигнала на выходе "Test Radio2 ** Signal GGS                                   OFF - ";
-	measure_vol_min(analog_gg_radio1, 40317,317,i2c_eeprom_read_byte(deviceaddress,adr_porog_Radio2 + 9));                                // Измерить уровень сигнала на выходе "Test Radio2 ** Signal GG Radio1                             OFF - ";
-	measure_vol_min(analog_gg_radio2, 40318,318,i2c_eeprom_read_byte(deviceaddress,adr_porog_Radio2 + 10));                                // Измерить уровень сигнала на выходе "Test Radio2 ** Signal GG Radio2                             OFF - ";
+	measure_vol_min(analog_FrontL,    310,310,i2c_eeprom_read_byte(deviceaddress,adr_porog_Radio2 + 2));                                // Измерить уровень сигнала на выходе "Test Radio2 ** Signal FrontL                                OFF - ";
+	measure_vol_min(analog_FrontR,    311,311,i2c_eeprom_read_byte(deviceaddress,adr_porog_Radio2 + 3));                                // Измерить уровень сигнала на выходе "Test Radio2 ** Signal FrontR                                OFF - ";
+	measure_vol_min(analog_LineL,     312,312,i2c_eeprom_read_byte(deviceaddress,adr_porog_Radio2 + 4));                                // Измерить уровень сигнала на выходе "Test Radio2 ** Signal LineL                                 OFF - ";
+	measure_vol_min(analog_LineR,     313,313,i2c_eeprom_read_byte(deviceaddress,adr_porog_Radio2 + 5));                                // Измерить уровень сигнала на выходе "Test Radio2 ** Signal LineR                                 OFF - ";
+	measure_vol_min(analog_mag_radio, 314,314,i2c_eeprom_read_byte(deviceaddress,adr_porog_Radio2 + 6));                                // Измерить уровень сигнала на выходе "Test Radio2 ** Signal mag radio                             OFF - ";
+	measure_vol_min(analog_mag_phone, 315,315,i2c_eeprom_read_byte(deviceaddress,adr_porog_Radio2 + 7));                                // Измерить уровень сигнала на выходе "Test Radio2 ** Signal mag phone                             OFF - ";
+	measure_vol_min(analog_ggs,       316,316,i2c_eeprom_read_byte(deviceaddress,adr_porog_Radio2 + 8));                                // Измерить уровень сигнала на выходе "Test Radio2 ** Signal GGS                                   OFF - ";
+	measure_vol_min(analog_gg_radio1, 317,317,i2c_eeprom_read_byte(deviceaddress,adr_porog_Radio2 + 9));                                // Измерить уровень сигнала на выходе "Test Radio2 ** Signal GG Radio1                             OFF - ";
+	measure_vol_min(analog_gg_radio2, 318,318,i2c_eeprom_read_byte(deviceaddress,adr_porog_Radio2 + 10));                                // Измерить уровень сигнала на выходе "Test Radio2 ** Signal GG Radio2                             OFF - ";
 
 	strcpy_P(buffer, (char*)pgm_read_word(&(table_message[53])));                   // "Signal Radio1 300 mV    LFE                   ON"            ;
 	if (test_repeat == false) myFile.println(buffer);                               // "Signal Radio1 300 mV    LFE                   ON"            ;
-	regBank.set(7,1);                                                               //  Реле RL3 Звук  LFE  "Маг."
+	mb.Coil(7,1);                                                               //  Реле RL3 Звук  LFE  "Маг."
 	UpdateRegs();                                                                   // Выполнить команду
 	delay(500);
 	UpdateRegs();  
-	wdt_reset();
-	//Serial.println("test_GG_Radio2 - on ");
 
 	measure_vol_min(analog_FrontL,    40310,310,i2c_eeprom_read_byte(deviceaddress,adr_porog_Radio2 + 11));                                // Измерить уровень сигнала на выходе "Test Radio2 ** Signal FrontL                                OFF - ";
 	measure_vol_min(analog_FrontR,    40311,311,i2c_eeprom_read_byte(deviceaddress,adr_porog_Radio2 + 12));                                // Измерить уровень сигнала на выходе "Test Radio2 ** Signal FrontR                                OFF - ";
@@ -7949,17 +7965,17 @@ void file_del_SD()
 		{
 			read_Serial2();
 			  myFile = sd.open(fileName_F);
-	          // Check to see if the file exists:
+			  // Check to see if the file exists:
 			  if (sd.exists(fileName_F)) 
 			  {
 				  regBank.set(125,true); 
 				  sd.remove(fileName_F);
 				  Serial.print(fileName_F);
-			      Serial.println("  Delete!");
+				  Serial.println("  Delete!");
 			  }
 			  else 
 			  {
-			      Serial.println("example.txt doesn't exist.");
+				  Serial.println("example.txt doesn't exist.");
 				  regBank.set(125,false); 
 			  }
 			}
@@ -7987,9 +8003,9 @@ void setup()
 	Serial1.begin(115200);                          // Подключение к звуковому модулю Камертон
 
 	  // Config Modbus Serial (port, speed, byte format) 
-    mb.config(&Serial, 38400, SERIAL_8N1);
-    // Set the Slave ID (1-247)
-    mb.setSlaveId(1);  
+	mb.config(&Serial, 38400, SERIAL_8N1);
+	// Set the Slave ID (1-247)
+	mb.setSlaveId(1);  
 
 
   //slave.setSerial(3,19200);                       // Подключение к протоколу MODBUS компьютера Serial3 
