@@ -1245,18 +1245,18 @@ void waiting_for_replyK()                                  // Чтение данных из К
 						{
 							overflowFlag = 1;              // Установить флаг превышения размера буфера
 						}
-						 regBank.set(40004+buffer,Serial1.read());
+						 mb.addHreg(4+buffer,Serial1.read());
 						//regs_in[buffer] = Serial1.read(); 
 						buffer++;
 					}
 				}
 //			calculateCRC_In();
-			regBank.set(124,1);                              // Связь с "Камертон" установлена
+			mb.addCoil(124,1);                              // Связь с "Камертон" установлена
 		   }
 	 else 
 		{
 			Stop_Kam = 0;                                    // Флаг отсутств. инф. из Камертона
-			regBank.set(124,0);                              // Флаг ошибки  связи с "Камертон"
+			mb.addCoil(124,0);                              // Флаг ошибки  связи с "Камертон"
 		}
 
 	  //if( regBank.get(40007) != regs_temp)
@@ -1378,53 +1378,53 @@ void UpdateRegs()                                        // Обновить регистры
 	// reg_Kamerton();                                     // Записать данные из Камертон в    регистры 
 		// Подпрограмма переноса данных из регистров на порты вывода
 	  //-----Установить бит 0
-	 set_rele = regBank.get(1);
+	 set_rele = mb.Coil(1);
 	 mcp_Out1.digitalWrite(0, set_rele);                 // Реле RL0 Звук  Звук Mic1p Диспетчер
 
 	 //-----Установить бит 1
-	  set_rele = regBank.get(2);
+	  set_rele = mb.Coil(2);
 	  mcp_Out1.digitalWrite(1, set_rele);               // Реле RL1 Звук Mic2p  Инструкор
 
 	 //-----Установить бит 2
-	  set_rele = regBank.get(3);
+	  set_rele = mb.Coil(3);
 	  mcp_Out1.digitalWrite(2, set_rele);               // Реле RL2 Звук Mic3p MTT
   
 	 //-----Установить бит 3
-	  set_rele = regBank.get(4);
+	  set_rele = mb.Coil(4);
 	  mcp_Out1.digitalWrite(3, set_rele);               // Реле RL3 Звук
 
 	 //-----Установить бит 4                            // Реле RL4 XP1 12
-	  set_rele = regBank.get(5);
+	  set_rele = mb.Coil(5);
 	  mcp_Out1.digitalWrite(4, set_rele);    
 
 	 //-----Установить бит 5
-	  set_rele = regBank.get(6);                        // Реле RL5 Звук
+	  set_rele = mb.Coil(6);                        // Реле RL5 Звук
 	  mcp_Out1.digitalWrite(5, set_rele);              
 
 	 //-----Установить бит 6	 
-	  set_rele = regBank.get(7);
+	  set_rele = mb.Coil(7);
 	  mcp_Out1.digitalWrite(6, set_rele);              // Реле RL6 Звук
 
 	 //-----Установить бит 7
-	  set_rele = regBank.get(8);
+	  set_rele = mb.Coil(8);
 	  mcp_Out1.digitalWrite(7, set_rele);              // Реле RL7 Питание платы
 
 	 //---- Второй байт----------
 	 //-----Установить бит 8
-	  set_rele = regBank.get(9);                        // Реле RL8 Звук на микрофон
+	  set_rele = mb.Coil(9);                        // Реле RL8 Звук на микрофон
 	  mcp_Out1.digitalWrite(8, set_rele);    
 
 	 //-----Установить бит 9
-	  set_rele = regBank.get(10);
+	  set_rele = mb.Coil(10);
 	  mcp_Out1.digitalWrite(9, set_rele);               // Реле RL9 XP1 10
 
 	 //-----Установить бит 10                           // Реле RL10 Включение питания на высоковольтный модуль 
-	  set_rele = regBank.get(11);
+	  set_rele = mb.Coil11);
 	  mcp_Out1.digitalWrite(10, set_rele);    
 
 
 	//-----Установить бит 11                            // Свободен 
-	  set_rele = regBank.get(12);
+	  set_rele = mb.Coil(12);
 	  mcp_Out1.digitalWrite(11, set_rele);    
 
 	 //-----Установить бит 12
@@ -1432,7 +1432,7 @@ void UpdateRegs()                                        // Обновить регистры
 	  mcp_Out1.digitalWrite(12, set_rele);              // XP8 - 2   sensor Тангента ножная
 
 	 //-----Установить бит 13
-	  set_rele = regBank.get(14);
+	  set_rele = mb.Coil(14);
 	  mcp_Out1.digitalWrite(13, set_rele);              // XP8 - 1   PTT Тангента ножная
 
 	 //-----Установить бит 14
@@ -1441,81 +1441,81 @@ void UpdateRegs()                                        // Обновить регистры
 	  mcp_Out1.digitalWrite(14, set_rele);              // XS1 - 5   PTT Мик
 
 	  //-----Установить бит 15
-	  set_rele = regBank.get(16);
+	  set_rele = mb.Coil(16);
 	  mcp_Out1.digitalWrite(15, set_rele);              // XS1 - 6   sensor Мик
 
 	  //  Test 3
 	 //-----Первый байт ------------
 	 //-----Установить бит 0
 
-	  set_rele = regBank.get(17);
+	  set_rele = mb.Coil(17);
 	  mcp_Out2.digitalWrite(0, set_rele);                // J8-12     XP7 4 PTT2   Танг. р.
 
 	 //-----Установить бит 1
-	  set_rele = regBank.get(18);
+	  set_rele = mb.Coil(18);
 	  mcp_Out2.digitalWrite(1, set_rele);                // XP1 - 20  HangUp  DCD
 
 	 //-----Установить бит 2
-	  set_rele = regBank.get(19);
+	  set_rele = mb.Coil(19);
 	  mcp_Out2.digitalWrite(2, set_rele);                // J8-11     XP7 2 sensor  Танг. р.
   
 	//-----Установить бит 3
 
-	  set_rele = regBank.get(20);
+	  set_rele = mb.Coil(20);
 	  mcp_Out2.digitalWrite(3, set_rele);                 // J8-23     XP7 1 PTT1 Танг. р.
 
 	 //-----Установить бит 4
-	  set_rele = regBank.get(21);
+	  set_rele = mb.Coil(21);
 	  mcp_Out2.digitalWrite(4, set_rele);                 // XP2-2     sensor "Маг." 
 
 	 //-----Установить бит 5
 
-	  set_rele = regBank.get(22);
+	  set_rele = mb.Coil(22);
 	  mcp_Out2.digitalWrite(5, set_rele);                  // XP5-3     sensor "ГГC."
 
 	 //-----Установить бит 6
-	  set_rele = regBank.get(23);
+	  set_rele = mb.Coil(23);
 	  mcp_Out2.digitalWrite(6, set_rele);                  // XP3-3     sensor "ГГ-Радио1."
 
 	 //-----Установить бит 7
-	  set_rele = regBank.get(24);
+	  set_rele = mb.Coil(24);
 	  mcp_Out2.digitalWrite(7, set_rele);                  // XP4-3     sensor "ГГ-Радио2."
 
 	  // Test 4
 	//-----Первый байт ------------
 	 //-----Установить бит 8
-	  set_rele = regBank.get(25);
+	  set_rele = mb.Coil(25);
 	  mcp_Out2.digitalWrite(8, set_rele);                  // XP1- 19 HaSs      флаг подключения трубки  
 
 	  //-----Установить бит 9
-	  set_rele = regBank.get(26);
+	  set_rele = mb.Coil(26);
 	  mcp_Out2.digitalWrite(9, set_rele);                  // XP1- 17 HaSPTT    CTS DSR вкл.
 
 	  //-----Установить бит 10
-	  set_rele = regBank.get(27);
+	  set_rele = mb.Coil(27);
 	  mcp_Out2.digitalWrite(10, set_rele);                 // XP1- 16 HeS2Rs    флаг подключения гарнитуры инструктора с 2 наушниками
 
 	  //-----Установить бит 11
-	  set_rele = regBank.get(28);
+	  set_rele = mb.Coil(28);
 	  mcp_Out2.digitalWrite(11, set_rele);                 // XP1- 15 HeS2PTT   CTS вкл
 
 	  //-----Установить бит 12
-	  set_rele = regBank.get(29);
+	  set_rele = mb.Coil(29);
 	  mcp_Out2.digitalWrite(12, set_rele);                 // XP1- 13 HeS2Ls    флаг подключения гарнитуры инструктора 
 
 	  //-----Установить бит 13
-	  set_rele = regBank.get(30);
+	  set_rele = mb.Coil(30);
 	  mcp_Out2.digitalWrite(13, set_rele);                 // XP1- 6  HeS1PTT   CTS вкл
 
 	  //-----Установить бит 14
-	  set_rele = regBank.get(31);
+	  set_rele = mb.Coil(31);
 	  mcp_Out2.digitalWrite(14, set_rele);                 // XP1- 5  HeS1Rs    Флаг подкючения гарнитуры диспетчера с 2 наушниками
 
 	  //-----Установить бит 15
-	  set_rele = regBank.get(32);
+	  set_rele = mb.Coil(32);
 	  mcp_Out2.digitalWrite(15, set_rele);                 // XP1- 1  HeS1Ls    Флаг подкючения гарнитуры диспетчера
 
-		 if (regBank.get(118)== 0)
+		 if (mb.Coil(118)== 0)
 		 {
 			 test_repeat = false;
 		 }
