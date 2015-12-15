@@ -3864,7 +3864,7 @@ void test_tangR()
 		   }
 		  }
 
-	regBank.set(19,1);                                                              // J8-11     XP7 2 sensor тангента ручная
+	mb.Coil(19,1);                                                              // J8-11     XP7 2 sensor тангента ручная
 	strcpy_P(buffer, (char*)pgm_read_word(&(table_message[40])));                   // "Command sensor ON  tangenta ruchnaja             send!"      ;
 	if (test_repeat == false) myFile.println(buffer);                               // "Command sensor ON  tangenta ruchnaja             send!"      ;
 	mb.Coil(17,1);                                                              // J8-12     XP7 4 PTT2 тангента ручная DSR
@@ -3906,7 +3906,7 @@ void test_tangR()
 		  }
 	 UpdateRegs(); 
 	  // 2)  Проверка  на отключение J8-23     XP7 1 PTT1 тангента ручная CTS
-		if(regBank.get(adr_reg_ind_CTS) == 0)                                       // Проверка  на отключение XP7 1 PTT1 тангента ручная CTS    "Command PTT1 tangenta ruchnaja (CTS)                        ON  - ";
+		if(mb.Hreg(adr_reg_ind_CTS) == 0)                                       // Проверка  на отключение XP7 1 PTT1 тангента ручная CTS    "Command PTT1 tangenta ruchnaja (CTS)                        ON  - ";
 		  {
 			regcount = mb.Hreg(272);                                          // адрес счетчика ошибки PTT  MTT (CTS)                      "Command PTT1 tangenta ruchnaja (CTS)                        ON  - ";
 			regcount++;                                                             // увеличить счетчик ошибок
@@ -3935,7 +3935,7 @@ void test_tangR()
 
 	 // 3)  Проверка  на отключение PTT2 тангента ручная (DSR)
 
-		if(regBank.get(adr_reg_ind_DSR) == 0)                                       // Проверка  на отключение  PTT2 тангента ручная (DSR)    "Command PTT2 tangenta ruchnaja (DCR)                        ON  - ";
+		if(mb.Hreg(adr_reg_ind_DSR) == 0)                                       // Проверка  на отключение  PTT2 тангента ручная (DSR)    "Command PTT2 tangenta ruchnaja (DCR)                        ON  - ";
 		  {
 			regcount = mb.Hreg(273);                                          // адрес счетчика ошибки  PTT  MTT (DSR)                   "Command PTT2 tangenta ruchnaja (DCR)                        ON  - "; 
 			regcount++;                                                             // увеличить счетчик ошибок
@@ -4443,7 +4443,7 @@ void testGGS()
 	if (test_repeat == false) myFile.println(buffer);              
 	resistor(1,i2c_eeprom_read_byte(deviceaddress,adr_porog_GGS + 0));                                                               // Установить уровень сигнала 60 мв
 	resistor(2,i2c_eeprom_read_byte(deviceaddress,adr_porog_GGS + 1));                                                               // Установить уровень сигнала 60 мв
-	regBank.set(6,0);                                                               // Реле RL5 Звук Front L, Front R
+	mb.Coil(6,0);                                                               // Реле RL5 Звук Front L, Front R
 	strcpy_P(buffer, (char*)pgm_read_word(&(table_message[71])));                   // "Signal FrontL, FrontR                         OFF "      ;
 	if (test_repeat == false) myFile.println(buffer);              
 	UpdateRegs();                                                                   // Выполнить команду
@@ -6001,7 +6001,7 @@ void measure_vol_min(int istochnik, unsigned int adr_count, int adr_flagErr, uns
 				regcount++;                                                          // увеличить счетчик ошибок канала 
 				mb.Hreg(_adr_count,regcount);                                    // адрес счетчика ошибки канала 
 				mb.Hreg(_adr_count+200,voltage10);                               // адрес данных ошибки канала 
-				regBank.set(_adr_flagErr,1);                                         // установить флаг ошибки  канала 
+				mb.Coil(_adr_flagErr,1);                                         // установить флаг ошибки  канала 
 				regcount_err = mb.Hreg(adr_reg_count_err);                       // Получить данные счетчика всех ошибок
 				regcount_err++;                                                      // увеличить счетчик всех ошибок 
 				mb.Hreg(adr_reg_count_err,regcount_err);                         // Сохранить данные счетчика всех ошибок
@@ -6315,8 +6315,8 @@ void test_RS232()
 }
 void set_USB0()
 {
-	i2c_eeprom_write_byte(deviceaddress, adr_set_USB, regBank.get(130));
-	Serial.println(i2c_eeprom_read_byte(deviceaddress,adr_set_USB));
+//	i2c_eeprom_write_byte(deviceaddress, adr_set_USB, regBank.get(130));
+//!!!!!	Serial.println(i2c_eeprom_read_byte(deviceaddress,adr_set_USB));
 	mb.Hreg(adr_control_command,0);                                // Завершить программу    
 	delay(100);
 }
@@ -6498,7 +6498,7 @@ void set_mem_regBank(int adr_mem , int step_mem)
 	int _step_mem = step_mem;
 	for (int i = 0; i < _step_mem;i++)
 		{
-			i2c_eeprom_write_byte(deviceaddress, _adr_mem + i, regBank.get(40130)+i);
+			i2c_eeprom_write_byte(deviceaddress, _adr_mem + i, mb.Hreg(130)+i);
 		}
 }
 
@@ -6547,7 +6547,7 @@ void read_mem_regBank(int adr_mem , int step_mem)
 	int _step_mem = step_mem;
 	for (int i = 0; i < _step_mem;i++)
 	{
-	  regBank.set(40130+i,i2c_eeprom_read_byte(deviceaddress,_adr_mem +i));   
+	  mb.Hreg(130+i,i2c_eeprom_read_byte(deviceaddress,_adr_mem +i));   
 	}
 }
 void send_file_PC()
@@ -7884,7 +7884,7 @@ void clear_serial2()
 					 Serial2.read();
 				}
 		   }
-   regBank.set(adr_control_command,0);
+   mb.Hreg(adr_control_command,0);
 }
 
 void clear_serial1()
@@ -7915,7 +7915,7 @@ void set_SD()
 		if (!sd.begin(chipSelect)) 
 		{
 			//Serial.println("initialization SD failed!");
-			regBank.set(125,false); 
+			mb.Coil(125,false); 
 		}
 	else
 		{
@@ -7925,20 +7925,20 @@ void set_SD()
 			  // Check to see if the file exists:
 			  if (sd.exists("example.txt")) 
 			  {
-				  regBank.set(125,true); 
+				 mb.Coil(125,true); 
 				  sd.remove("example.txt");
 			   // Serial.println("example.txt exists.");
 			  }
 			  else 
 			  {
 			   // Serial.println("example.txt doesn't exist.");
-				regBank.set(125,false); 
+				mb.Coil(125,false); 
 			  }
 			}
 
 	UpdateRegs(); 
 	delay(100);
-	regBank.set(adr_control_command,0);  
+	mb.Hreg(adr_control_command,0);  
 }
 void file_del_SD()
 {
@@ -7954,7 +7954,7 @@ void file_del_SD()
 			  // Check to see if the file exists:
 			  if (sd.exists(fileName_F)) 
 			  {
-				  regBank.set(125,true); 
+				  mb.Coil(125,true); 
 				  sd.remove(fileName_F);
 				  Serial.print(fileName_F);
 				  Serial.println("  Delete!");
@@ -7962,13 +7962,13 @@ void file_del_SD()
 			  else 
 			  {
 				  Serial.println("example.txt doesn't exist.");
-				  regBank.set(125,false); 
+				  mb.Coil(125,false); 
 			  }
 			}
 
 	//UpdateRegs(); 
 	delay(100);
-	regBank.set(adr_control_command,0);  
+	mb.Hreg(adr_control_command,0);  
 }
 //------------------------------------------------------------------------------
 
@@ -8042,10 +8042,10 @@ void setup()
 
 	//regBank.set(40004+buffer,Serial1.read());
 
-	regBank.set(21,0);                              // XP2-2     sensor "Маг."  
-	regBank.set(22,0);                              // XP5-3     sensor "ГГC."
-	regBank.set(23,0);                              // XP3-3     sensor "ГГ-Радио1."
-	regBank.set(24,0);                              // XP4-3     sensor "ГГ-Радио2."
+	mb.Coil(21,0);                              // XP2-2     sensor "Маг."  
+	mb.Coil(22,0);                              // XP5-3     sensor "ГГC."
+	mb.Coil(23,0);                              // XP3-3     sensor "ГГ-Радио1."
+	mb.Coil(24,0);                              // XP4-3     sensor "ГГ-Радио2."
 //	regBank.set(8,1);                               // Включить питание Камертон
 	UpdateRegs();                                   // Обновить информацию в регистрах
 
@@ -8058,33 +8058,33 @@ void setup()
 
 	for (int i = 120; i <= 131; i++)                  // Очистить флаги ошибок
 	{
-	   regBank.set(i,0);   
+	   mb.Coil(i,0);   
 	}
 
 	for (int i = 200; i <= 330; i++)                  // Очистить флаги ошибок
 	{
-	   regBank.set(i,0);   
+	  mb.Coil(i,0);   
 	}
 	
-	for (unsigned int i = 40200; i <= 40330; i++)     // Очистить флаги ошибок
+	for (unsigned int i = 200; i <= 330; i++)     // Очистить флаги ошибок
 	{
-	   regBank.set(i,0);   
+	   mb.Hreg(i,0);   
 	}
-		for (unsigned int i = 40400; i <= 40530; i++) // Очистить флаги ошибок
+		for (unsigned int i = 400; i <= 530; i++) // Очистить флаги ошибок
 	{
-	   regBank.set(i,0);   
+	   mb.Hreg(i,0);   
 	} 
 	Serial.println("Initializing SD card...");
 	pinMode(49, OUTPUT);//    заменить 
 	if (!sd.begin(chipSelect)) 
 		{
 			Serial.println("initialization SD failed!");
-			regBank.set(125,false); 
+			mb.Coil(125,false); 
 		}
 	else
 		{
 			Serial.println("initialization SD successfully.");
-			regBank.set(125,true); 
+			mb.Coil(125,true); 
 		}
 
 	SdFile::dateTimeCallback(dateTime);             // Настройка времени записи файла
@@ -8093,8 +8093,8 @@ void setup()
   // list all files in the card with date and size
   //sd.ls (LS_R | LS_DATE | LS_SIZE);
  
-	regBank.set(40120,0);                            // 
-	regBank.set(adr_reg_count_err,0);                // Обнулить данные счетчика всех ошибок
+	mb.Hreg(120,0);                            // 
+	mb.Hreg(adr_reg_count_err,0);                // Обнулить данные счетчика всех ошибок
 	MsTimer2::set(30, flash_time);                   // 30ms период таймера прерывани
 	resistor(1, 200);                                // Установить уровень сигнала
 	resistor(2, 200);                                // Установить уровень сигнала
