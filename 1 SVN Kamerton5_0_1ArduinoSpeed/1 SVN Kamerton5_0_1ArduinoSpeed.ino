@@ -3808,7 +3808,7 @@ void test_tangR()
 
 	 UpdateRegs(); 
 	  // 2)  Проверка  на отключение J8-23     XP7 1 PTT1 тангента ручная CTS
-		if(regBank.get(adr_reg_ind_CTS) != 0)                                       // Проверка  на отключение XP7 1 PTT1 тангента ручная CTS "Command PTT1 tangenta ruchnaja (CTS)                        OFF - ";
+		if(mb.Hreg(adr_reg_ind_CTS) != 0)                                       // Проверка  на отключение XP7 1 PTT1 тангента ручная CTS "Command PTT1 tangenta ruchnaja (CTS)                        OFF - ";
 		  {
 			regcount = mb.Hreg(270);                                          // адрес счетчика ошибки                                  "Command PTT1 tangenta ruchnaja (CTS)                        OFF - ";
 			regcount++;                                                             // увеличить счетчик ошибок
@@ -3837,7 +3837,7 @@ void test_tangR()
 
 	 // 3)  Проверка  на отключение PTT2 тангента ручная (DSR)
 
-		if(regBank.get(adr_reg_ind_DSR) != 0)                                       // Проверка  на отключение  PTT2 тангента ручная (DSR) "Command PTT2 tangenta ruchnaja (DCR)                        OFF - ";
+		if(mb.Hreg(adr_reg_ind_DSR) != 0)                                       // Проверка  на отключение  PTT2 тангента ручная (DSR) "Command PTT2 tangenta ruchnaja (DCR)                        OFF - ";
 		  {
 			regcount = mb.Hreg(271);                                          // адрес счетчика ошибки  PTT  MTT (DSR)                "Command PTT2 tangenta ruchnaja (DCR)                        OFF - ";
 			regcount++;                                                             // увеличить счетчик ошибок
@@ -4372,7 +4372,7 @@ void test_mikrophon()
 	delay(100);
 
 	  // 2)  Проверка  на отключение PTT microphone
-		if(regBank.get(adr_reg_ind_CTS) != 0)                                       // Проверка  на отключение "Test microphone PTT  (CTS)                                  OFF - ";
+		if(mb.Hreg(adr_reg_ind_CTS) != 0)                                       // Проверка  на отключение "Test microphone PTT  (CTS)                                  OFF - ";
 		  {
 			regcount = mb.Hreg(264);                                          // адрес счетчика ошибки       "Test microphone PTT  (CTS)                                  OFF - ";
 			regcount++;                                                             // увеличить счетчик ошибок
@@ -4806,7 +4806,7 @@ void test_power()
 		if (test_repeat == false)
 			{
 				myFile.print(buffer);                               // 
-				myFile.print(regBank.get(40493)*2.51/100);
+				myFile.print(mb.Hreg(493)*2.51/100);
 				myFile.print(" V - pass");
 				myFile.println(" / min 11v, max 13v");
 			}
@@ -4858,7 +4858,7 @@ void test_power()
 		if (test_repeat == false) 
 			{
 				myFile.print(buffer);                               // "Power Radio2 V    - "                                        ;
-				myFile.print(regBank.get(40495)*2.51/100);
+				myFile.print(mb.Hreg(495)*2.51/100);
 				myFile.print(" V - pass");
 				myFile.println(" / min 11v, max 13v");
 			}
@@ -5186,7 +5186,7 @@ void test_instr_on()
 	unsigned int regcount = 0;
 	strcpy_P(buffer, (char*)pgm_read_word(&(table_message[10])));
 	if (test_repeat == false) myFile.println(buffer);                               // "Command sensor ON headset instructor    send!"
-	mb.Coil29,1);                                                              // XP1- 13 HeS2Ls    sensor подключения гарнитуры инструктора 
+	mb.Coil(29,1);                                                              // XP1- 13 HeS2Ls    sensor подключения гарнитуры инструктора 
 	strcpy_P(buffer, (char*)pgm_read_word(&(table_message[11])));
 	if (test_repeat == false) myFile.println(buffer);                               // "Command sensor ON headset instructor 2  send!"
 	mb.Coil(27,1);                                                              // XP1- 16 HeS2Rs    sensor подключения гарнитуры инструктора с 2 наушниками
@@ -5361,7 +5361,7 @@ void test_disp_off()
 			mb.Coil(120,1);                                                     // установить общий флаг ошибки
 			regcount_err = mb.Hreg(adr_reg_count_err);                          // Получить данные счетчика всех ошибок
 			regcount_err++;                                                         // увеличить счетчик всех ошибок 
-			regBank.set(adr_reg_count_err,regcount_err);                            // Сохранить данные счетчика всех ошибок
+			mb.Hreg(adr_reg_count_err,regcount_err);                            // Сохранить данные счетчика всех ошибок
 			strcpy_P(buffer, (char*)pgm_read_word(&(string_table_err[6])));         // "Sensor headset dispatcher           XP1- 1  HeS1Ls          OFF - ";
 			myFile.print(buffer);                                                   // "Sensor headset dispatcher           XP1- 1  HeS1Ls          OFF - ";   
 			strcpy_P(buffer, (char*)pgm_read_word(&(table_message[0])));            // "    Error! - "; 
@@ -6310,14 +6310,14 @@ void i2c_test1()
 void test_RS232()
 {
 
-	regBank.set(adr_control_command,0);                                             // Завершить программу    
+	mb.Hreg(adr_control_command,0);                                             // Завершить программу    
 	delay(100);
 }
 void set_USB0()
 {
 	i2c_eeprom_write_byte(deviceaddress, adr_set_USB, regBank.get(130));
 	Serial.println(i2c_eeprom_read_byte(deviceaddress,adr_set_USB));
-	regBank.set(adr_control_command,0);                                // Завершить программу    
+	mb.Hreg(adr_control_command,0);                                // Завершить программу    
 	delay(100);
 }
 
@@ -6384,7 +6384,7 @@ void default_mem_porog()  // Запись заводских установок уровней порога
   }
  
 	UpdateRegs();     
-	regBank.set(adr_control_command,0);                                             // Завершить программу    
+	mb.Hreg(adr_control_command,0);                                             // Завершить программу    
 	delay(100);
 }
 // Чтение и запись информиции двух байтных слов
@@ -6399,15 +6399,15 @@ void set_mem_porog()
 		regBank.get(40128);  //  Адрес блока памяти для передачи в ПК уровней порогов.
 		regBank.get(40129);  //  Адрес длины блока памяти для передачи в ПК уровней порогов.
 	*/
-	int _adr_reg  = regBank.get(40127);              // Начальный адрес блока регистров, 
-	int _adr_mem  = regBank.get(40128);              // Начальный адрес блока памяти
-	int _step_mem = regBank.get(40129);              // Длина блока с учетом хранения двухбайтных чисел
+	int _adr_reg  = mb.Hreg(127);              // Начальный адрес блока регистров, 
+	int _adr_mem  = mb.Hreg(128);              // Начальный адрес блока памяти
+	int _step_mem = mb.Hreg(129);              // Длина блока с учетом хранения двухбайтных чисел
 	int _u_porog  = 0;                               // Временное хранения содержимого регистра.
 	int i_k       = 0;                               // Смещение адреса блока памяти
 
 	for (int i = 0; i < _step_mem;i++)                            // Копирование блока памяти в регистры.        
 		{
-			_u_porog = regBank.get(_adr_reg+i);
+			_u_porog = mb.Hreg(_adr_reg+i);
 		   // разбираем _u_porog на byte
 			hi=highByte(_u_porog);
 			low=lowByte(_u_porog);
@@ -6417,7 +6417,7 @@ void set_mem_porog()
 			i2c_eeprom_write_byte(deviceaddress,_adr_mem+i_k, low); 
 			i_k++;
 		}
-	regBank.set(adr_control_command,0);                                             // Завершить программу    
+	mb.Hreg(adr_control_command,0);                                             // Завершить программу    
 	delay(200);
 }
 void read_mem_porog()
@@ -6431,9 +6431,9 @@ void read_mem_porog()
 		Стартовый адрес регистров 40130 
 		Длина блока не более ??? байт
 	*/
-	int _adr_reg  = regBank.get(40127);              // Начальный адрес блока регистров, 
-	int _adr_mem  = regBank.get(40128);              // Начальный адрес блока памяти
-	int _step_mem = regBank.get(40129);              // Длина блока с учетом хранения двухбайтных чисел
+	int _adr_reg  = mb.Hreg(127);              // Начальный адрес блока регистров, 
+	int _adr_mem  = mb.Hreg(128);              // Начальный адрес блока памяти
+	int _step_mem = mb.Hreg(129);              // Длина блока с учетом хранения двухбайтных чисел
 	int _u_porog = 0;                                      // Временное хранения содержимого регистра.
 	int i_k = 0;                                           // Смещение адреса блока памяти
 
@@ -6445,17 +6445,17 @@ void read_mem_porog()
 		  low = i2c_eeprom_read_byte(deviceaddress,_adr_mem+i_k);
 		  i_k++;
 		   _u_porog = (hi<<8) | low;                              // собираем как "настоящие программеры"
-		  regBank.set(_adr_reg+i,_u_porog);
+		  mb.Hreg(_adr_reg+i,_u_porog);
 		 }
 	
-	regBank.set(adr_control_command,0);                                             // Завершить программу    
+	mb.Hreg(adr_control_command,0);                                             // Завершить программу    
 	delay(200);
 }
 // Чтение и запись информиции одно байтных слов
 void mem_byte_trans_read()
 {
 	// Уточнить  !!!!!
-	unsigned int _adr_reg = (mb.Hreg(127)+40000);                      //  Адрес блока регистров для передачи в ПК уровней порогов.
+	unsigned int _adr_reg = (mb.Hreg(127));                      //  Адрес блока регистров для передачи в ПК уровней порогов.
 	int _adr_mem          = (mb.Hreg(128)+200);                        //  Адрес блока памяти для передачи в ПК уровней порогов.
 	int _size_block       = mb.Hreg(129);                              //  Адрес длины блока
 
@@ -6469,26 +6469,26 @@ void mem_byte_trans_read()
 
 	for (int x_mem = 0;x_mem < _size_block;x_mem++)
 	{
-		regBank.set(_adr_reg+x_mem,i2c_eeprom_read_byte(deviceaddress,_adr_mem + x_mem));
+		mb.Hreg(_adr_reg+x_mem,i2c_eeprom_read_byte(deviceaddress,_adr_mem + x_mem));
 
 	//	Serial.println(regBank.get(_adr_reg+x_mem));
 
 	}
 
-	regBank.set(adr_control_command,0);                                             // Завершить программу    
+	mb.Hreg(adr_control_command,0);                                             // Завершить программу    
 	delay(200);
 }
 void mem_byte_trans_save()
 {
-	int _adr_reg = regBank.get(40127);  //  Адрес блока регистров для передачи в ПК уровней порогов.
-	int _adr_mem = regBank.get(40128);  //  Адрес блока памяти для передачи в ПК уровней порогов.
-	int _size_block = regBank.get(40129);  //  Адрес длины блока
+	int _adr_reg = mb.Hreg(127);  //  Адрес блока регистров для передачи в ПК уровней порогов.
+	int _adr_mem = mb.Hreg(128);  //  Адрес блока памяти для передачи в ПК уровней порогов.
+	int _size_block = mb.Hreg(129);  //  Адрес длины блока
 
 	for (int x_mem = 0;x_mem < _size_block;x_mem++)
 	{
-		i2c_eeprom_write_byte(deviceaddress, _adr_mem + x_mem, regBank.get(_adr_reg+x_mem));
+		i2c_eeprom_write_byte(deviceaddress, _adr_mem + x_mem, mb.Hreg(_adr_reg+x_mem));
 	}
-	regBank.set(adr_control_command,0);                                             // Завершить программу    
+	mb.Hreg(adr_control_command,0);                                             // Завершить программу    
 	delay(200);
 }
 
@@ -6619,7 +6619,7 @@ void send_file_PC()
    //}
 	 delay(1000);
 
-	regBank.set(adr_control_command,0);                                             // Завершить программу    
+	mb.Hreg(adr_control_command,0);                                             // Завершить программу    
 	delay(100);
 }
 
