@@ -1,15 +1,17 @@
 /*
 
- Kamerton5_0.ino
+ Kamerton5_0_1ArduinoSpeed.ino
  VisualStudio
  
  Программа тестирования модуля "Камертон" (Базовый вариант)
- Версия:      - 5_0
- Дата:        - 13.11.2015г.
+ Версия:      - 5_0_1Speed
+ Дата:        - 15.12.2015г.
  Организация: - ООО "Децима"
  Автор:       - Мосейчук А.В.
- Версия: Обновленная версия от 17.09.2015г. Новая плата с учетом добавления 
+ Версия: Обновленная версия от 15.12.2015г. Новая плата с учетом добавления 
  высоковольтного  модуля для испытания на пробой.
+ Замена библиотеки MODBUS
+
  Реализовано:
  -
  - прерывание 30мс,
@@ -30,10 +32,10 @@
 #include <Wire.h> 
 #include <RTClib.h>
 #include <MsTimer2.h> 
-#include <modbus.h>
-#include <modbusDevice.h>
-#include <modbusRegBank.h>
-#include <modbusSlave.h>
+//#include <modbus.h>
+//#include <modbusDevice.h>
+//#include <modbusRegBank.h>
+//#include <modbusSlave.h>
 #include "MCP23017.h"
 #include <avr/pgmspace.h>
 #include <AH_AD9850.h>
