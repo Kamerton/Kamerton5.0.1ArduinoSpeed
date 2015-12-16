@@ -251,18 +251,18 @@ ModbusSerial mb;
 //Create the modbus slave protocol handler
 //modbusSlave slave;
 
-//byte regs_in[5];                                    // Регистры работы с платой Камертон CPLL
-byte regs_out[4];                                   // Регистры работы с платой Камертон
-byte regs_crc[1];                                   // Регистры работы с платой Камертон контрольная сумма
-byte regs_temp = 0;
-byte regs_temp1 = 0;
-byte Stop_Kam = 0;                                  // Флаг индикации чтения инф. из Камертона
-volatile bool prer_Kmerton_On = true;               // Флаг разрешение прерывания Камертон
-bool test_repeat     = true;                        // Флаг повторения теста
-volatile bool prer_Kmerton_Run = false;             // Флаг разрешение прерывания Камертон
-#define BUFFER_SIZEK 64                             // Размер буфера Камертон не более 128 байт
-#define BUFFER_SIZEKF 128                           // Размер буфера Serial2 не более 128 байт
-unsigned char bufferK;                              // Счетчик количества принимаемых байт
+//byte regs_in[5];                                           // Регистры работы с платой Камертон CPLL
+byte regs_out[4];                                            // Регистры работы с платой Камертон
+byte regs_crc[1];                                            // Регистры работы с платой Камертон контрольная сумма
+byte regs_temp                 = 0;
+byte regs_temp1                = 0;
+byte Stop_Kam                  = 0;                          // Флаг индикации чтения инф. из Камертона
+volatile bool prer_Kmerton_On  = true;                       // Флаг разрешение прерывания Камертон
+bool test_repeat               = true;                       // Флаг повторения теста
+volatile bool prer_Kmerton_Run = false;                      // Флаг разрешение прерывания Камертон
+#define BUFFER_SIZEK 64                                      // Размер буфера Камертон не более 128 байт
+#define BUFFER_SIZEKF 128                                    // Размер буфера Serial2 не более 128 байт
+unsigned char bufferK;                                       // Счетчик количества принимаемых байт
 
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
@@ -282,12 +282,12 @@ const unsigned int adr_set_kontrol_hour   PROGMEM      = 55;   // адрес час
 const unsigned int adr_set_kontrol_minute PROGMEM      = 56;   // адрес минута
 
 // Время старта теста
-const unsigned int adr_Mic_Start_day      PROGMEM      = 96; // адрес день
-const unsigned int adr_Mic_Start_month    PROGMEM      = 97; // адрес месяц
-const unsigned int adr_Mic_Start_year     PROGMEM      = 98; // адрес год
-const unsigned int adr_Mic_Start_hour     PROGMEM      = 99; // адрес час
-const unsigned int adr_Mic_Start_minute   PROGMEM      = 100; // адрес минута
-const unsigned int adr_Mic_Start_second   PROGMEM      = 101; // адрес секунда
+const unsigned int adr_Mic_Start_day      PROGMEM      = 96;   // адрес день
+const unsigned int adr_Mic_Start_month    PROGMEM      = 97;   // адрес месяц
+const unsigned int adr_Mic_Start_year     PROGMEM      = 98;   // адрес год
+const unsigned int adr_Mic_Start_hour     PROGMEM      = 99;   // адрес час
+const unsigned int adr_Mic_Start_minute   PROGMEM      = 100;  // адрес минута
+const unsigned int adr_Mic_Start_second   PROGMEM      = 101;  // адрес секунда
 // Время окончания теста
 const unsigned int adr_Mic_Stop_day       PROGMEM       = 102; // адрес день
 const unsigned int adr_Mic_Stop_month     PROGMEM       = 103; // адрес месяц
@@ -311,20 +311,20 @@ const unsigned int adr_reg_file_tek       PROGMEM       = 116; // Регистр хранен
 const unsigned int adr_control_command    PROGMEM       = 120; // Адрес передачи комманд на выполнение 
 const unsigned int adr_reg_count_err      PROGMEM       = 121; // Адрес счетчика всех ошибок
 
-const unsigned int adr_set_time           PROGMEM       = 36;    // адрес флаг установки
+const unsigned int adr_set_time           PROGMEM       = 36;  // адрес флаг установки
 
 //------------------------- Уровни пороговых значений сигналов при тестировании устройств--------------------------------------
 //++++++++++++++++++++++++++++ Заводские установки уровней порогов +++++++++++++++++++++++++++++++++++++
 
 // Адреса внешней памяти для хранения порогов уровней измерения сигналов
 
-const  int adr_porog_instruktor            = 0;     // 19 адресов 
-const  int adr_porog_dispatcher            = 30;    // 19 адресов 
-const  int adr_porog_MTT                   = 60;    // 21 адресов 
-const  int adr_porog_GGS                   = 90;    // 29 адресов 
-const  int adr_porog_Radio1                = 120;   // 20 адресов 
-const  int adr_porog_Radio2                = 150;   // 20 адресов 
-const  int adr_porog_Microphone            = 180;   //  
+const  int adr_porog_instruktor            = 0;                // 19 адресов 
+const  int adr_porog_dispatcher            = 30;               // 19 адресов 
+const  int adr_porog_MTT                   = 60;               // 21 адресов 
+const  int adr_porog_GGS                   = 90;               // 29 адресов 
+const  int adr_porog_Radio1                = 120;              // 20 адресов 
+const  int adr_porog_Radio2                = 150;              // 20 адресов 
+const  int adr_porog_Microphone            = 180;              //  
 const  int adr_set_USB                     = 200;  
 // end                                     = 160
 //
@@ -1074,7 +1074,7 @@ void flash_time()                                              // Программа обра
 		//prer_Kmerton_Run = false;
 		//if (slave.run()!= 0)
 		//slave.run();
-		 mb.task();
+		// mb.task();
 			//Serial.println("Serial_Event");
 		//clear_serial3();
 	//	digitalWrite(ledPin13,LOW);
@@ -1090,10 +1090,10 @@ void serialEvent3()
 	//digitalWrite(ledPin13,HIGH);
 	////if (portFound == true)
 	////{
-	//Serial_Event++; 
-	//Serial.println(Serial_Event);
+	/*Serial_Event++; 
+	Serial.println(Serial_Event);*/
 	//slave.run();
-
+	mb.task();
 	//clear_serial3();
 	//digitalWrite(ledPin13,LOW);
 	//}
@@ -1274,12 +1274,12 @@ void waiting_for_replyK()                                  // Чтение данных из К
 					}
 				}
 //			calculateCRC_In();
-			mb.addCoil(124,1);                              // Связь с "Камертон" установлена
+			mb.Coil(124,1);                               // Связь с "Камертон" установлена
 		   }
 	 else 
 		{
-			Stop_Kam = 0;                                    // Флаг отсутств. инф. из Камертона
-			mb.addCoil(124,0);                              // Флаг ошибки  связи с "Камертон"
+			Stop_Kam = 0;                                 // Флаг отсутств. инф. из Камертона
+			mb.Coil(124,0);                               // Флаг ошибки  связи с "Камертон"
 		}
 
 	  //if( regBank.get(40007) != regs_temp)
@@ -1295,7 +1295,7 @@ void waiting_for_replyK()                                  // Чтение данных из К
 void Stop_Kamerton ()                  //Если не приходит информация с Камертона - регистры обнулить
   {
 	 for (unsigned char i = 0; i <4; i++)
-	 mb.addHreg(4+i,0);
+	 mb.Hreg(4+i,0);
 	// regs_in[i]=0;
   }
 
@@ -1577,9 +1577,10 @@ void UpdateRegs()                                        // Обновить регистры
 	 // regBank.set(adr_reg_count_Mic, count_test_Mic);                   // записать в регистр показания счетчика проходов теста Mic
 	  regBank.set(adr_reg_err_Mic, err_count_Mic);                        // записать в регистр показания счетчика ошибок CTS
 	  */
-	mb.Ists(adr_reg_ind_CTS, !mcp_Analog.digitalRead(CTS));
-	mb.Ists(adr_reg_ind_DSR, !mcp_Analog.digitalRead(DSR));
-	mb.Ists(adr_reg_ind_DCD, !mcp_Analog.digitalRead(DCD));
+
+	  mb.Ists(adr_reg_ind_CTS, !mcp_Analog.digitalRead(CTS));
+	  mb.Ists(adr_reg_ind_DSR, !mcp_Analog.digitalRead(DSR));
+	  mb.Ists(adr_reg_ind_DCD, !mcp_Analog.digitalRead(DCD));
 
 	  time_control();
 	  prer_Kmerton_On = true;
@@ -1598,7 +1599,7 @@ void Reg_count_clear()
 	{
 		mb.Coil(k,false);
 	}
-	mb.Hreg(121,0);
+	mb.Hreg(121,0);                                                             // Сбросить счетчик ошибок
 	mb.Hreg(adr_control_command,0);
 }
 void set_clock()
@@ -1812,28 +1813,28 @@ void controlFileName()
 void FileOpen()
 {
 	Serial.println("FileOpen");
-  int temp_file_name = 0;
-  preob_num_str();
-  while (sd.exists(fileName)) 
-  {
-	if (fileName[BASE_NAME_SIZE + 1] != '9') 
+	int temp_file_name = 0;
+	preob_num_str();
+	while (sd.exists(fileName)) 
 	{
-	  fileName[BASE_NAME_SIZE + 1]++;
+		if (fileName[BASE_NAME_SIZE + 1] != '9') 
+			{
+				fileName[BASE_NAME_SIZE + 1]++;
+			}
+		else if (fileName[BASE_NAME_SIZE] != '9') 
+			{
+				fileName[BASE_NAME_SIZE + 1] = '0';
+				fileName[BASE_NAME_SIZE]++;
+			}
+		else 
+			{
+				mb.Coil(122,1);                              // Флаг ошибки  открытия файла
+			}
 	}
-	else if (fileName[BASE_NAME_SIZE] != '9') 
-	{
-	  fileName[BASE_NAME_SIZE + 1] = '0';
-	  fileName[BASE_NAME_SIZE]++;
-	}
-	else 
-	{
-		mb.Coil(122,1);                              // Флаг ошибки  открытия файла
-	}
-  }
 
  
-  temp_file_name = ((fileName[BASE_NAME_SIZE]-48)*10) + (fileName[BASE_NAME_SIZE + 1]-48); // преобразование символьного номера файла в числа
-  mb.Hreg(adr_reg_file_name,temp_file_name);      
+	temp_file_name = ((fileName[BASE_NAME_SIZE]-48)*10) + (fileName[BASE_NAME_SIZE + 1]-48); // преобразование символьного номера файла в числа
+	mb.Hreg(adr_reg_file_name,temp_file_name);      
 //  i2c_eeprom_write_byte(0x50, adr_file_name_count,temp_file_name);                 // при смене даты счетчик номера файла сбросить в "0"
 
   if (!myFile.open(fileName, O_CREAT | O_WRITE | O_EXCL)) //sdError("file.open");
@@ -1877,7 +1878,7 @@ void FileOpen()
 //	Serial.println(fileName);
 	delay(100);
    }
-  mb.Coil(adr_control_command,0);  
+  mb.Hreg(adr_control_command,0);  
 }
 void FileClose()
 {
@@ -1902,8 +1903,8 @@ void FileClose()
 			Serial.println(" doesn't exist.");  
 			mb.Coil(123,1);                              // Флаг ошибки  закрытия файла
 		}
-	mb.Hreg(adr_control_command,0);                                             // Завершить программу    
 	delay(100);
+	mb.Hreg(adr_control_command,0);                                             // Завершить программу    
 }
 
 void file_name()
@@ -1912,22 +1913,22 @@ void file_name()
    preob_num_str();
 
   while (sd.exists(fileName)) 
-  {
-	if (fileName[BASE_NAME_SIZE + 1] != '9') 
-	{
-	  fileName[BASE_NAME_SIZE + 1]++;
-	}
-	else if (fileName[BASE_NAME_SIZE] != '9') 
-	{
-	  fileName[BASE_NAME_SIZE + 1] = '0';
-	  fileName[BASE_NAME_SIZE]++;
-	}
-	else 
-	{
-		Serial.println("Can't create file name");
-//	  sdError("Can't create file name");
-	}
-  }
+	  {
+		if (fileName[BASE_NAME_SIZE + 1] != '9') 
+			{
+			  fileName[BASE_NAME_SIZE + 1]++;
+			}
+		else if (fileName[BASE_NAME_SIZE] != '9') 
+			{
+			  fileName[BASE_NAME_SIZE + 1] = '0';
+			  fileName[BASE_NAME_SIZE]++;
+			}
+		else 
+		{
+			Serial.println("Can't create file name");
+	//	  sdError("Can't create file name");
+		}
+	  }
   if (!myFile.open(fileName, O_CREAT | O_WRITE | O_EXCL)) //sdError("file.open");
   {
   }
@@ -2130,10 +2131,8 @@ void control_command()
 	
 		default:
 
-			//wdt_reset();
 		break;
 	 }
-	// wdt_reset();
 	 mb.Hreg(adr_control_command,0);
 	}
 }
@@ -2187,14 +2186,14 @@ void sensor_all_off()
 
 		if(bitRead(i50,2) != 0)                                                     // XP1- 19 HaSs sensor контроля подключения трубки    "Sensor MTT                          XP1- 19 HaSs            OFF - ";
 		  {
-			regcount = mb.Hreg(200);                                          // адрес счетчика ошибки                              "Sensor MTT                          XP1- 19 HaSs            OFF - ";
+			regcount = mb.Hreg(200);                                                // адрес счетчика ошибки                              "Sensor MTT                          XP1- 19 HaSs            OFF - ";
 			regcount++;                                                             // увеличить счетчик ошибок sensor отключения трубки  "Sensor MTT                          XP1- 19 HaSs            OFF - ";
-			mb.Hreg(200,regcount);                                            // адрес счетчика ошибки                              "Sensor MTT                          XP1- 19 HaSs            OFF - ";  
-			mb.Coil(200,1);                                                     // установить флаг ошибки                             "Sensor MTT                          XP1- 19 HaSs            OFF - ";
-			mb.Coil(120,1);                                                     // установить общий флаг ошибки
-			regcount_err = mb.Hreg(adr_reg_count_err);                          // Получить данные счетчика всех ошибок
+			mb.Hreg(200,regcount);                                                  // адрес счетчика ошибки                              "Sensor MTT                          XP1- 19 HaSs            OFF - ";  
+			mb.Coil(200,1);                                                         // установить флаг ошибки                             "Sensor MTT                          XP1- 19 HaSs            OFF - ";
+			mb.Coil(120,1);                                                         // установить общий флаг ошибки
+			regcount_err = mb.Hreg(adr_reg_count_err);                              // Получить данные счетчика всех ошибок
 			regcount_err++;                                                         // увеличить счетчик всех ошибок 
-			mb.Hreg(adr_reg_count_err,regcount_err);                            // Сохранить данные счетчика всех ошибок
+			mb.Hreg(adr_reg_count_err,regcount_err);                                // Сохранить данные счетчика всех ошибок
 			strcpy_P(buffer, (char*)pgm_read_word(&(string_table_err[0])));         // "Sensor MTT                      XP1- 19 HaSs   OFF               - ";  
 			myFile.print(buffer);                                                   // "Sensor MTT                     XP1- 19 HaSs   OFF               - ";  
 			strcpy_P(buffer, (char*)pgm_read_word(&(table_message[0])));            // "    Error! - "; 
@@ -2214,14 +2213,14 @@ void sensor_all_off()
 	
 		if(bitRead(i50,3) != 0)                                                     // J8-11  тангента ручная                           "Sensor tangenta ruchnaja            XP7 - 2                 OFF - ";
 		  {
-			regcount = mb.Hreg(201);                                          // адрес счетчика ошибки sensor тангента ручная     "Sensor tangenta ruchnaja            XP7 - 2                 OFF - ";
+			regcount = mb.Hreg(201);                                                // адрес счетчика ошибки sensor тангента ручная     "Sensor tangenta ruchnaja            XP7 - 2                 OFF - ";
 			regcount++;                                                             // увеличить счетчик ошибок sensor тангента ручная  "Sensor tangenta ruchnaja            XP7 - 2                 OFF - ";
-			mb.Hreg(201,regcount);                                            // адрес счетчика ошибки sensor тангента ручная     "Sensor tangenta ruchnaja            XP7 - 2                 OFF - ";
-			mb.Coil(201,1);                                                     // установить флаг ошибки sensor тангента ручная    "Sensor tangenta ruchnaja            XP7 - 2                 OFF - ";
-			mb.Coil(120,1);                                                     // установить общий флаг ошибки
-			regcount_err = mb.Hreg(adr_reg_count_err);                          // Получить данные счетчика всех ошибок
+			mb.Hreg(201,regcount);                                                  // адрес счетчика ошибки sensor тангента ручная     "Sensor tangenta ruchnaja            XP7 - 2                 OFF - ";
+			mb.Coil(201,1);                                                         // установить флаг ошибки sensor тангента ручная    "Sensor tangenta ruchnaja            XP7 - 2                 OFF - ";
+			mb.Coil(120,1);                                                         // установить общий флаг ошибки
+			regcount_err = mb.Hreg(adr_reg_count_err);                              // Получить данные счетчика всех ошибок
 			regcount_err++;                                                         // увеличить счетчик всех ошибок 
-			mb.Hreg(adr_reg_count_err,regcount_err);                            // Сохранить данные счетчика всех ошибок
+			mb.Hreg(adr_reg_count_err,regcount_err);                                // Сохранить данные счетчика всех ошибок
 			strcpy_P(buffer, (char*)pgm_read_word(&(string_table_err[1])));         // "Sensor tangenta ruchnaja            XP7 - 2                 OFF - ";
 			myFile.print(buffer);                                                   // "Sensor tangenta ruchnaja            XP7 - 2                 OFF - "; 
 			strcpy_P(buffer, (char*)pgm_read_word(&(table_message[0])));            // "    Error! - "; 
@@ -2241,14 +2240,14 @@ void sensor_all_off()
 
 		if(bitRead(i50,4) != 0)                                                     // XP8 - 2   sensor Тангента ножная                  "Sensor tangenta nognaja             XP8 - 2                 OFF - "; 
 		  {
-			regcount = mb.Hreg(202);                                          // адрес счетчика ошибки sensor Тангента ножная      "Sensor tangenta nognaja             XP8 - 2                 OFF - "; 
+			regcount = mb.Hreg(202);                                                // адрес счетчика ошибки sensor Тангента ножная      "Sensor tangenta nognaja             XP8 - 2                 OFF - "; 
 			regcount++;                                                             // увеличить счетчик ошибок  sensor Тангента ножная  "Sensor tangenta nognaja             XP8 - 2                 OFF - "; 
-			mb.Hreg(202,regcount);                                            // адрес счетчика ошибки  sensor Тангента ножная     "Sensor tangenta nognaja             XP8 - 2                 OFF - "; 
-			mb.Coil(202,1);                                                     // установить флаг ошибки sensor Тангента ножная     "Sensor tangenta nognaja             XP8 - 2                 OFF - "; 
-			mb.Coil(120,1);                                                     // установить общий флаг ошибки
-			regcount_err = mb.Hreg(adr_reg_count_err);                          // Получить данные счетчика всех ошибок
+			mb.Hreg(202,regcount);                                                  // адрес счетчика ошибки  sensor Тангента ножная     "Sensor tangenta nognaja             XP8 - 2                 OFF - "; 
+			mb.Coil(202,1);                                                         // установить флаг ошибки sensor Тангента ножная     "Sensor tangenta nognaja             XP8 - 2                 OFF - "; 
+			mb.Coil(120,1);                                                         // установить общий флаг ошибки
+			regcount_err = mb.Hreg(adr_reg_count_err);                              // Получить данные счетчика всех ошибок
 			regcount_err++;                                                         // увеличить счетчик всех ошибок 
-			mb.Hreg(adr_reg_count_err,regcount_err);                            // Сохранить данные счетчика всех ошибок
+			mb.Hreg(adr_reg_count_err,regcount_err);                                // Сохранить данные счетчика всех ошибок
 			strcpy_P(buffer, (char*)pgm_read_word(&(string_table_err[2])));         // "Sensor tangenta nognaja             XP8 - 2                 OFF - ";   
 			myFile.print(buffer);                                                   // "Sensor tangenta nognaja             XP8 - 2                 OFF - ";   
 			strcpy_P(buffer, (char*)pgm_read_word(&(table_message[0])));            // "    Error! - "; 
@@ -2268,14 +2267,14 @@ void sensor_all_off()
 
 		if(bitRead(i52,1) != 0)                                                     // XP1- 16 HeS2Rs    sensor подключения гарнитуры инструктора с 2 наушниками
 		  {
-			regcount = mb.Hreg(203);                                          // адрес счетчика ошибки sensor подключения гарнитуры инструктора с 2 наушниками
+			regcount = mb.Hreg(203);                                                // адрес счетчика ошибки sensor подключения гарнитуры инструктора с 2 наушниками
 			regcount++;                                                             // увеличить счетчик ошибок sensor подключения гарнитуры инструктора с 2 наушниками
-			mb.Hreg(203,regcount);                                            // адрес счетчика ошибки sensor подключения гарнитуры инструктора с 2 наушниками
-			mb.Coil(203,1);                                                     // установить флаг ошибки sensor подключения гарнитуры инструктора с 2 наушниками 
-			mb.Coil(120,1);                                                     // установить общий флаг ошибки
-			regcount_err = mb.Hreg(adr_reg_count_err);                          // Получить данные счетчика всех ошибок
+			mb.Hreg(203,regcount);                                                  // адрес счетчика ошибки sensor подключения гарнитуры инструктора с 2 наушниками
+			mb.Coil(203,1);                                                         // установить флаг ошибки sensor подключения гарнитуры инструктора с 2 наушниками 
+			mb.Coil(120,1);                                                         // установить общий флаг ошибки
+			regcount_err = mb.Hreg(adr_reg_count_err);                              // Получить данные счетчика всех ошибок
 			regcount_err++;                                                         // увеличить счетчик всех ошибок 
-			mb.Hreg(adr_reg_count_err,regcount_err);                            // Сохранить данные счетчика всех ошибок
+			mb.Hreg(adr_reg_count_err,regcount_err);                                // Сохранить данные счетчика всех ошибок
 			strcpy_P(buffer, (char*)pgm_read_word(&(string_table_err[3])));         // "Sensor headset instructor 2         XP1- 16 HeS2Rs          OFF - ";
 			myFile.print(buffer);                                                   // "Sensor headset instructor 2         XP1- 16 HeS2Rs          OFF - ";   
 			strcpy_P(buffer, (char*)pgm_read_word(&(table_message[0])));            // "    Error! - "; 
@@ -2295,14 +2294,14 @@ void sensor_all_off()
 
 		if(bitRead(i52,2) != 0)                                                     // XP1- 13 HeS2Ls    sensor подключения гарнитуры инструктора 
 		  {
-			regcount = mb.Hreg(204);                                          // адрес счетчика ошибки sensor подключения гарнитуры инструктора
+			regcount = mb.Hreg(204);                                                // адрес счетчика ошибки sensor подключения гарнитуры инструктора
 			regcount++;                                                             // увеличить счетчик ошибок sensor подключения гарнитуры инструктора
-			mb.Hreg(204,regcount);                                            // адрес счетчика ошибки sensor подключения гарнитуры инструктора 
-			mb.Coil(204,1);                                                     // установить флаг ошибки sensor подключения гарнитуры инструктора 
-			mb.Coil(120,1);                                                     // установить общий флаг ошибки
-			regcount_err = mb.Hreg(adr_reg_count_err);                          // Получить данные счетчика всех ошибок
+			mb.Hreg(204,regcount);                                                  // адрес счетчика ошибки sensor подключения гарнитуры инструктора 
+			mb.Coil(204,1);                                                         // установить флаг ошибки sensor подключения гарнитуры инструктора 
+			mb.Coil(120,1);                                                         // установить общий флаг ошибки
+			regcount_err = mb.Hreg(adr_reg_count_err);                              // Получить данные счетчика всех ошибок
 			regcount_err++;                                                         // увеличить счетчик всех ошибок 
-			mb.Hreg(adr_reg_count_err,regcount_err);                            // Сохранить данные счетчика всех ошибок
+			mb.Hreg(adr_reg_count_err,regcount_err);                                // Сохранить данные счетчика всех ошибок
 			strcpy_P(buffer, (char*)pgm_read_word(&(string_table_err[4])));         // "Sensor headset instructor           XP1- 13 HeS2Ls          OFF - ";   
 			myFile.print(buffer);                                                   // "Sensor headset instructor           XP1- 13 HeS2Ls          OFF - ";    
 			strcpy_P(buffer, (char*)pgm_read_word(&(table_message[0])));            // "    Error! - "; 
@@ -2322,14 +2321,14 @@ void sensor_all_off()
 
 		if(bitRead(i52,3) != 0)                                                     // XP1- 5  HeS1Rs    sensor подкючения гарнитуры диспетчера с 2 наушниками
 		  {
-			regcount = mb.Hreg(205);                                          // адрес счетчика ошибки sensor подкючения гарнитуры диспетчера с 2 наушниками
+			regcount = mb.Hreg(205);                                                // адрес счетчика ошибки sensor подкючения гарнитуры диспетчера с 2 наушниками
 			regcount++;                                                             // увеличить счетчик ошибок sensor подкючения гарнитуры диспетчера с 2 наушниками
-			mb.Hreg(205,regcount);                                            // адрес счетчика ошибки sensor подкючения гарнитуры диспетчера с 2 наушниками
-			mb.Coil(205,1);                                                     // установить флаг ошибки sensor подкючения гарнитуры диспетчера с 2 наушниками
-			mb.Coil(120,1);                                                     // установить общий флаг ошибки
-			regcount_err = mb.Hreg(adr_reg_count_err);                          // Получить данные счетчика всех ошибок
+			mb.Hreg(205,regcount);                                                  // адрес счетчика ошибки sensor подкючения гарнитуры диспетчера с 2 наушниками
+			mb.Coil(205,1);                                                         // установить флаг ошибки sensor подкючения гарнитуры диспетчера с 2 наушниками
+			mb.Coil(120,1);                                                         // установить общий флаг ошибки
+			regcount_err = mb.Hreg(adr_reg_count_err);                              // Получить данные счетчика всех ошибок
 			regcount_err++;                                                         // увеличить счетчик всех ошибок 
-			mb.Hreg(adr_reg_count_err,regcount_err);                            // Сохранить данные счетчика всех ошибок
+			mb.Hreg(adr_reg_count_err,regcount_err);                                // Сохранить данные счетчика всех ошибок
 			strcpy_P(buffer, (char*)pgm_read_word(&(string_table_err[5])));         // "Sensor headset dispatcher 2         XP1- 13 HeS2Ls          OFF - ";  
 			myFile.print(buffer);                                                   // "Sensor headset dispatcher 2         XP1- 13 HeS2Ls          OFF - ";     
 			strcpy_P(buffer, (char*)pgm_read_word(&(table_message[0])));            // "    Error! - "; 
@@ -2350,14 +2349,14 @@ void sensor_all_off()
 		
 		if(bitRead(i52,4) != 0)                                                     // XP1- 1  HeS1Ls   sensor подкючения гарнитуры диспетчера 
 		  {
-			regcount = mb.Hreg(206);                                          // адрес счетчика ошибки sensor подкючения гарнитуры диспетчера
+			regcount = mb.Hreg(206);                                                // адрес счетчика ошибки sensor подкючения гарнитуры диспетчера
 			regcount++;                                                             // увеличить счетчик ошибок sensor подкючения гарнитуры диспетчера 
-			mb.Hreg(206,regcount);                                            // адрес счетчика ошибки sensor подкючения гарнитуры диспетчера
-			mb.Coil(206,1);                                                     // установить флаг ошибки sensor подкючения гарнитуры диспетчера
-			mb.Coil(120,1);                                                     // установить общий флаг ошибки
-			regcount_err = mb.Hreg(adr_reg_count_err);                          // Получить данные счетчика всех ошибок
+			mb.Hreg(206,regcount);                                                  // адрес счетчика ошибки sensor подкючения гарнитуры диспетчера
+			mb.Coil(206,1);                                                         // установить флаг ошибки sensor подкючения гарнитуры диспетчера
+			mb.Coil(120,1);                                                         // установить общий флаг ошибки
+			regcount_err = mb.Hreg(adr_reg_count_err);                              // Получить данные счетчика всех ошибок
 			regcount_err++;                                                         // увеличить счетчик всех ошибок 
-			mb.Hreg(adr_reg_count_err,regcount_err);                            // Сохранить данные счетчика всех ошибок
+			mb.Hreg(adr_reg_count_err,regcount_err);                                // Сохранить данные счетчика всех ошибок
 			strcpy_P(buffer, (char*)pgm_read_word(&(string_table_err[6])));         // "Sensor headset dispatcher           XP1- 1  HeS1Ls          OFF - "; 
 			myFile.print(buffer);                                                   // "Sensor headset dispatcher           XP1- 1  HeS1Ls          OFF - ";    
 			strcpy_P(buffer, (char*)pgm_read_word(&(table_message[0])));            // "    Error! - "; 
@@ -2460,7 +2459,6 @@ void sensor_all_off()
 	delay(100);
 
 	mb.Hreg(adr_control_command,0);                                             // Завершить программу    
-	//delay(100);
 }
 void sensor_all_on()
 {
@@ -3521,7 +3519,6 @@ void test_headset_instructor()
 	mb.Coil(29,1);                                                              // ВКЛ XP1- 13 HeS2Ls Кнопка  ВКЛ флаг подключения гарнитуры инструктора 
 	UpdateRegs();                                                                   // 
 	delay(500); 
-	wdt_reset();    //
 	byte i53 = mb.Hreg(7);                                                  // Получить текущее состояние Камертона
 		if(bitRead(i53,4) == 0)                                                     // Реле RL4 XP1 12  HeS2e   Включение микрофона инструктора
 		  {
@@ -3577,7 +3574,6 @@ void test_headset_instructor()
 	mcp_Analog.digitalWrite(Front_led_Blue, HIGH); 
 	delay(100);
 	mb.Hreg(adr_control_command,0);                                             // Завершить программу    
-	//delay(100);
 }
 void test_headset_dispatcher()
  {
@@ -3679,7 +3675,6 @@ void test_headset_dispatcher()
 	mcp_Analog.digitalWrite(Front_led_Blue, HIGH); 
 	delay(100);
 	mb.Hreg(adr_control_command,0);                                             // Завершить программу    
-	//delay(100);
  }
 void test_MTT()
 {
@@ -3808,7 +3803,7 @@ void test_tangR()
 
 	 UpdateRegs(); 
 	  // 2)  Проверка  на отключение J8-23     XP7 1 PTT1 тангента ручная CTS
-		if(mb.Hreg(adr_reg_ind_CTS) != 0)                                       // Проверка  на отключение XP7 1 PTT1 тангента ручная CTS "Command PTT1 tangenta ruchnaja (CTS)                        OFF - ";
+		if(mb.Ists(adr_reg_ind_CTS) != 0)                                       // Проверка  на отключение XP7 1 PTT1 тангента ручная CTS "Command PTT1 tangenta ruchnaja (CTS)                        OFF - ";
 		  {
 			regcount = mb.Hreg(270);                                          // адрес счетчика ошибки                                  "Command PTT1 tangenta ruchnaja (CTS)                        OFF - ";
 			regcount++;                                                             // увеличить счетчик ошибок
@@ -3906,7 +3901,7 @@ void test_tangR()
 		  }
 	 UpdateRegs(); 
 	  // 2)  Проверка  на отключение J8-23     XP7 1 PTT1 тангента ручная CTS
-		if(mb.Hreg(adr_reg_ind_CTS) == 0)                                       // Проверка  на отключение XP7 1 PTT1 тангента ручная CTS    "Command PTT1 tangenta ruchnaja (CTS)                        ON  - ";
+		if(mb.Ists(adr_reg_ind_CTS) == 0)                                       // Проверка  на отключение XP7 1 PTT1 тангента ручная CTS    "Command PTT1 tangenta ruchnaja (CTS)                        ON  - ";
 		  {
 			regcount = mb.Hreg(272);                                          // адрес счетчика ошибки PTT  MTT (CTS)                      "Command PTT1 tangenta ruchnaja (CTS)                        ON  - ";
 			regcount++;                                                             // увеличить счетчик ошибок
@@ -3988,8 +3983,7 @@ void test_tangN()
 	if (test_repeat == false)  myFile.println(buffer);                              //
   
 	byte i50 = mb.Hreg(4);    
-//	byte i52 = regBank.get(40006);     
-//	byte i53 = regBank.get(40007);     
+ 
 	if(bitRead(i50,4) != 0)                                                         // J8-11     XP8 2 sensor тангента                  "Command sensor tangenta nognaja                             OFF - ";
 		{
 			regcount = (276);                                          // адрес счетчика ошибки sensor тангента ручная     "Command sensor tangenta nognaja                             OFF - ";
@@ -4019,7 +4013,7 @@ void test_tangN()
 
 	 UpdateRegs(); 
 	  // 2)  Проверка  на отключение  XP8 1 PTT1 тангента ножная CTS
-		if(mb.Hreg(adr_reg_ind_CTS) != 0)                                       // Проверка  на отключение XP8 1 PTT1 тангента   "Command PTT tangenta nognaja (CTS)                          OFF - ";
+		if(mb.Ists(adr_reg_ind_CTS) != 0)                                       // Проверка  на отключение XP8 1 PTT1 тангента   "Command PTT tangenta nognaja (CTS)                          OFF - ";
 		  {
 			regcount = mb.Hreg(278);                                          // адрес счетчика ошибки 
 			regcount++;                                                             // увеличить счетчик ошибок
@@ -4059,11 +4053,7 @@ void test_tangN()
 	delay(400);
 
 	i50 = mb.Hreg(4);    
-	//byte i52 = regBank.get(40006);     
-	//byte i53 = regBank.get(40007);     
-
-
-			if(bitRead(i50,4) == 0)                                                 // J8-11     XP7 2 sensor тангента                    "Command sensor tangenta nognaja                             ON  - ";
+	if(bitRead(i50,4) == 0)                                                 // J8-11     XP7 2 sensor тангента                    "Command sensor tangenta nognaja                             ON  - ";
 		  {
 			regcount = mb.Hreg(277);                                          // адрес счетчика ошибки sensor тангента ручная       "Command sensor tangenta nognaja                             ON  - ";
 			regcount++;                                                             // увеличить счетчик ошибок sensor тангента ручная    "Command sensor tangenta nognaja                             ON  - ";
@@ -4091,7 +4081,7 @@ void test_tangN()
 		  }
 	 UpdateRegs(); 
 	  // 2)  Проверка  на отключение  XP8 1 PTT1 тангента  CTS
-		if(mb.Hreg(adr_reg_ind_CTS) == 0)                                       // Проверка  на отключение XP8 1         "Command PTT tangenta nognaja (CTS)                          ON  - ";
+		if(mb.Ists(adr_reg_ind_CTS) == 0)                                       // Проверка  на отключение XP8 1         "Command PTT tangenta nognaja (CTS)                          ON  - ";
 		  {
 			regcount = mb.Hreg(279);                                          // адрес счетчика ошибки                 "Command PTT tangenta nognaja (CTS)                          ON  - ";          
 			regcount++;                                                             // увеличить счетчик ошибок
@@ -4153,12 +4143,8 @@ void test_mikrophon()
 	delay(500);
 
 	 // +++++++++++++++++++++++++++++++++++++++ Проверка  на отключение сенсора и  PTT microphone ++++++++++++++++++++++++++++++++++++++++++++
-//		byte i50 = regBank.get(40004);    
 	byte i52 = mb.Hreg(6);     
-//	byte i53 = regBank.get(40007);     
-
-	//byte i52 = regs_in[2];    
-			if(bitRead(i52,5) != 0)                                                 // XS1 - 6   sensor отключения микрофона
+		if(bitRead(i52,5) != 0)                                                 // XS1 - 6   sensor отключения микрофона
 		  {
 			regcount = mb.Hreg(207);                                          // адрес счетчика ошибки sensor подключения микрофона
 			regcount++;                                                             // увеличить счетчик ошибок sensor подключения микрофона
@@ -4189,7 +4175,7 @@ void test_mikrophon()
 	 delay(500);
 
 	  // 2)  Проверка  на отключение PTT microphone
-		if(mb.Hreg(adr_reg_ind_CTS) != 0)                                       // Проверка  на отключение "Test microphone PTT  (CTS)                                  OFF - ";
+		if(mb.Ists(adr_reg_ind_CTS) != 0)                                       // Проверка  на отключение "Test microphone PTT  (CTS)                                  OFF - ";
 		  {
 			regcount = mb.Hreg(264);                                          // адрес счетчика ошибки       "Test microphone PTT  (CTS)                                  OFF - ";
 			regcount++;                                                             // увеличить счетчик ошибок
@@ -4224,9 +4210,6 @@ void test_mikrophon()
 	delay(500);
    
 	i52 = mb.Hreg(6);     
-	//byte i53 = regBank.get(40007);     
-
-	//i52 = regs_in[2];    
 
 	  if(bitRead(i52,5) == 0)                                                       // XS1 - 6   sensor отключения микрофона
 		  {
@@ -4265,9 +4248,6 @@ void test_mikrophon()
 	delay(500);
   
 	i52 = mb.Hreg(6);     
-	//byte i53 = regBank.get(40007);     
-	//i52 = regs_in[2];    
-
 	if(bitRead(i52,5) == 0)                                                         // XS1 - 6   sensor отключения микрофона
 		  {
 			regcount = mb.Hreg(217);                                          // адрес счетчика ошибки sensor подключения микрофона
@@ -4299,7 +4279,7 @@ void test_mikrophon()
 	 delay(500);
 
 	  // 2)  Проверка  на включение  PTT microphone
-		if(mb.Hreg(adr_reg_ind_CTS) == 0)                                       // Проверка  на включение      "Test microphone PTT  (CTS)                                  ON  
+		if(mb.Ists(adr_reg_ind_CTS) == 0)                                       // Проверка  на включение      "Test microphone PTT  (CTS)                                  ON  
 		  {
 			regcount = mb.Hreg(266);                                          // адрес счетчика ошибки       "Test microphone PTT  (CTS)                                  ON  - ";
 			regcount++;                                                             // увеличить счетчик ошибок
@@ -4372,7 +4352,7 @@ void test_mikrophon()
 	delay(100);
 
 	  // 2)  Проверка  на отключение PTT microphone
-		if(mb.Hreg(adr_reg_ind_CTS) != 0)                                       // Проверка  на отключение "Test microphone PTT  (CTS)                                  OFF - ";
+		if(mb.Ists(adr_reg_ind_CTS) != 0)                                       // Проверка  на отключение "Test microphone PTT  (CTS)                                  OFF - ";
 		  {
 			regcount = mb.Hreg(264);                                          // адрес счетчика ошибки       "Test microphone PTT  (CTS)                                  OFF - ";
 			regcount++;                                                             // увеличить счетчик ошибок
@@ -4482,7 +4462,7 @@ void testGGS()
 				if (test_repeat == false) myFile.println(buffer);                   //  sensor  трубки отключен  - Pass
 			   }
 		  }
-		if(mb.Hreg(adr_reg_ind_DCD)!= 0)                                         // Проверить включение HangUp  DCD   "Test MTT HangUp (DCD)                                       OFF - ";
+		if(mb.Ists(adr_reg_ind_DCD)!= 0)                                         // Проверить включение HangUp  DCD   "Test MTT HangUp (DCD)                                       OFF - ";
 		  {
 			regcount = mb.Hreg(267);                                          // адрес счетчика ошибки отключения HangUp  DCD  "Test MTT HangUp (DCD)                                       OFF - ";
 			regcount++;                                                             // увеличить счетчик ошибок
@@ -4500,7 +4480,7 @@ void testGGS()
 		 }
 	  else
 		 {
-			   if (test_repeat == false)
+			if (test_repeat == false)
 			   {
 				strcpy_P(buffer, (char*)pgm_read_word(&(string_table_err[67])));    // "Test MTT HangUp (DCD)                                       OFF - ";
 				myFile.print(buffer);                                               // 
@@ -4564,7 +4544,7 @@ void testGGS()
 		  }
 		else
 		  {
-			   if (test_repeat == false)
+			 if (test_repeat == false)
 			   {
 				strcpy_P(buffer, (char*)pgm_read_word(&(string_table_err[10])));    // "Sensor MTT                     XP1- 19 HaSs   ON                 - ";  
 				myFile.print(buffer);                                               // 
@@ -4573,7 +4553,7 @@ void testGGS()
 			   }
 		  }
 
-		if(mb.Hreg(adr_reg_ind_DCD)!= 0)                                         // Проверить включение HangUp  DCD   "Test MTT HangUp (DCD)                                       OFF - ";
+		if(mb.Ists(adr_reg_ind_DCD)!= 0)                                         // Проверить включение HangUp  DCD   "Test MTT HangUp (DCD)                                       OFF - ";
 		  {
 			regcount = mb.Hreg(267);                                          // адрес счетчика ошибки отключения HangUp  DCD  "Test MTT HangUp (DCD)                                       OFF - ";
 			regcount++;                                                             // увеличить счетчик ошибок
@@ -4591,7 +4571,7 @@ void testGGS()
 		 }
 	  else
 		 {
-			   if (test_repeat == false)
+			 if (test_repeat == false)
 			   {
 				strcpy_P(buffer, (char*)pgm_read_word(&(string_table_err[67])));    // "Test MTT HangUp (DCD)                                       OFF - ";
 				myFile.print(buffer);                                               // 
@@ -4619,7 +4599,7 @@ void testGGS()
 	delay(1000);
 	UpdateRegs();
 
-	   if(mb.Hreg(adr_reg_ind_DCD)== 0)                                         // Проверить включение HangUp  DCD "Test MTT HangUp (DCD)                                       ON  - ";
+	   if(mb.Ists(adr_reg_ind_DCD)== 0)                                         // Проверить включение HangUp  DCD "Test MTT HangUp (DCD)                                       ON  - ";
 		  {
 			regcount = mb.Hreg(268);                                          // адрес счетчика ошибки отключения HangUp  DCD "Test MTT HangUp (DCD)                                       ON  - ";
 			regcount++;                                                             // увеличить счетчик ошибок
@@ -4771,18 +4751,18 @@ void test_power()
 	myFile.println(buffer);                                                         // " ****** Test power start! ******"                           ;
 	file_print_date();
 	myFile.println("");
+	// Информация об применяемых регистрах
+	//mb.Hreg(293);                         // Aдрес счетчика  ошибки ADC1 напряжение 12/3 вольт
+	//mb.Hreg(294);                         // Aдрес счетчика  ошибки ADC14 напряжение 12/3 вольт Radio1
+	//mb.Hreg(295);                         // Aдрес счетчика  ошибки ADC14 напряжение 12/3 вольт Radio2
+	//mb.Hreg(296);                         // Aдрес счетчика  ошибки ADC14 напряжение 12/3 вольт ГГС
+	//mb.Hreg(297);                         // Aдрес счетчика  ошибки ADC15 напряжение светодиода 3,6 вольта
 
-	//mb.addHreg(40293);                         // Aдрес счетчика  ошибки ADC1 напряжение 12/3 вольт
-	//mb.addHreg(40294);                         // Aдрес счетчика  ошибки ADC14 напряжение 12/3 вольт Radio1
-	//mb.addHreg(40295);                         // Aдрес счетчика  ошибки ADC14 напряжение 12/3 вольт Radio2
-	//mb.addHreg(40296);                         // Aдрес счетчика  ошибки ADC14 напряжение 12/3 вольт ГГС
-	//mb.addHreg(40297);                         // Aдрес счетчика  ошибки ADC15 напряжение светодиода 3,6 вольта
-
-	//mb.addHreg(40493);                         // Aдрес данных измерения ADC1 напряжение 12/3 вольт
-	//mb.addHreg(40494);                         // Aдрес данных измерения ADC14 напряжение 12/3 вольт Radio1
-	//mb.addHreg(40495);                         // Aдрес данных измерения ADC14 напряжение 12/3 вольт Radio2
-	//mb.addHreg(40496);                         // Aдрес данных измерения ADC14 напряжение 12/3 вольт ГГС
-	//mb.addHreg(40497);                         // Aдрес данных измерения ADC15 напряжение светодиода 3,6 вольта
+	//mb.Hreg(493);                         // Aдрес данных измерения ADC1 напряжение 12/3 вольт
+	//mb.Hreg(494);                         // Aдрес данных измерения ADC14 напряжение 12/3 вольт Radio1
+	//mb.Hreg(495);                         // Aдрес данных измерения ADC14 напряжение 12/3 вольт Radio2
+	//mb.Hreg(496);                         // Aдрес данных измерения ADC14 напряжение 12/3 вольт ГГС
+	//mb.Hreg(497);                         // Aдрес данных измерения ADC15 напряжение светодиода 3,6 вольта
 
 	measure_power();
 
@@ -5020,14 +5000,13 @@ void measure_mks()
   unsigned long duration1 = 0;
   duration = pulseIn(A12, HIGH);
 	  for (int imp = 0;imp < 10; imp++)
-	  {
-	   duration = pulseIn(A12, HIGH);
-	   duration1 += duration;
-	  }
+		  {
+			   duration = pulseIn(A12, HIGH);
+			   duration1 += duration;
+		  }
 	  duration = duration1/10;
-  //Serial.println(duration);
- mb.Hreg(469,duration); 	 
- mb.Hreg(63,duration);                          // Передать длительность импульса яркости в программу
+	 mb.Hreg(469,duration); 	 
+	 mb.Hreg(63,duration);                          // Передать длительность импульса яркости в программу
 }
 
 void test_instr_off()
@@ -5059,12 +5038,8 @@ void test_instr_off()
 	delay(100);
 
 	byte i52 = mb.Hreg(6);     
-//	byte i53 = regBank.get(40007);     
 
-
-//	byte i52 = regs_in[2];    
-	 
-	  // 1)  Проверка сенсора на отключение гарнитуры инструктора 2 наушниками
+	// 1)  Проверка сенсора на отключение гарнитуры инструктора 2 наушниками
 		if(bitRead(i52,1) != 0)                                                     // XP1- 16 HeS2Rs    sensor подключения гарнитуры инструктора с 2 наушниками
 		  {
 			regcount = mb.Hreg(203);                                          // адрес счетчика ошибки sensor подключения гарнитуры инструктора с 2 наушниками
@@ -5151,7 +5126,7 @@ void test_instr_off()
 		UpdateRegs(); 
 		delay(100);
 
-	   if(mb.Hreg(adr_reg_ind_CTS) != 0)                                        // Проверить включение PTT инструктора   CTS "Command PTT headset instructor (CTS)                        OFF - ";
+	   if(mb.Ists(adr_reg_ind_CTS) != 0)                                        // Проверить включение PTT инструктора   CTS "Command PTT headset instructor (CTS)                        OFF - ";
 		  {
 			regcount = mb.Hreg(220);                                          // адрес счетчика ошибки отключения PTT гарнитуры инструктора "Command PTT headset instructor (CTS)                        OFF - ";
 			regcount++;                                                             // увеличить счетчик ошибок
@@ -5262,7 +5237,7 @@ void test_instr_on()
 		UpdateRegs(); 
 		delay(100);
 
-	   if(mb.Hreg(adr_reg_ind_CTS)== 0)                                         // Проверить включение PTT инструктора   CTS "Command PTT headset instructor (CTS)                        ON  - ";
+	   if(mb.Ists(adr_reg_ind_CTS)== 0)                                         // Проверить включение PTT инструктора   CTS "Command PTT headset instructor (CTS)                        ON  - ";
 		  {
 			regcount = mb.Hreg(221);                                          // адрес счетчика ошибки отключения PTT гарнитуры инструктора "Command PTT headset instructor (CTS)                        ON  - ";
 			regcount++;                                                             // увеличить счетчик ошибок
@@ -5411,7 +5386,7 @@ void test_disp_off()
 		UpdateRegs(); 
 		delay(100);
 
-	   if(mb.Hreg(adr_reg_ind_CTS) != 0)                                        // Проверить отключения PTT диспетчера   CTS "Command PTT headset instructor (CTS)                        OFF - ";
+	   if(mb.Ists(adr_reg_ind_CTS) != 0)                                        // Проверить отключения PTT диспетчера   CTS "Command PTT headset instructor (CTS)                        OFF - ";
 		  {
 			regcount = mb.Hreg(222);                                          // адрес счетчика   ошибки отключения PTT гарнитуры диспетчера "Command PTT headset instructor (CTS)                        OFF - ";
 			regcount++;                                                             // увеличить счетчик ошибок
@@ -5522,7 +5497,7 @@ void test_disp_on()
 
 		UpdateRegs(); 
 
-	   if(mb.Hreg(adr_reg_ind_CTS)== 0)                                         // Проверить включение PTT диспетчера   "Command PTT headset dispatcher (CTS)                        ON  - ";
+	   if(mb.Ists(adr_reg_ind_CTS)== 0)                                         // Проверить включение PTT диспетчера   "Command PTT headset dispatcher (CTS)                        ON  - ";
 		  {
 			regcount = mb.Hreg(223);                                          // адрес счетчика ошибки  отключения PTT гарнитуры диспетчера "Command PTT headset instructor (CTS)                        ON  - ";
 			regcount++;                                                             // увеличить счетчик ошибок
@@ -5614,7 +5589,7 @@ void test_MTT_off()
 		   delay(1000);
 	
 	  // 2)  Проверка  на отключение PTT  MTT (CTS)
-		if(mb.Hreg(adr_reg_ind_CTS) != 0)                                       // Проверка  на отключение CTS MTT
+		if(mb.Ists(adr_reg_ind_CTS) != 0)                                       // Проверка  на отключение CTS MTT
 		  {
 			regcount = mb.Hreg(40263);                                          // адрес счетчика ошибки PTT  MTT (CTS) "Test MTT PTT    (CTS)                                       OFF - ";
 			regcount++;                                                             // увеличить счетчик ошибок
@@ -5641,7 +5616,7 @@ void test_MTT_off()
 			   }                   
 		  }
 
-	   if(mb.Hreg(adr_reg_ind_DCD)!= 0)                                         // Проверить включение HangUp  DCD   "Test MTT HangUp (DCD)                                       OFF - ";
+	   if(mb.Ists(adr_reg_ind_DCD)!= 0)                                         // Проверить включение HangUp  DCD   "Test MTT HangUp (DCD)                                       OFF - ";
 		  {
 			regcount = mb.Hreg(267);                                          // адрес счетчика ошибки отключения HangUp  DCD  "Test MTT HangUp (DCD)                                       OFF - ";
 			regcount++;                                                             // увеличить счетчик ошибок
@@ -5725,7 +5700,7 @@ void test_MTT_on()
 		UpdateRegs(); 
 
 	  // 2)  Проверка  на отключение PTT  MTT (CTS)
-		if(mb.Hreg(adr_reg_ind_CTS) == 0)                                       // Проверка  на включение CTS MTT
+		if(mb.Ists(adr_reg_ind_CTS) == 0)                                       // Проверка  на включение CTS MTT
 		  {
 			regcount = mb.Hreg(265);                                          // адрес счетчика ошибки PTT  MTT (CTS) "Test MTT PTT    (CTS)                                       ON  - ";
 			regcount++;                                                             // увеличить счетчик ошибок
@@ -5752,7 +5727,7 @@ void test_MTT_on()
 			   }
 		  }
 
-	   if(mb.Hreg(adr_reg_ind_DCD)== 0)                                         // Проверить включение HangUp  DCD "Test MTT HangUp (DCD)                                       ON  - ";
+	   if(mb.Ists(adr_reg_ind_DCD)== 0)                                         // Проверить включение HangUp  DCD "Test MTT HangUp (DCD)                                       ON  - ";
 		  {
 			regcount = mb.Hreg(268);                                          // адрес счетчика ошибки отключения HangUp  DCD "Test MTT HangUp (DCD)                                       ON  - ";
 			regcount++;                                                             // увеличить счетчик ошибок
@@ -5993,19 +5968,19 @@ void measure_vol_min(int istochnik, unsigned int adr_count, int adr_flagErr, uns
 		Serial.print(voltage10);
 		Serial.print(" porogV - ");
 		Serial.println(_porogV);*/
-		mb.Hreg(_adr_count+200,voltage10);                               // адрес данных ошибки канала 
+		mb.Hreg(_adr_count+200,voltage10);                                           // адрес данных ошибки канала 
 		if(voltage10 > _porogV)                                                      // Проверить исправность канала
 			{
 				myFile.print(buffer); 
-				regcount = mb.Hreg(_adr_count);                                  // адрес счетчика ошибки 
+				regcount = mb.Hreg(_adr_count);                                      // адрес счетчика ошибки 
 				regcount++;                                                          // увеличить счетчик ошибок канала 
-				mb.Hreg(_adr_count,regcount);                                    // адрес счетчика ошибки канала 
-				mb.Hreg(_adr_count+200,voltage10);                               // адрес данных ошибки канала 
-				mb.Coil(_adr_flagErr,1);                                         // установить флаг ошибки  канала 
-				regcount_err = mb.Hreg(adr_reg_count_err);                       // Получить данные счетчика всех ошибок
+				mb.Hreg(_adr_count,regcount);                                        // адрес счетчика ошибки канала 
+				mb.Hreg(_adr_count+200,voltage10);                                   // адрес данных ошибки канала 
+				mb.Coil(_adr_flagErr,1);                                             // установить флаг ошибки  канала 
+				regcount_err = mb.Hreg(adr_reg_count_err);                           // Получить данные счетчика всех ошибок
 				regcount_err++;                                                      // увеличить счетчик всех ошибок 
-				mb.Hreg(adr_reg_count_err,regcount_err);                         // Сохранить данные счетчика всех ошибок
-				mb.Coil(120,1);                                                  // установить общий флаг ошибки 
+				mb.Hreg(adr_reg_count_err,regcount_err);                             // Сохранить данные счетчика всех ошибок
+				mb.Coil(120,1);                                                      // установить общий флаг ошибки 
 				strcpy_P(buffer, (char*)pgm_read_word(&(table_message[0])));         // "    Error! - "; 
 				myFile.print(buffer);                                                // "    Error! - "; 
 				myFile.print(regcount);                                              // Показания счетчика ошибок
@@ -6020,9 +5995,9 @@ void measure_vol_min(int istochnik, unsigned int adr_count, int adr_flagErr, uns
 			{
 				if (test_repeat == false)
 				{
-					myFile.print(buffer);                                           // Наименование проверки
-					strcpy_P(buffer, (char*)pgm_read_word(&(table_message[1])));    // "Pass";
-					myFile.print(buffer);                                           // "Pass";
+					myFile.print(buffer);                                               // Наименование проверки
+					strcpy_P(buffer, (char*)pgm_read_word(&(table_message[1])));        // "Pass";
+					myFile.print(buffer);                                               // "Pass";
 					myFile.print("  ");  
 					myFile.print(voltage); 
 					myFile.print(" V");
@@ -6049,87 +6024,87 @@ void measure_vol_max(int istochnik, unsigned int adr_count, int adr_flagErr, uns
 	switch (_adr_flagErr) 
 		{
 			case 224:
-				strcpy_P(buffer, (char*)pgm_read_word(&(string_table_err[24])));    // "Test headset instructor ** Signal LineL                     ON  - ";
+				strcpy_P(buffer, (char*)pgm_read_word(&(string_table_err[24])));     // "Test headset instructor ** Signal LineL                     ON  - ";
 				break;
 			case 225:
-				strcpy_P(buffer, (char*)pgm_read_word(&(string_table_err[25])));    // "Test headset instructor ** Signal LineR                     ON  - "; 
+				strcpy_P(buffer, (char*)pgm_read_word(&(string_table_err[25])));     // "Test headset instructor ** Signal LineR                     ON  - "; 
 				break;
 			case 226:
-				strcpy_P(buffer, (char*)pgm_read_word(&(string_table_err[26])));    // "Test headset instructor ** Signal Mag phone                 ON  - ";
+				strcpy_P(buffer, (char*)pgm_read_word(&(string_table_err[26])));     // "Test headset instructor ** Signal Mag phone                 ON  - ";
 				break;
 			case 227:
-				strcpy_P(buffer, (char*)pgm_read_word(&(string_table_err[27])));    // "Test headset dispatcher ** Signal LineL                     ON  - ";
+				strcpy_P(buffer, (char*)pgm_read_word(&(string_table_err[27])));     // "Test headset dispatcher ** Signal LineL                     ON  - ";
 				break;
 			case 228:
-				strcpy_P(buffer, (char*)pgm_read_word(&(string_table_err[28])));    // "Test headset dispatcher ** Signal LineR                     ON  - "; 
+				strcpy_P(buffer, (char*)pgm_read_word(&(string_table_err[28])));     // "Test headset dispatcher ** Signal LineR                     ON  - "; 
 				break;
 			case 229:
-				strcpy_P(buffer, (char*)pgm_read_word(&(string_table_err[29])));    // "Test headset dispatcher ** Signal Mag phone                 ON  - ";
+				strcpy_P(buffer, (char*)pgm_read_word(&(string_table_err[29])));     // "Test headset dispatcher ** Signal Mag phone                 ON  - ";
 				break;
 			case 259:
-				strcpy_P(buffer, (char*)pgm_read_word(&(string_table_err[59])));    // "Test MTT ** Signal GGS                                      ON  - ";
+				strcpy_P(buffer, (char*)pgm_read_word(&(string_table_err[59])));     // "Test MTT ** Signal GGS                                      ON  - ";
 				break;
 			case 260:
-				strcpy_P(buffer, (char*)pgm_read_word(&(string_table_err[60])));    // "Test MTT ** Signal LineL                                    ON  - ";
+				strcpy_P(buffer, (char*)pgm_read_word(&(string_table_err[60])));     // "Test MTT ** Signal LineL                                    ON  - ";
 				break;
 			case 261:
-				strcpy_P(buffer, (char*)pgm_read_word(&(string_table_err[61])));    // "Test MTT ** Signal LineR                                    ON  - ";  
+				strcpy_P(buffer, (char*)pgm_read_word(&(string_table_err[61])));     // "Test MTT ** Signal LineR                                    ON  - ";  
 				break;
 			case 262:
-				strcpy_P(buffer, (char*)pgm_read_word(&(string_table_err[62])));    // "Test MTT ** Signal Mag phone                                ON  - ";
+				strcpy_P(buffer, (char*)pgm_read_word(&(string_table_err[62])));     // "Test MTT ** Signal Mag phone                                ON  - ";
 				break;
 			case 289:
-				strcpy_P(buffer, (char*)pgm_read_word(&(string_table_err[89])));    // ошибки "Test GGS ** Signal GGS                                      ON  - ";
+				strcpy_P(buffer, (char*)pgm_read_word(&(string_table_err[89])));     // ошибки "Test GGS ** Signal GGS                                      ON  - ";
 				break;
 			case 290:
-				strcpy_P(buffer, (char*)pgm_read_word(&(string_table_err[90])));    // ошибки "Test GGS ** Signal FrontL                                   ON  - ";
+				strcpy_P(buffer, (char*)pgm_read_word(&(string_table_err[90])));     // ошибки "Test GGS ** Signal FrontL                                   ON  - ";
 				break;
 			case 291:
-				strcpy_P(buffer, (char*)pgm_read_word(&(string_table_err[91])));    // ошибки "Test GGS ** Signal FrontR                                   ON  - ";
+				strcpy_P(buffer, (char*)pgm_read_word(&(string_table_err[91])));     // ошибки "Test GGS ** Signal FrontR                                   ON  - ";
 				break;
 			case 292:
-				strcpy_P(buffer, (char*)pgm_read_word(&(string_table_err[92])));    // ошибки "Test GGS ** Signal mag phone                                ON  - ";
+				strcpy_P(buffer, (char*)pgm_read_word(&(string_table_err[92])));     // ошибки "Test GGS ** Signal mag phone                                ON  - ";
 				break;
 			case 298:
-				strcpy_P(buffer, (char*)pgm_read_word(&(string_table_err[98])));    // "Test Microphone ** Signal mag phone                         ON  - ";      
+				strcpy_P(buffer, (char*)pgm_read_word(&(string_table_err[98])));     // "Test Microphone ** Signal mag phone                         ON  - ";      
 				break;
 			case 299:
-				strcpy_P(buffer, (char*)pgm_read_word(&(string_table_err[99])));    // "Test Microphone ** Signal LineL                             ON  - ";  
+				strcpy_P(buffer, (char*)pgm_read_word(&(string_table_err[99])));     // "Test Microphone ** Signal LineL                             ON  - ";  
 				break;
 			case 309:
-				strcpy_P(buffer, (char*)pgm_read_word(&(string_table_err[109])));   // "Test Radio1 ** Signal Radio1                                ON  - ";
+				strcpy_P(buffer, (char*)pgm_read_word(&(string_table_err[109])));    // "Test Radio1 ** Signal Radio1                                ON  - ";
 				break;
 			case 319:
-				strcpy_P(buffer, (char*)pgm_read_word(&(string_table_err[119])));   // "Test Radio1 ** Signal Radio2                                ON  - ";
+				strcpy_P(buffer, (char*)pgm_read_word(&(string_table_err[119])));    // "Test Radio1 ** Signal Radio2                                ON  - ";
 				break;
 			case 330:
-				strcpy_P(buffer, (char*)pgm_read_word(&(string_table_err[130])));   // "Test Radio1 ** Signal mag radio                              ON  - ";
+				strcpy_P(buffer, (char*)pgm_read_word(&(string_table_err[130])));    // "Test Radio1 ** Signal mag radio                              ON  - ";
 				break;
 			case 331:
-				strcpy_P(buffer, (char*)pgm_read_word(&(string_table_err[131])));   // "Test Radio2 ** Signal mag radio                              ON  - ";
+				strcpy_P(buffer, (char*)pgm_read_word(&(string_table_err[131])));    // "Test Radio2 ** Signal mag radio                              ON  - ";
 				break;
 			case 332:
-				strcpy_P(buffer, (char*)pgm_read_word(&(string_table_err[132])));   // "Test GGS ** Signal mag radio                              ON  - ";
+				strcpy_P(buffer, (char*)pgm_read_word(&(string_table_err[132])));    // "Test GGS ** Signal mag radio                              ON  - ";
 				break;
 
 		}
 
-	mb.Hreg(_adr_count+200,voltage10);                                          // адрес данных ошибки канала 
-		if(voltage10 < _porogV)                                                     // Проверить исправность канала
+		mb.Hreg(_adr_count+200,voltage10);                                           // адрес данных ошибки канала 
+		if(voltage10 < _porogV)                                                      // Проверить исправность канала
 			{
 				myFile.print(buffer); 
-				regcount = mb.Hreg(_adr_count);                                 // адрес счетчика ошибки 
-				regcount++;                                                         // увеличить счетчик ошибок канала 
-				mb.Hreg(_adr_count, regcount);                                  // адрес счетчика ошибки канала 
-				//regBank.set(_adr_count+200,voltage10);                              // адрес данных ошибки канала 
-				mb.Coil(_adr_flagErr,1);                                            // установить флаг ошибки  канала 
-				regcount_err = mb.Hreg(adr_reg_count_err);                       // Получить данные счетчика всех ошибок
+				regcount = mb.Hreg(_adr_count);                                      // адрес счетчика ошибки 
+				regcount++;                                                          // увеличить счетчик ошибок канала 
+				mb.Hreg(_adr_count, regcount);                                       // адрес счетчика ошибки канала 
+				//regBank.set(_adr_count+200,voltage10);                             // адрес данных ошибки канала 
+				mb.Coil(_adr_flagErr,1);                                             // установить флаг ошибки  канала 
+				regcount_err = mb.Hreg(adr_reg_count_err);                           // Получить данные счетчика всех ошибок
 				regcount_err++;                                                      // увеличить счетчик всех ошибок 
-				mb.Hreg(adr_reg_count_err,regcount_err);                         // Сохранить данные счетчика всех ошибок
-				mb.Coil(120,1);                                                 // установить общий флаг ошибки 
-				strcpy_P(buffer, (char*)pgm_read_word(&(table_message[0])));        // "    Error! - "; 
-				myFile.print(buffer);                                               // "    Error! - "; 
-				myFile.print(regcount);                                             // Показания счетчика ошибок
+				mb.Hreg(adr_reg_count_err,regcount_err);                             // Сохранить данные счетчика всех ошибок
+				mb.Coil(120,1);                                                      // установить общий флаг ошибки 
+				strcpy_P(buffer, (char*)pgm_read_word(&(table_message[0])));         // "    Error! - "; 
+				myFile.print(buffer);                                                // "    Error! - "; 
+				myFile.print(regcount);                                              // Показания счетчика ошибок
 				myFile.print("  ");  
 				myFile.print(voltage); 
 				myFile.print(" V");
@@ -6140,9 +6115,9 @@ void measure_vol_max(int istochnik, unsigned int adr_count, int adr_flagErr, uns
 			{
 			if (test_repeat == false)
 				{
-					myFile.print(buffer);                                           // Наименование проверки
-					strcpy_P(buffer, (char*)pgm_read_word(&(table_message[1])));    // "Pass";
-					myFile.print(buffer);                                           // "Pass";
+					myFile.print(buffer);                                            // Наименование проверки
+					strcpy_P(buffer, (char*)pgm_read_word(&(table_message[1])));     // "Pass";
+					myFile.print(buffer);                                            // "Pass";
 					myFile.print("  ");  
 					myFile.print(voltage); 
 					myFile.print(" V");
@@ -6710,28 +6685,12 @@ void setup_resistor()
 
 void setup_regModbus()
 {
-
-/*
-Присвоить объект Modbus устройства обработчик протокола
-Это то, где обработчик протокола будет смотреть, чтобы читать и писать
-зарегистрированные данные. В настоящее время протокол Modbus Slave проводник может
-имеется только одно устройство возложенные на него.
-*/
-
-//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-  //Assign the modbus device ID.  
-//  regBank.setId(1);               // Slave ID 1
-
-/*
-modbus registers follow the following format
-00001-09999  Digital Outputs, A master device can read and write to these registers
-10001-19999  Digital Inputs,  A master device can only read the values from these registersmb.addCoil
-30001-39999  Analog Inputs,   A master device can only read the values from these registers
-40001-49999  Analog Outputs,  A master device can read and write to these registers 
-Лучше всего, чтобы настроить регистры как типа в смежных блоках. это
-обеспечивает более эффективный поиск и регистра и уменьшает количество сообщений
-требуются мастера для извлечения данных.
-*/
+	
+	  // Config Modbus Serial (port, speed, byte format) 
+	mb.config(&Serial3, 38400, SERIAL_8N1);
+	// Set the Slave ID (1-247)
+	mb.setSlaveId(1);  
+   // Подключение к протоколу MODBUS компьютера Serial3    
 
 	mb.addCoil(1);                           // Реле RL0 Звук  MIC1P
 	mb.addCoil(2);                           // Реле RL1 Звук  MIC2P
@@ -6934,209 +6893,6 @@ modbus registers follow the following format
 	mb.addCoil(331);                         // Флаг ошибки "Test Radio2 ** Signal mag radio                             ON  - ";                    // 
 	mb.addCoil(332);                         // Флаг ошибки "Test GGS ** Signal mag radio   
 
-	/*
-	regBank.add(1);                           // Реле RL0 Звук  MIC1P
-	regBank.add(2);                           // Реле RL1 Звук  MIC2P
-	regBank.add(3);                           // Реле RL2 Звук  MIC3P
-	regBank.add(4);                           // Реле RL3 Звук  LFE  "Маг."
-	regBank.add(5);                           // Реле RL4 XP1 12  HeS2e   Включение микрофона инструктора
-	regBank.add(6);                           // Реле RL5 Звук Front L, Front R
-	regBank.add(7);                           // Реле RL6 Звук Center
-	regBank.add(8);                           // Реле RL7 Питание платы
-  
-	regBank.add(9);                           // Реле RL8 Звук на микрофон
-	regBank.add(10);                          // Реле RL9 XP1 10 Включение микрофона диспетчера
-	regBank.add(11);                          // Реле RL10 Включение питания на высоковольтный модуль 
-	regBank.add(12);                          // Свободен J24 - 1 
-	regBank.add(13);                          // XP8 - 2   sensor Тангента ножная
-	regBank.add(14);                          // XP8 - 1   PTT Тангента ножная
-	regBank.add(15);                          // XS1 - 5   PTT Мик
-	regBank.add(16);                          // XS1 - 6   sensor Мик
- 
-	regBank.add(17);                          // J8-12     XP7 4 PTT2   Танг. р.
-	regBank.add(18);                          // XP1 - 20  HangUp  DCD
-	regBank.add(19);                          // J8-11     XP7 2 sensor  Танг. р.
-	regBank.add(20);                          // J8-23     XP7 1 PTT1 Танг. р.
-	regBank.add(21);                          // XP2-2     sensor "Маг."  
-	regBank.add(22);                          // XP5-3     sensor "ГГC."
-	regBank.add(23);                          // XP3-3     sensor "ГГ-Радио1."
-	regBank.add(24);                          // XP4-3     sensor "ГГ-Радио2."
- 
-	regBank.add(25);                          // XP1- 19 HaSs      sensor подключения трубки    MTT                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
-	regBank.add(26);                          // XP1- 17 HaSPTT    CTS DSR вкл.  
-	regBank.add(27);                          // XP1- 16 HeS2Rs    sensor подключения гарнитуры инструктора с 2 наушниками
-	regBank.add(28);                          // XP1- 15 HeS2PTT   CTS вкл PTT Инструктора
-	regBank.add(29);                          // XP1- 13 HeS2Ls    sensor подключения гарнитуры инструктора 
-	regBank.add(30);                          // XP1- 6  HeS1PTT   CTS вкл   РТТ Диспетчера
-	regBank.add(31);                          // XP1- 5  HeS1Rs    sensor подкючения гарнитуры диспетчера с 2 наушниками
-	regBank.add(32);                          // XP1- 1  HeS1Ls    sensor подкючения гарнитуры диспетчера
-
-
-	regBank.add(118);                         // Флаг индикации многоразовой проверки
-	regBank.add(119);                         // 
-
-	regBank.add(120);                         // Флаг индикации возникновения любой ошибки
-	regBank.add(122);                         // Флаг индикации открытия файла
-	regBank.add(123);                         // Флаг индикации закрытия файла
-	regBank.add(124);                         // Флаг индикации связи с модулем "Камертон"
-	regBank.add(125);                         // Флаг индикации инициализации SD памяти
-	regBank.add(126);                         //  
-	regBank.add(127);                         //  
-	regBank.add(128);                         //  
-	regBank.add(129);                         //  
-
-	regBank.add(130);                         //  Флаг индикации порта 0 - RS232, 1 - USB0
-	regBank.add(131);                         //  
-
-
-	regBank.add(200);                         // Флаг ошибки "Sensor MTT                          XP1- 19 HaSs            OFF - ";
-	regBank.add(201);                         // Флаг ошибки "Sensor tangenta ruchnaja            XP7 - 2                 OFF - ";
-	regBank.add(202);                         // Флаг ошибки "Sensor tangenta nognaja             XP8 - 2                 OFF - "; 
-	regBank.add(203);                         // Флаг ошибки "Sensor headset instructor 2         XP1- 16 HeS2Rs          OFF - ";
-	regBank.add(204);                         // Флаг ошибки "Sensor headset instructor           XP1- 13 HeS2Ls          OFF - "; 
-	regBank.add(205);                         // Флаг ошибки "Sensor headset dispatcher 2         XP1- 13 HeS2Ls          OFF - ";
-	regBank.add(206);                         // Флаг ошибки "Sensor headset dispatcher           XP1- 1  HeS1Ls          OFF - ";
-	regBank.add(207);                         // Флаг ошибки "Sensor microphone                   XS1 - 6                 OFF - "; 
-	regBank.add(208);                         // Флаг ошибки "Microphone headset instructor Sw.   XP1 12 HeS2e            OFF - "; 
-	regBank.add(209);                         // Флаг ошибки "Microphone headset dispatcher Sw.   XP1 12 HeS2e            OFF - ";  
-
-	regBank.add(210);                         // Флаг ошибки "Sensor MTT                          XP1- 19 HaSs            ON  - ";
-	regBank.add(211);                         // Флаг ошибки "Sensor tangenta ruchnaja            XP7 - 2                 ON  - ";
-	regBank.add(212);                         // Флаг ошибки "Sensor tangenta nognaja             XP8 - 2                 ON  - "; 
-	regBank.add(213);                         // Флаг ошибки "Sensor headset instructor 2         XP1- 16 HeS2Rs          ON  - ";
-	regBank.add(214);                         // Флаг ошибки "Sensor headset instructor           XP1- 13 HeS2Ls          ON  - "; 
-	regBank.add(215);                         // Флаг ошибки "Sensor headset dispatcher 2         XP1- 13 HeS2Ls          ON  - ";
-	regBank.add(216);                         // Флаг ошибки "Sensor headset dispatcher           XP1- 1  HeS1Ls          ON  - ";
-	regBank.add(217);                         // Флаг ошибки "Sensor microphone                   XS1 - 6                 ON  - "; 
-	regBank.add(218);                         // Флаг ошибки "Microphone headset instructor Sw.   XP1 12 HeS2e            ON  - "; 
-	regBank.add(219);                         // Флаг ошибки "Microphone headset dispatcher Sw.   XP1 12 HeS2e            ON  - "; 
-	 
-	regBank.add(220);                         // Флаг ошибки "Command PTT headset instructor (CTS)                        OFF - ";
-	regBank.add(221);                         // Флаг ошибки "Command PTT headset instructor (CTS)                        ON  - ";
-	regBank.add(222);                         // Флаг ошибки "Command PTT headset dispatcher (CTS)                        OFF - ";
-	regBank.add(223);                         // Флаг ошибки "Command PTT headset dispatcher (CTS)                        ON  - ";
-	regBank.add(224);                         // Флаг ошибки "Test headset instructor ** Signal LineL                     ON  - ";
-	regBank.add(225);                         // Флаг ошибки "Test headset instructor ** Signal LineR                     ON  - ";   
-	regBank.add(226);                         // Флаг ошибки "Test headset instructor ** Signal Mag phone                 ON  - ";
-	regBank.add(227);                         // Флаг ошибки "Test headset dispatcher ** Signal LineL                     ON  - ";
-	regBank.add(228);                         // Флаг ошибки "Test headset dispatcher ** Signal LineR                     ON  - ";  
-	regBank.add(229);                         // Флаг ошибки "Test headset dispatcher ** Signal Mag phone                 ON  - ";
-
-	regBank.add(230);                         // Флаг ошибки "Test headset instructor ** Signal FrontL                    OFF - ";
-	regBank.add(231);                         // Флаг ошибки "Test headset instructor ** Signal FrontR                    OFF - ";
-	regBank.add(232);                         // Флаг ошибки "Test headset instructor ** Signal LineL                     OFF - ";
-	regBank.add(233);                         // Флаг ошибки "Test headset instructor ** Signal LineR                     OFF - ";
-	regBank.add(234);                         // Флаг ошибки "Test headset instructor ** Signal mag radio                 OFF - "; 
-	regBank.add(235);                         // Флаг ошибки "Test headset instructor ** Signal mag phone                 OFF - ";
-	regBank.add(236);                         // Флаг ошибки "Test headset instructor ** Signal GGS                       OFF - ";
-	regBank.add(237);                         // Флаг ошибки "Test headset instructor ** Signal GG Radio1                 OFF - ";
-	regBank.add(238);                         // Флаг ошибки "Test headset instructor ** Signal GG Radio2                 OFF - ";
-	regBank.add(239);                         // Флаг ошибки  ADC0  ток x1 
-
-	regBank.add(240);                         // Флаг ошибки "Test headset dispatcher ** Signal FrontL                    OFF - ";
-	regBank.add(241);                         // Флаг ошибки "Test headset dispatcher ** Signal FrontR                    OFF - ";
-	regBank.add(242);                         // Флаг ошибки "Test headset dispatcher ** Signal LineL                     OFF - "; 
-	regBank.add(243);                         // Флаг ошибки "Test headset dispatcher ** Signal LineR                     OFF - ";
-	regBank.add(244);                         // Флаг ошибки "Test headset dispatcher ** Signal mag radio                 OFF - "; 
-	regBank.add(245);                         // Флаг ошибки "Test headset dispatcher ** Signal mag phone                 OFF - ";
-	regBank.add(246);                         // Флаг ошибки "Test headset dispatcher ** Signal GGS                       OFF - "; 
-	regBank.add(247);                         // Флаг ошибки "Test headset dispatcher ** Signal GG Radio1                 OFF - ";
-	regBank.add(248);                         // Флаг ошибки "Test headset dispatcher ** Signal GG Radio2                 OFF - "; 
-	regBank.add(249);                         // Флаг ошибки ADC2 ток x10  
-
-	regBank.add(250);                         // Флаг ошибки "Test MTT ** Signal FrontL                                   OFF - ";
-	regBank.add(251);                         // Флаг ошибки "Test MTT ** Signal FrontR                                   OFF - ";
-	regBank.add(252);                         // Флаг ошибки "Test MTT ** Signal LineL                                    OFF - ";
-	regBank.add(253);                         // Флаг ошибки "Test MTT ** Signal LineR                                    OFF - "; 
-	regBank.add(254);                         // Флаг ошибки "Test MTT ** Signal mag radio                                OFF - ";
-	regBank.add(255);                         // Флаг ошибки "Test MTT ** Signal mag phone                                OFF - ";
-	regBank.add(256);                         // Флаг ошибки "Test MTT ** Signal GGS                                      OFF - ";
-	regBank.add(257);                         // Флаг ошибки "Test MTT ** Signal GG Radio1                                OFF - ";
-	regBank.add(258);                         // Флаг ошибки "Test MTT ** Signal GG Radio2                                OFF - "; 
-	regBank.add(259);                         // Флаг ошибки "Test MTT ** Signal GGS                                      ON  - ";
-
-	regBank.add(260);                         // Флаг ошибки "Test MTT ** Signal LineL                                    ON  - ";
-	regBank.add(261);                         // Флаг ошибки "Test MTT ** Signal LineR                                    ON  - ";  
-	regBank.add(262);                         // Флаг ошибки "Test MTT ** Signal Mag phone                                ON  - ";
-	regBank.add(263);                         // Флаг ошибки "Test MTT PTT    (CTS)                                       OFF - ";
-	regBank.add(264);                         // Флаг ошибки "Test microphone PTT  (CTS)                                  OFF - ";
-	regBank.add(265);                         // Флаг ошибки "Test MTT PTT    (CTS)                                       ON  - ";
-	regBank.add(266);                         // Флаг ошибки "Test microphone PTT  (CTS)                                  ON  - ";
-	regBank.add(267);                         // Флаг ошибки "Test MTT HangUp (DCD)                                       OFF - ";
-	regBank.add(268);                         // Флаг ошибки "Test MTT HangUp (DCD)                                       ON  - ";
-	regBank.add(269);                         // Флаг ошибки Длительность регулировки яркости 
-
-	regBank.add(270);                         // Флаг ошибки "Command PTT1 tangenta ruchnaja (CTS)                        OFF - ";
-	regBank.add(271);                         // Флаг ошибки "Command PTT2 tangenta ruchnaja (DCR)                        OFF - ";
-	regBank.add(272);                         // Флаг ошибки "Command PTT1 tangenta ruchnaja (CTS)                        ON  - ";
-	regBank.add(273);                         // Флаг ошибки "Command PTT2 tangenta ruchnaja (DCR)                        ON  - ";
-	regBank.add(274);                         // Флаг ошибки "Command sensor tangenta ruchnaja                            OFF - ";
-	regBank.add(275);                         // Флаг ошибки "Command sensor tangenta ruchnaja                            ON  - ";
-	regBank.add(276);                         // Флаг ошибки "Command sensor tangenta nognaja                             OFF - ";
-	regBank.add(277);                         // Флаг ошибки "Command sensor tangenta nognaja                             ON  - ";
-	regBank.add(278);                         // Флаг ошибки "Command PTT tangenta nognaja (CTS)                          OFF - ";
-	regBank.add(279);                         // Флаг ошибки "Command PTT tangenta nognaja (CTS)                          ON  - ";
-
-	regBank.add(280);                         // Флаг ошибки "Test GGS ** Signal FrontL                                   OFF - ";
-	regBank.add(281);                         // Флаг ошибки "Test GGS ** Signal FrontR                                   OFF - ";
-	regBank.add(282);                         // Флаг ошибки "Test GGS ** Signal LineL                                    OFF - ";
-	regBank.add(283);                         // Флаг ошибки "Test GGS ** Signal LineR                                    OFF - ";
-	regBank.add(284);                         // Флаг ошибки "Test GGS ** Signal mag radio                                OFF - ";
-	regBank.add(285);                         // Флаг ошибки "Test GGS ** Signal mag phone                                OFF - ";
-	regBank.add(286);                         // Флаг ошибки "Test GGS ** Signal GGS                                      OFF - ";
-	regBank.add(287);                         // Флаг ошибки "Test GGS ** Signal GG Radio1                                OFF - ";
-	regBank.add(288);                         // Флаг ошибки "Test GGS ** Signal GG Radio2                                OFF - ";
-	regBank.add(289);                         // Флаг ошибки "Test GGS ** Signal GGS                                      ON  - ";
-
-	regBank.add(290);                         // Флаг ошибки "Test GGS ** Signal FrontL                                   ON  - ";
-	regBank.add(291);                         // Флаг ошибки "Test GGS ** Signal FrontR                                   ON  - ";
-	regBank.add(292);                         // Флаг ошибки "Test GGS ** Signal mag phone                                ON  - ";
-	regBank.add(293);                         // Флаг ошибки ADC1 напряжение 12/3 вольт
-	regBank.add(294);                         // Флаг ошибки ADC14 напряжение 12/3 вольт Radio1
-	regBank.add(295);                         // Флаг ошибки ADC14 напряжение 12/3 вольт Radio2
-	regBank.add(296);                         // Флаг ошибки ADC14 напряжение 12/3 вольт ГГС
-	regBank.add(297);                         // Флаг ошибки ADC15 напряжение светодиода 3,6 вольта
-	regBank.add(298);                         // Флаг ошибки "Test Microphone ** Signal mag phone                         ON  - ";      
-	regBank.add(299);                         // Флаг ошибки "Test Microphone ** Signal LineL                             ON  - ";   
-
-	regBank.add(300);                         // Флаг ошибки "Test Radio1 ** Signal FrontL                                OFF - ";
-	regBank.add(301);                         // Флаг ошибки "Test Radio1 ** Signal FrontR                                OFF - ";
-	regBank.add(302);                         // Флаг ошибки "Test Radio1 ** Signal LineL                                 OFF - ";
-	regBank.add(303);                         // Флаг ошибки "Test Radio1 ** Signal LineR                                 OFF - ";
-	regBank.add(304);                         // Флаг ошибки "Test Radio1 ** Signal mag radio                             OFF - ";
-	regBank.add(305);                         // Флаг ошибки "Test Radio1 ** Signal mag phone                             OFF - ";
-	regBank.add(306);                         // Флаг ошибки "Test Radio1 ** Signal GGS                                   OFF - ";
-	regBank.add(307);                         // Флаг ошибки "Test Radio1 ** Signal GG Radio1                             OFF - ";
-	regBank.add(308);                         // Флаг ошибки "Test Radio1 ** Signal GG Radio2                             OFF - ";
-	regBank.add(309);                         // Флаг ошибки "Test Radio1 ** Signal Radio1                                ON  - ";
-
-	regBank.add(310);                         // Флаг ошибки "Test Radio2 ** Signal FrontL                                OFF - ";
-	regBank.add(311);                         // Флаг ошибки "Test Radio2 ** Signal FrontR                                OFF - ";
-	regBank.add(312);                         // Флаг ошибки "Test Radio2 ** Signal LineL                                 OFF - ";
-	regBank.add(313);                         // Флаг ошибки "Test Radio2 ** Signal LineR                                 OFF - ";
-	regBank.add(314);                         // Флаг ошибки "Test Radio2 ** Signal mag radio                             OFF - ";
-	regBank.add(315);                         // Флаг ошибки "Test Radio2 ** Signal mag phone                             OFF - ";
-	regBank.add(316);                         // Флаг ошибки "Test Radio2 ** Signal GGS                                   OFF - ";
-	regBank.add(317);                         // Флаг ошибки "Test Radio2 ** Signal GG Radio1                             OFF - ";
-	regBank.add(318);                         // Флаг ошибки "Test Radio2 ** Signal GG Radio2                             OFF - ";
-	regBank.add(319);                         // Флаг ошибки "Test Radio2 ** Signal Radio2                                ON  - ";
-
-	regBank.add(320);                         // Флаг ошибки "Test Microphone ** Signal FrontL                            OFF - ";
-	regBank.add(321);                         // Флаг ошибки "Test Microphone ** Signal FrontR                            OFF - ";
-	regBank.add(322);                         // Флаг ошибки "Test Microphone ** Signal LineL                             OFF - ";
-	regBank.add(323);                         // Флаг ошибки "Test Microphone ** Signal LineR                             OFF - ";
-	regBank.add(324);                         // Флаг ошибки "Test Microphone ** Signal mag radio                         OFF - ";
-	regBank.add(325);                         // Флаг ошибки "Test Microphone ** Signal mag phone                         OFF - ";
-	regBank.add(326);                         // Флаг ошибки "Test Microphone ** Signal GGS                               OFF - ";
-	regBank.add(327);                         // Флаг ошибки "Test Microphone ** Signal GG Radio1                         OFF - ";
-	regBank.add(328);                         // Флаг ошибки "Test Microphone ** Signal GG Radio2                         OFF - ";
-	regBank.add(329);                         // Флаг ошибки Код яркости дисплея
-
-	regBank.add(330);                         // Флаг ошибки "Test Radio1 ** Signal mag radio                             ON  - ";
-	regBank.add(331);                         // Флаг ошибки "Test Radio2 ** Signal mag radio                             ON  - ";                    // 
-	regBank.add(332);                         // Флаг ошибки "Test GGS ** Signal mag radio   
-
-	*/
 
 	mb.addIsts(81);    // Адрес флагa индикации состояния сигнала CTS
 	mb.addIsts(82);    // Адрес флагa индикации состояния сигнала DSR
@@ -7681,7 +7437,39 @@ modbus registers follow the following format
 	mb.addHreg(531);                         // Aдрес данных измерения "Test Radio2 ** Signal mag radio                             ON  - ";                    // 
 	mb.addHreg(532);                         // Aдрес данных измерения "Test GGS ** Signal mag radio   
 
-	//slave._device = &regBank;  
+//
+//	
+//	//regBank.set(40004+buffer,Serial1.read());
+//
+//	mb.Coil(21,0);                              // XP2-2     sensor "Маг."  
+//	mb.Coil(22,0);                              // XP5-3     sensor "ГГC."
+//	mb.Coil(23,0);                              // XP3-3     sensor "ГГ-Радио1."
+//	mb.Coil(24,0);                              // XP4-3     sensor "ГГ-Радио2."
+////	regBank.set(8,1);                               // Включить питание Камертон
+////	UpdateRegs();                                   // Обновить информацию в регистрах
+//
+//	for (int i = 120; i <= 131; i++)                  // Очистить флаги ошибок
+//	{
+//	   mb.Coil(i,0);   
+//	}
+//
+//	for (int i = 200; i <= 330; i++)                  // Очистить флаги ошибок
+//	{
+//	  mb.Coil(i,0);   
+//	}
+//	
+//	for (unsigned int i = 200; i <= 330; i++)         // Очистить флаги ошибок
+//	{
+//	   mb.Hreg(i,0);   
+//	}
+//		for (unsigned int i = 400; i <= 530; i++)     // Очистить флаги ошибок
+//	{
+//	   mb.Hreg(i,0);   
+//	} 
+//
+//	mb.Hreg(120,0);                                  // 
+//	mb.Hreg(adr_reg_count_err,0);                    // Обнулить данные счетчика всех ошибок
+//
 }
 void test_system()
 {
@@ -7987,17 +7775,9 @@ void setup()
 	mcp_Analog.digitalWrite(Front_led_Red, HIGH); 
 	Serial.begin(9600);                             // Подключение к USB ПК
 	Serial1.begin(115200);                          // Подключение к звуковому модулю Камертон
-
-	  // Config Modbus Serial (port, speed, byte format) 
-	mb.config(&Serial, 38400, SERIAL_8N1);
-	// Set the Slave ID (1-247)
-	mb.setSlaveId(1);  
-
-
-  //slave.setSerial(3,19200);                       // Подключение к протоколу MODBUS компьютера Serial3 
-  // 	slave.setSerial(3,57600);                       // Подключение к протоколу MODBUS компьютера Serial3                                               // 
+									 // 
 	Serial2.begin(38400);                            // 
-	//Serial2.begin(9600);                            // 
+
 	Serial.println(" ");
 	Serial.println(" ***** Start system  *****");
 	Serial.println(" ");
@@ -8019,7 +7799,6 @@ void setup()
 
 //	set_serial();                                    // Поиск СОМ порта подключения к компьютеру
 
-	//set_serial();                                    // Поиск СОМ порта подключения к компьютеру
 	AD9850.reset();                                  //reset module
 	delay(500);
 	AD9850.powerDown();                              //set signal output to LOW
@@ -8034,20 +7813,9 @@ void setup()
 
 	setup_resistor();                               // Начальные установки резистора
 
-	setup_regModbus();                              // Настройка регистров MODBUS
-
 	regs_out[0]= 0x2B;                              // Код первого байта подключения к Камертону 43
 	regs_out[1]= 0xC4;                              // 196 Изменять в реальной схеме
 	regs_out[2]= 0x7F;                              // 127 Изменять в реальной схеме
-
-	//regBank.set(40004+buffer,Serial1.read());
-
-	mb.Coil(21,0);                              // XP2-2     sensor "Маг."  
-	mb.Coil(22,0);                              // XP5-3     sensor "ГГC."
-	mb.Coil(23,0);                              // XP3-3     sensor "ГГ-Радио1."
-	mb.Coil(24,0);                              // XP4-3     sensor "ГГ-Радио2."
-//	regBank.set(8,1);                               // Включить питание Камертон
-	UpdateRegs();                                   // Обновить информацию в регистрах
 
 	#if FASTADC                                     // Ускорить считывание аналогового канала
 	// set prescale to 16
@@ -8056,35 +7824,17 @@ void setup()
 	cbi(ADCSRA,ADPS0) ;
 	#endif
 
-	for (int i = 120; i <= 131; i++)                  // Очистить флаги ошибок
-	{
-	   mb.Coil(i,0);   
-	}
-
-	for (int i = 200; i <= 330; i++)                  // Очистить флаги ошибок
-	{
-	  mb.Coil(i,0);   
-	}
-	
-	for (unsigned int i = 200; i <= 330; i++)     // Очистить флаги ошибок
-	{
-	   mb.Hreg(i,0);   
-	}
-		for (unsigned int i = 400; i <= 530; i++) // Очистить флаги ошибок
-	{
-	   mb.Hreg(i,0);   
-	} 
 	Serial.println("Initializing SD card...");
 	pinMode(49, OUTPUT);//    заменить 
 	if (!sd.begin(chipSelect)) 
 		{
 			Serial.println("initialization SD failed!");
-			mb.Coil(125,false); 
+			//mb.Coil(125,false); 
 		}
 	else
 		{
 			Serial.println("initialization SD successfully.");
-			mb.Coil(125,true); 
+			//mb.Coil(125,true); 
 		}
 
 	SdFile::dateTimeCallback(dateTime);             // Настройка времени записи файла
@@ -8092,14 +7842,12 @@ void setup()
 
   // list all files in the card with date and size
   //sd.ls (LS_R | LS_DATE | LS_SIZE);
- 
-	mb.Hreg(120,0);                            // 
-	mb.Hreg(adr_reg_count_err,0);                // Обнулить данные счетчика всех ошибок
+
 	MsTimer2::set(30, flash_time);                   // 30ms период таймера прерывани
 	resistor(1, 200);                                // Установить уровень сигнала
 	resistor(2, 200);                                // Установить уровень сигнала
-	preob_num_str();                                 // Записать начальное имя файла 
-	list_file();                                     // Вывод списка файлов в СОМ порт  
+//	preob_num_str();                                 // Записать начальное имя файла 
+//	list_file();                                     // Вывод списка файлов в СОМ порт  
 	//controlFileName();
 	//default_mem_porog();
 	prer_Kmerton_On = true;                          // Разрешить прерывания на камертон
@@ -8111,8 +7859,13 @@ void setup()
 	mcp_Analog.digitalWrite(Front_led_Red, LOW); 
 	mcp_Analog.digitalWrite(Front_led_Blue, HIGH); 
 //	logTime = micros();
-	MsTimer2::start();                               // Включить таймер прерывания
-	clear_serial2();
+	Serial.println("initialization regModbus ...!");
+	setup_regModbus();                              // Настройка регистров MODBUS
+	//delay(1500);
+	Serial.println("initialization regModbus Ok!");
+
+	//MsTimer2::start();                               // Включить таймер прерывания
+//	clear_serial2();
 //	set_serial2();
 	Serial.println(" ");                             //
 	Serial.println("System initialization OK!.");    // Информация о завершении настройки
