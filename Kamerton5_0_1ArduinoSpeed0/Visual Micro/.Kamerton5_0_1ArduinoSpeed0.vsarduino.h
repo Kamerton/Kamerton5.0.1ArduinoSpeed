@@ -83,6 +83,35 @@ extern "C" void __cxa_pure_virtual() {;}
 #define portInputRegister(P)
 #define portModeRegister(P)
 
+void dateTime(uint16_t* date, uint16_t* time);
+void serial_print_date();
+void set_time();
+void flash_time();
+void prer_Kamerton();
+void sendPacketK ();
+void waiting_for_replyK();
+void Stop_Kamerton ();
+void calculateCRC_Out();
+void calculateCRC_In();
+void i2c_eeprom_write_byte( int deviceaddress, unsigned int eeaddress, byte data );
+byte i2c_eeprom_read_byte( int deviceaddress, unsigned int eeaddress );
+void i2c_eeprom_read_buffer( int deviceaddress, unsigned int eeaddress, byte *buffer, int length );
+void i2c_eeprom_write_page( int deviceaddress, unsigned int eeaddresspage, byte* data, byte length );
+void UpdateRegs();
+void set_rezistor();
+void resistor(int resist, int valresist);
+void Reg_count_clear();
+void set_clock();
+void data_clock_exchange();
+void time_control();
+void time_control_get();
+void list_file();
+void preob_num_str();
+void serialEvent3();
+void control_command();
+void setup_mcp();
+void setup_regModbus();
+void setup_resistor();
 //
 //
 
