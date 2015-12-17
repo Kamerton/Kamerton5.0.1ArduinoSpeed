@@ -63,56 +63,56 @@ word Modbus::Reg(word address) {
 }
 
 void Modbus::addHreg(word offset, word value) {
-    this->addReg(offset + 40001, value);
+    this->addReg(offset + 40000, value);
 }
 
 bool Modbus::Hreg(word offset, word value) {
-    return Reg(offset + 40001, value);
+    return Reg(offset + 40000, value);
 }
 
 word Modbus::Hreg(word offset) {
-    return Reg(offset + 40001);
+    return Reg(offset + 40000);
 }
 
 #ifndef USE_HOLDING_REGISTERS_ONLY
     void Modbus::addCoil(word offset, bool value) {
-        this->addReg(offset + 1, value?0xFF00:0x0000);
+        this->addReg(offset + 0, value?0xFF00:0x0000);
     }
 
     void Modbus::addIsts(word offset, bool value) {
-        this->addReg(offset + 10001, value?0xFF00:0x0000);
+        this->addReg(offset + 10000, value?0xFF00:0x0000);
     }
 
     void Modbus::addIreg(word offset, word value) {
-        this->addReg(offset + 30001, value);
+        this->addReg(offset + 30000, value);
     }
 
     bool Modbus::Coil(word offset, bool value) {
-        return Reg(offset + 1, value?0xFF00:0x0000);
+        return Reg(offset + 0, value?0xFF00:0x0000);
     }
 
     bool Modbus::Ists(word offset, bool value) {
-        return Reg(offset + 10001, value?0xFF00:0x0000);
+        return Reg(offset + 10000, value?0xFF00:0x0000);
     }
 
     bool Modbus::Ireg(word offset, word value) {
-        return Reg(offset + 30001, value);
+        return Reg(offset + 30000, value);
     }
 
     bool Modbus::Coil(word offset) {
-        if (Reg(offset + 1) == 0xFF00) {
+        if (Reg(offset + 0) == 0xFF00) {
             return true;
         } else return false;
     }
 
     bool Modbus::Ists(word offset) {
-        if (Reg(offset + 10001) == 0xFF00) {
+        if (Reg(offset + 10000) == 0xFF00) {
             return true;
         } else return false;
     }
 
     word Modbus::Ireg(word offset) {
-        return Reg(offset + 30001);
+        return Reg(offset + 30000);
     }
 #endif
 
@@ -191,7 +191,7 @@ void Modbus::readRegisters(word startreg, word numregs) {
 
     //Check Address
     //*** See comments on readCoils method.
-    if (!this->searchRegister(startreg + 40001)) {
+    if (!this->searchRegister(startreg + 40000)) {
         this->exceptionResponse(MB_FC_READ_REGS, MB_EX_ILLEGAL_ADDRESS);
         return;
     }
@@ -255,7 +255,7 @@ void Modbus::writeMultipleRegisters(byte* frame,word startreg, word numoutputs, 
 
     //Check Address (startreg...startreg + numregs)
     for (int k = 0; k < numoutputs; k++) {
-        if (!this->searchRegister(startreg + 40001 + k)) {
+        if (!this->searchRegister(startreg + 40000 + k)) {
             this->exceptionResponse(MB_FC_WRITE_REGS, MB_EX_ILLEGAL_ADDRESS);
             return;
         }
@@ -300,7 +300,7 @@ void Modbus::readCoils(word startreg, word numregs) {
     //When I check all registers in range I got errors in ScadaBR
     //I think that ScadaBR request more than one in the single request
     //when you have more then one datapoint configured from same type.
-    if (!this->searchRegister(startreg + 1)) {
+    if (!this->searchRegister(startreg + 0)) {
         this->exceptionResponse(MB_FC_READ_COILS, MB_EX_ILLEGAL_ADDRESS);
         return;
     }
@@ -351,7 +351,7 @@ void Modbus::readInputStatus(word startreg, word numregs) {
 
     //Check Address
     //*** See comments on readCoils method.
-    if (!this->searchRegister(startreg + 10001)) {
+    if (!this->searchRegister(startreg + 10000)) {
         this->exceptionResponse(MB_FC_READ_COILS, MB_EX_ILLEGAL_ADDRESS);
         return;
     }
@@ -402,7 +402,7 @@ void Modbus::readInputRegisters(word startreg, word numregs) {
 
     //Check Address
     //*** See comments on readCoils method.
-    if (!this->searchRegister(startreg + 30001)) {
+    if (!this->searchRegister(startreg + 30000)) {
         this->exceptionResponse(MB_FC_READ_COILS, MB_EX_ILLEGAL_ADDRESS);
         return;
     }
@@ -472,7 +472,7 @@ void Modbus::writeMultipleCoils(byte* frame,word startreg, word numoutputs, byte
 
     //Check Address (startreg...startreg + numregs)
     for (int k = 0; k < numoutputs; k++) {
-        if (!this->searchRegister(startreg + 1 + k)) {
+        if (!this->searchRegister(startreg + 0 + k)) {
             this->exceptionResponse(MB_FC_WRITE_COILS, MB_EX_ILLEGAL_ADDRESS);
             return;
         }
