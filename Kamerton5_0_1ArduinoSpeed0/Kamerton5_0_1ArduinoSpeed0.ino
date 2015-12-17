@@ -83,15 +83,15 @@ uint16_t year  = 15 ;
 //****************** Регистры работы с модулем Аудио-1 ******************************************************
 
 //byte regs_in[5];                                           // Регистры работы с платой Аудио-1
-byte regs_out[4];                                            // Регистры работы с платой Аудио-1
-byte regs_crc[1];                                            // Регистры работы с платой Аудио-1 контрольная сумма
-byte regs_temp                 = 0;
-byte regs_temp1                = 0;
-byte Stop_Kam                  = 0;                          // Флаг индикации чтения инф. из Аудио-1
-bool test_repeat               = true;                       // Флаг повторения теста
-volatile bool prer_Kmerton_On  = true;                       // Флаг разрешение прерывания Аудио-1
-volatile bool prer_Kmerton_Run = false;                      // Флаг разрешение прерывания Аудио-1
-unsigned char bufferK;                                       // Счетчик количества принимаемых байт
+volatile byte regs_out[4];                                            // Регистры работы с платой Аудио-1
+volatile byte regs_crc[1];                                            // Регистры работы с платой Аудио-1 контрольная сумма
+volatile byte regs_temp                 = 0;
+volatile byte regs_temp1                = 0;
+volatile byte Stop_Kam                  = 0;                          // Флаг индикации чтения инф. из Аудио-1
+volatile bool test_repeat               = true;                       // Флаг повторения теста
+volatile bool prer_Kmerton_On           = true;                       // Флаг разрешение прерывания Аудио-1
+volatile bool prer_Kmerton_Run          = false;                      // Флаг разрешение прерывания Аудио-1
+volatile unsigned char bufferK;                                       // Счетчик количества принимаемых байт
 #define BUFFER_SIZEK           64                            // Размер буфера Камертон не более 128 байт
 
 //------------------------------------------------------------------------------------------------------------
@@ -153,6 +153,40 @@ byte resistance        = 0x00;                      // Сопротивление 0x00..0xFF 
 #define sbi(sfr, bit) (_SFR_BYTE(sfr) |= _BV(bit))
 #endif
 
+
+
+//***************************** Назначение аналоговых входов   ****************************************
+int analog_tok            = 0;       //   Измерение тока питания платы Камертон
+int analog_12V            = 1;       //   Измерение напряжения питания 12в. платы Камертон
+int analog_tok_x10        = 2;       //   Измерение тока питания платы Камертон х 10
+int analog_mag_radio      = 3;       //
+int analog_mag_phone      = 4;       //
+int analog_gg_radio1      = 5;       //
+int analog_gg_radio2      = 6;       //
+int analog_ggs            = 7;       //
+int analog_LineL          = 8;       //
+int analog_LineR          = 9;       //
+int analog_FrontL         = 10;       //
+int analog_FrontR         = 11;       //
+int analog_W              = 12;       //
+int analog_13             = 13;       // Измерение напряжения питания  12в.на разъемах  платы Камертон
+int analog_14             = 14;       // Измерение напряжения питания  12в.на разъемах  платы Камертон
+int analog_3_6            = 15;       // Измерение напряжения питания 3,6в. на разъемах платы Камертон
+
+//-----------------------------------------------------------------------------------
+//-----------------------------------------------------------------------------------------------
+unsigned int volume1     = 0;                       //
+unsigned int volume_max  = 0;                       //
+unsigned int volume_min  = 0;                       //
+unsigned int volume_fact = 0;                       //
+unsigned int Array_volume[260];                     //
+unsigned int Array_min[40];                         //
+unsigned int Array_max[40];                         //
+unsigned int volume_porog_D = 40;                   // Максимальная величина порога при проверке исправности FrontL,FrontR
+unsigned int volume_porog_L = 200;                  // Минимальная величина порога при проверке исправности FrontL,FrontR
+float voltage ;
+//float voltage_test = 0.60;                        // порог величины синусоиды звука
+unsigned int  voltage10 ;
 
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
@@ -942,19 +976,6 @@ txt_error131,                                 // "Test Radio2 ** Signal mag radi
 txt_error132                                  // "Test GGS    ** Signal mag radio                             ON  - ";
 };
 
-
-
-
-
-
-
-
-
-
-
-
-
-
 // ========================= Блок программ ============================================
 void dateTime(uint16_t* date, uint16_t* time)                  // Программа записи времени и даты файла
 {
@@ -1006,19 +1027,16 @@ void set_time()
 
 void flash_time()                                              // Программа обработчик прерывания 
 { 
-		//prer_Kmerton_Run = true;
-		////	digitalWrite(ledPin13,HIGH);
-		//prer_Kamerton();
-		//// mb.task();
+		prer_Kmerton_Run = true;
+		//	digitalWrite(ledPin13,HIGH);
+		prer_Kamerton(); 
 	    //	digitalWrite(ledPin13,LOW);
-		//prer_Kmerton_Run = false;
+		prer_Kmerton_Run = false;
 }
-void prer_Kamerton()                                          // Произвести обмен информации с модулем Камертон
+void prer_Kamerton()                                       // Произвести обмен информации с модулем Камертон
 {
-//	clear_serial1();
-	sendPacketK ();  
-	// Отправить информацию в модуль Камертон
-	waiting_for_replyK();                                  // Получить подтверждение
+	 sendPacketK ();                                       // Отправить информацию в модуль Камертон
+	 waiting_for_replyK();                                 // Получить подтверждение
 }
 void sendPacketK () 
 {              // Программа передачи пакета в Камертон
@@ -1026,12 +1044,13 @@ void sendPacketK ()
 	for (int i = 0; i <3; i++)
 		{
 			Serial1.write(regs_out[i]);
-			mb.addHreg(1+i,regs_out[i]);
+			mb.Hreg(1+i,regs_out[i]);
 		}
+	Serial1.flush();
 }
 void waiting_for_replyK()                                  // Чтение данных из Камертона
 {
-//	delayMicroseconds(5);
+	delayMicroseconds(5);
 	//blink_red = !blink_red;
 	//digitalWrite(ledPin13,!digitalRead(ledPin13));
 	//  Уточнить задержку и применение Stop_Kam = 0; 
@@ -1050,7 +1069,7 @@ void waiting_for_replyK()                                  // Чтение данных из К
 						{
 							overflowFlag = 1;              // Установить флаг превышения размера буфера
 						}
-						 mb.addHreg(4+buffer,Serial1.read());
+						 mb.Hreg(4+buffer,Serial1.read());
 						buffer++;
 					}
 				}
@@ -1063,15 +1082,6 @@ void waiting_for_replyK()                                  // Чтение данных из К
 			mb.Coil(124,0);                               // Флаг ошибки  связи с "Камертон"
 		}
 
-	  //if( regBank.get(40007) != regs_temp)
-	  //{
-		 //Serial.println(regBank.get(40004),BIN);
-		 //Serial.println(regBank.get(40005),BIN);
-		 //Serial.println(regBank.get(40006),BIN);
-		 //Serial.println(regBank.get(40007),BIN);
-	  //}
-   //   regs_temp = regBank.get(40007);
-
 }
 void Stop_Kamerton ()                  //Если не приходит информация с Камертона - регистры обнулить
   {
@@ -1081,7 +1091,7 @@ void Stop_Kamerton ()                  //Если не приходит информация с Камертона
 
 void calculateCRC_Out()                // Вычисление контрольной суммы ниблов байта
 { 
-  byte temp1, temp2, temp3, temp4, crc;
+ volatile  byte temp1, temp2, temp3, temp4, crc;
   temp1 = regs_out[1];                 // записать  
   temp1 = temp1&0xF0;                  // Наложить маску F0 на старший нибл 1 байта
   temp2 = temp1>>4;                    // Переместить старший нибл в младший
@@ -1173,159 +1183,160 @@ void i2c_eeprom_write_page( int deviceaddress, unsigned int eeaddresspage, byte*
 }
 void UpdateRegs()                                        // Обновить регистры
 {
-	//-----Первый байт ------------
-	//-----Установить бит 0
-	// while(prer_Kmerton_Run == true){}                  // Ждем окончания получения данных из Камертон
-	 boolean set_rele ;
-	 prer_Kmerton_On = false;                            // Запретить прерывание Камертон ??
-	// reg_Kamerton();                                     // Записать данные из Камертон в    регистры 
+		//-----Первый байт ------------
+		//-----Установить бит 0
+		// while(prer_Kmerton_Run == true){}                  // Ждем окончания получения данных из Камертон
+		boolean set_rele ;
+		prer_Kmerton_On = false;                            // Запретить прерывание Камертон ??
+		// reg_Kamerton();                                     // Записать данные из Камертон в    регистры 
 		// Подпрограмма переноса данных из регистров на порты вывода
-	  //-----Установить бит 0
-	 set_rele = mb.Coil(1);
-	 mcp_Out1.digitalWrite(0, set_rele);                 // Реле RL0 Звук  Звук Mic1p Диспетчер
+		//-----Установить бит 0
+		set_rele = mb.Coil(1);
+		mcp_Out1.digitalWrite(0, set_rele);                 // Реле RL0 Звук  Звук Mic1p Диспетчер
 
-	 //-----Установить бит 1
-	  set_rele = mb.Coil(2);
-	  mcp_Out1.digitalWrite(1, set_rele);               // Реле RL1 Звук Mic2p  Инструкор
+		//-----Установить бит 1
+		set_rele = mb.Coil(2);
+		mcp_Out1.digitalWrite(1, set_rele);               // Реле RL1 Звук Mic2p  Инструкор
 
-	 //-----Установить бит 2
-	  set_rele = mb.Coil(3);
-	  mcp_Out1.digitalWrite(2, set_rele);               // Реле RL2 Звук Mic3p MTT
+		//-----Установить бит 2
+		set_rele = mb.Coil(3);
+		mcp_Out1.digitalWrite(2, set_rele);               // Реле RL2 Звук Mic3p MTT
   
-	 //-----Установить бит 3
-	  set_rele = mb.Coil(4);
-	  mcp_Out1.digitalWrite(3, set_rele);               // Реле RL3 Звук
+		//-----Установить бит 3
+		set_rele = mb.Coil(4);
+		mcp_Out1.digitalWrite(3, set_rele);               // Реле RL3 Звук
 
-	 //-----Установить бит 4                            // Реле RL4 XP1 12
-	  set_rele = mb.Coil(5);
-	  mcp_Out1.digitalWrite(4, set_rele);    
+		//-----Установить бит 4                            // Реле RL4 XP1 12
+		set_rele = mb.Coil(5);
+		mcp_Out1.digitalWrite(4, set_rele);    
 
-	 //-----Установить бит 5
-	  set_rele = mb.Coil(6);                        // Реле RL5 Звук
-	  mcp_Out1.digitalWrite(5, set_rele);              
+		//-----Установить бит 5
+		//set_rele = mb.Coil(6);                        // Реле RL5 Звук
+		//mcp_Out1.digitalWrite(5, set_rele);              
+		mcp_Out1.digitalWrite(5,  mb.Coil(6));    
+		//-----Установить бит 6	 
+		set_rele = mb.Coil(7);
+		mcp_Out1.digitalWrite(6, set_rele);              // Реле RL6 Звук
 
-	 //-----Установить бит 6	 
-	  set_rele = mb.Coil(7);
-	  mcp_Out1.digitalWrite(6, set_rele);              // Реле RL6 Звук
+		//-----Установить бит 7
+		set_rele = mb.Coil(8);
+		//	mcp_Out1.digitalWrite(7, mb.Coil(8));              // Реле RL7 Питание платы
+		//mcp_Out1.digitalWrite(7, set_rele);              // Реле RL7 Питание платы
 
-	 //-----Установить бит 7
-	  set_rele = mb.Coil(8);
-	  mcp_Out1.digitalWrite(7, set_rele);              // Реле RL7 Питание платы
+		//---- Второй байт----------
+		//-----Установить бит 8
+		set_rele = mb.Coil(9);                        // Реле RL8 Звук на микрофон
+		mcp_Out1.digitalWrite(8, set_rele);    
 
-	 //---- Второй байт----------
-	 //-----Установить бит 8
-	  set_rele = mb.Coil(9);                        // Реле RL8 Звук на микрофон
-	  mcp_Out1.digitalWrite(8, set_rele);    
+		//-----Установить бит 9
+		set_rele = mb.Coil(10);
+		mcp_Out1.digitalWrite(9, set_rele);               // Реле RL9 XP1 10
 
-	 //-----Установить бит 9
-	  set_rele = mb.Coil(10);
-	  mcp_Out1.digitalWrite(9, set_rele);               // Реле RL9 XP1 10
-
-	 //-----Установить бит 10                           // Реле RL10 Включение питания на высоковольтный модуль 
-	  set_rele = mb.Coil(11);
-	  mcp_Out1.digitalWrite(10, set_rele);    
+		//-----Установить бит 10                           // Реле RL10 Включение питания на высоковольтный модуль 
+		set_rele = mb.Coil(11);
+		mcp_Out1.digitalWrite(10, set_rele);    
 
 
-	//-----Установить бит 11                            // Свободен 
-	  set_rele = mb.Coil(12);
-	  mcp_Out1.digitalWrite(11, set_rele);    
+		//-----Установить бит 11                            // Свободен 
+		set_rele = mb.Coil(12);
+		mcp_Out1.digitalWrite(11, set_rele);    
 
-	 //-----Установить бит 12
-	  set_rele = mb.Coil(13);
-	  mcp_Out1.digitalWrite(12, set_rele);              // XP8 - 2   sensor Тангента ножная
+		//-----Установить бит 12
+		set_rele = mb.Coil(13);
+		mcp_Out1.digitalWrite(12, set_rele);              // XP8 - 2   sensor Тангента ножная
 
-	 //-----Установить бит 13
-	  set_rele = mb.Coil(14);
-	  mcp_Out1.digitalWrite(13, set_rele);              // XP8 - 1   PTT Тангента ножная
+		//-----Установить бит 13
+		set_rele = mb.Coil(14);
+		mcp_Out1.digitalWrite(13, set_rele);              // XP8 - 1   PTT Тангента ножная
 
-	 //-----Установить бит 14
+		//-----Установить бит 14
 
-	  set_rele = mb.Coil(15);
-	  mcp_Out1.digitalWrite(14, set_rele);              // XS1 - 5   PTT Мик
+		set_rele = mb.Coil(15);
+		mcp_Out1.digitalWrite(14, set_rele);              // XS1 - 5   PTT Мик
 
-	  //-----Установить бит 15
-	  set_rele = mb.Coil(16);
-	  mcp_Out1.digitalWrite(15, set_rele);              // XS1 - 6   sensor Мик
+		//-----Установить бит 15
+		set_rele = mb.Coil(16);
+		mcp_Out1.digitalWrite(15, set_rele);              // XS1 - 6   sensor Мик
 
-	  //  Test 3
-	 //-----Первый байт ------------
-	 //-----Установить бит 0
+		//  Test 3
+		//-----Первый байт ------------
+		//-----Установить бит 0
 
-	  set_rele = mb.Coil(17);
-	  mcp_Out2.digitalWrite(0, set_rele);                // J8-12     XP7 4 PTT2   Танг. р.
+		set_rele = mb.Coil(17);
+		mcp_Out2.digitalWrite(0, set_rele);                // J8-12     XP7 4 PTT2   Танг. р.
 
-	 //-----Установить бит 1
-	  set_rele = mb.Coil(18);
-	  mcp_Out2.digitalWrite(1, set_rele);                // XP1 - 20  HangUp  DCD
+		//-----Установить бит 1
+		set_rele = mb.Coil(18);
+		mcp_Out2.digitalWrite(1, set_rele);                // XP1 - 20  HangUp  DCD
 
-	 //-----Установить бит 2
-	  set_rele = mb.Coil(19);
-	  mcp_Out2.digitalWrite(2, set_rele);                // J8-11     XP7 2 sensor  Танг. р.
+		//-----Установить бит 2
+		set_rele = mb.Coil(19);
+		mcp_Out2.digitalWrite(2, set_rele);                // J8-11     XP7 2 sensor  Танг. р.
   
-	//-----Установить бит 3
+		//-----Установить бит 3
 
-	  set_rele = mb.Coil(20);
-	  mcp_Out2.digitalWrite(3, set_rele);                 // J8-23     XP7 1 PTT1 Танг. р.
+		set_rele = mb.Coil(20);
+		mcp_Out2.digitalWrite(3, set_rele);                 // J8-23     XP7 1 PTT1 Танг. р.
 
-	 //-----Установить бит 4
-	  set_rele = mb.Coil(21);
-	  mcp_Out2.digitalWrite(4, set_rele);                 // XP2-2     sensor "Маг." 
+		//-----Установить бит 4
+		set_rele = mb.Coil(21);
+		mcp_Out2.digitalWrite(4, set_rele);                 // XP2-2     sensor "Маг." 
 
-	 //-----Установить бит 5
+		//-----Установить бит 5
 
-	  set_rele = mb.Coil(22);
-	  mcp_Out2.digitalWrite(5, set_rele);                  // XP5-3     sensor "ГГC."
+		set_rele = mb.Coil(22);
+		mcp_Out2.digitalWrite(5, set_rele);                  // XP5-3     sensor "ГГC."
 
-	 //-----Установить бит 6
-	  set_rele = mb.Coil(23);
-	  mcp_Out2.digitalWrite(6, set_rele);                  // XP3-3     sensor "ГГ-Радио1."
+		//-----Установить бит 6
+		set_rele = mb.Coil(23);
+		mcp_Out2.digitalWrite(6, set_rele);                  // XP3-3     sensor "ГГ-Радио1."
 
-	 //-----Установить бит 7
-	  set_rele = mb.Coil(24);
-	  mcp_Out2.digitalWrite(7, set_rele);                  // XP4-3     sensor "ГГ-Радио2."
+		//-----Установить бит 7
+		set_rele = mb.Coil(24);
+		mcp_Out2.digitalWrite(7, set_rele);                  // XP4-3     sensor "ГГ-Радио2."
 
-	  // Test 4
-	//-----Первый байт ------------
-	 //-----Установить бит 8
-	  set_rele = mb.Coil(25);
-	  mcp_Out2.digitalWrite(8, set_rele);                  // XP1- 19 HaSs      флаг подключения трубки  
+		// Test 4
+		//-----Первый байт ------------
+		//-----Установить бит 8
+		set_rele = mb.Coil(25);
+		mcp_Out2.digitalWrite(8, set_rele);                  // XP1- 19 HaSs      флаг подключения трубки  
 
-	  //-----Установить бит 9
-	  set_rele = mb.Coil(26);
-	  mcp_Out2.digitalWrite(9, set_rele);                  // XP1- 17 HaSPTT    CTS DSR вкл.
+		//-----Установить бит 9
+		set_rele = mb.Coil(26);
+		mcp_Out2.digitalWrite(9, set_rele);                  // XP1- 17 HaSPTT    CTS DSR вкл.
 
-	  //-----Установить бит 10
-	  set_rele = mb.Coil(27);
-	  mcp_Out2.digitalWrite(10, set_rele);                 // XP1- 16 HeS2Rs    флаг подключения гарнитуры инструктора с 2 наушниками
+		//-----Установить бит 10
+		set_rele = mb.Coil(27);
+		mcp_Out2.digitalWrite(10, set_rele);                 // XP1- 16 HeS2Rs    флаг подключения гарнитуры инструктора с 2 наушниками
 
-	  //-----Установить бит 11
-	  set_rele = mb.Coil(28);
-	  mcp_Out2.digitalWrite(11, set_rele);                 // XP1- 15 HeS2PTT   CTS вкл
+		//-----Установить бит 11
+		set_rele = mb.Coil(28);
+		mcp_Out2.digitalWrite(11, set_rele);                 // XP1- 15 HeS2PTT   CTS вкл
 
-	  //-----Установить бит 12
-	  set_rele = mb.Coil(29);
-	  mcp_Out2.digitalWrite(12, set_rele);                 // XP1- 13 HeS2Ls    флаг подключения гарнитуры инструктора 
+		//-----Установить бит 12
+		set_rele = mb.Coil(29);
+		mcp_Out2.digitalWrite(12, set_rele);                 // XP1- 13 HeS2Ls    флаг подключения гарнитуры инструктора 
 
-	  //-----Установить бит 13
-	  set_rele = mb.Coil(30);
-	  mcp_Out2.digitalWrite(13, set_rele);                 // XP1- 6  HeS1PTT   CTS вкл
+		//-----Установить бит 13
+		set_rele = mb.Coil(30);
+		mcp_Out2.digitalWrite(13, set_rele);                 // XP1- 6  HeS1PTT   CTS вкл
 
-	  //-----Установить бит 14
-	  set_rele = mb.Coil(31);
-	  mcp_Out2.digitalWrite(14, set_rele);                 // XP1- 5  HeS1Rs    Флаг подкючения гарнитуры диспетчера с 2 наушниками
+		//-----Установить бит 14
+		set_rele = mb.Coil(31);
+		mcp_Out2.digitalWrite(14, set_rele);                 // XP1- 5  HeS1Rs    Флаг подкючения гарнитуры диспетчера с 2 наушниками
 
-	  //-----Установить бит 15
-	  set_rele = mb.Coil(32);
-	  mcp_Out2.digitalWrite(15, set_rele);                 // XP1- 1  HeS1Ls    Флаг подкючения гарнитуры диспетчера
+		//-----Установить бит 15
+		set_rele = mb.Coil(32);
+		mcp_Out2.digitalWrite(15, set_rele);                 // XP1- 1  HeS1Ls    Флаг подкючения гарнитуры диспетчера
 
-		 if (mb.Coil(118)== 0)
-		 {
-			 test_repeat = false;
-		 }
-	else
-		 {
-			test_repeat = true;
-		 }
+		if (mb.Coil(118)== 0)
+			{
+				test_repeat = false;
+			}
+		else
+			{
+				test_repeat = true;
+			}
 
 
 	  //*******************************************************
@@ -1518,18 +1529,27 @@ void preob_num_str() // Программа формирования имени файла, состоящего из текуще
 
 
 
-
-
-
-
-
-
+void file_print_date()  //программа  записи даты в файл
+	{
+	  DateTime now = RTC.now();
+	  myFile.print(now.day(), DEC);
+	  myFile.print('/');
+	  myFile.print(now.month(), DEC);
+	  myFile.print('/');
+	  myFile.print(now.year(), DEC);//Serial display time
+	  myFile.print(' ');
+	  myFile.print(now.hour(), DEC);
+	  myFile.print(':');
+	  myFile.print(now.minute(), DEC);
+	  myFile.print(':');
+	  myFile.print(now.second(), DEC);
+  }
 //------------------------------------------------------------------------------------
 
 void serialEvent3()
 {
-	//mb.task();
-	//control_command();
+	 while (prer_Kmerton_Run){}
+	 mb.task();
 }
 
 void control_command()
@@ -1619,7 +1639,8 @@ void control_command()
 			//	Reg_count_clear();			                                        // Сброс счетчиков ошибок                    
 				break;
 		case 17:
-			//	test_power();                                                    	// Проверить напряжение  питания
+			Serial.println("test_power");
+				test_power();                                                    	// Проверить напряжение  питания
 				break;
 		case 18:
 			//	set_video();				              //
@@ -1671,6 +1692,225 @@ void control_command()
 	 mb.Hreg(adr_control_command,0);
 	}
 }
+
+void test_power()
+{
+	mcp_Analog.digitalWrite(Front_led_Blue, LOW); 
+	unsigned int regcount = 0;
+	myFile.println(""); 
+	strcpy_P(buffer, (char*)pgm_read_word(&(table_message[67])));                   // " ****** Test power start! ******"                           ;
+	myFile.println(buffer);                                                         // " ****** Test power start! ******"                           ;
+	file_print_date();
+	myFile.println("");
+
+	//regBank.add(40293);                         // Aдрес счетчика  ошибки ADC1 напряжение 12/3 вольт
+	//regBank.add(40294);                         // Aдрес счетчика  ошибки ADC14 напряжение 12/3 вольт Radio1
+	//regBank.add(40295);                         // Aдрес счетчика  ошибки ADC14 напряжение 12/3 вольт Radio2
+	//regBank.add(40296);                         // Aдрес счетчика  ошибки ADC14 напряжение 12/3 вольт ГГС
+	//regBank.add(40297);                         // Aдрес счетчика  ошибки ADC15 напряжение светодиода 3,6 вольта
+
+	//regBank.add(40493);                         // Aдрес данных измерения ADC1 напряжение 12/3 вольт
+	//regBank.add(40494);                         // Aдрес данных измерения ADC14 напряжение 12/3 вольт Radio1
+	//regBank.add(40495);                         // Aдрес данных измерения ADC14 напряжение 12/3 вольт Radio2
+	//regBank.add(40496);                         // Aдрес данных измерения ADC14 напряжение 12/3 вольт ГГС
+	//regBank.add(40497);                         // Aдрес данных измерения ADC15 напряжение светодиода 3,6 вольта
+
+	measure_power();
+
+	// Проверка напряжения 12 вольт платы Камертон
+	strcpy_P(buffer, (char*)pgm_read_word(&(table_message[61])));                   // "Power Kamerton V  - "                                        ;
+	if(mb.Hreg(40493)*2.51/100 < 11 || mb.Hreg(40493)*2.51/100 >13)
+	{
+		myFile.print(buffer);                               // 
+		myFile.print(mb.Hreg(40493)*2.51/100);
+		myFile.print(" V - error");
+		mb.Coil(293,1); 
+		regcount = mb.Hreg(40293);
+		regcount++;
+		mb.Hreg(40293,regcount); 
+		mb.Coil(120,1);  
+		myFile.println(" / min 11v, max 13v");
+	}
+
+	else
+	{
+		if (test_repeat == false)
+			{
+				myFile.print(buffer);                               // 
+				myFile.print(mb.Hreg(40493)*2.51/100);
+				myFile.print(" V - pass");
+				myFile.println(" / min 11v, max 13v");
+			}
+	}
+
+	// Проверка напряжения 12 вольт Радио 1
+	strcpy_P(buffer, (char*)pgm_read_word(&(table_message[63])));                   // "Power Radio1 V    - "                                        ;
+	if(mb.Hreg(40494)*2.51/100 < 11 || mb.Hreg(40494)*2.51/100 >13)
+	{
+		myFile.print(buffer);                               // "Power Radio1 V    - "                                        ;
+		myFile.print(mb.Hreg(40494)*2.51/100);
+		myFile.print(" V - error");
+		mb.Coil(294,1); 
+		regcount = mb.Hreg(40294);
+		regcount++;
+		mb.Hreg(40294,regcount); 
+		mb.Coil(120,1); 
+		myFile.println(" / min 11v, max 13v");
+	}
+
+	else
+	{
+		if (test_repeat == false) 
+			{
+				myFile.print(buffer);                               // "Power Radio1 V    - "                                        ;
+				myFile.print(mb.Hreg(40494)*2.51/100);
+				myFile.print(" V - pass");
+				myFile.println(" / min 11v, max 13v");
+			}
+	}
+
+	// Проверка напряжения 12 вольт Радио 2
+	strcpy_P(buffer, (char*)pgm_read_word(&(table_message[64])));                   // "Power Radio2 V    - "                                        ;
+	if(mb.Hreg(40495)*2.51/100 < 11 || mb.Hreg(40495)*2.51/100 >13)
+	{
+		myFile.print(buffer);                               // "Power Radio2 V    - "                                        ;
+		myFile.print(mb.Hreg(40495)*2.51/100);
+		myFile.print(" V - error");
+		mb.Coil(295,1); 
+		regcount = mb.Hreg(40295);
+		regcount++;
+		mb.Hreg(40295,regcount); 
+		mb.Coil(120,1);  
+		myFile.println(" / min 11v, max 13v");
+	}
+
+	else
+	{
+		if (test_repeat == false) 
+			{
+				myFile.print(buffer);                               // "Power Radio2 V    - "                                        ;
+				myFile.print(mb.Hreg(40495)*2.51/100);
+				myFile.print(" V - pass");
+				myFile.println(" / min 11v, max 13v");
+			}
+	}
+
+	// Проверка напряжения 12 вольт  ГГС
+	strcpy_P(buffer, (char*)pgm_read_word(&(table_message[65])));                   // "Power GGS    V    - "                                        ;
+	if(mb.Hreg(40496)*2.51/100 < 11 || mb.Hreg(40496)*2.51/100 >13)
+	{
+		myFile.print(buffer);                               // "Power GGS    V    - "                                        ;
+		myFile.print(mb.Hreg(40496)*2.51/100);
+		myFile.print(" V - error");
+		mb.Coil(296,1); 
+		regcount = mb.Hreg(40296);
+		regcount++;
+		mb.Hreg(40296,regcount); 
+		mb.Coil(120,1);  
+		myFile.println(" / min 11v, max 13v");
+	}
+
+	else
+	{	
+		if (test_repeat == false) 
+		{
+			myFile.print(buffer);                               // "Power GGS    V    - "                                        ;
+			myFile.print(mb.Hreg(40496)*2.51/100);
+			myFile.print(" V - pass");
+			myFile.println(" / min 11v, max 13v");
+		}
+	}
+
+	// Проверка напряжения 3,6 вольт на светодиоде микрофона
+	strcpy_P(buffer, (char*)pgm_read_word(&(table_message[66])));                   // "Power Led mic.V   - "  
+	if(mb.Hreg(40497)/100 < 2 || mb.Hreg(40497)/100 >4)
+	{
+		myFile.print(buffer);                                 // "Power Led mic.V   - " 
+		myFile.print(mb.Hreg(40497)/100.0);
+		myFile.print(" V - error");
+		mb.Coil(297,1); 
+		regcount = mb.Hreg(40297);
+		regcount++;
+		mb.Hreg(40297,regcount); 
+		mb.Coil(120,1);  
+		myFile.println(" / min 2,0v, max 4,0v");
+	}
+
+	else
+	{
+		if (test_repeat == false) 
+			{
+				myFile.print(buffer);                                 // "Power Led mic.V   - " 
+				myFile.print(mb.Hreg(40497)/100.0);
+				myFile.print(" V - pass");
+				myFile.println(" / min 2,0v, max 4,0v");
+			}
+	}
+	mcp_Analog.digitalWrite(Front_led_Blue, HIGH); 
+	delay(100);
+	mb.Hreg(adr_control_command,0);    
+}
+void measure_power()
+{
+	mcp_Analog.digitalWrite(Front_led_Blue, LOW); 
+	mb.Coil(21,0);                           // XP2-2     sensor "Маг."  
+	mb.Coil(22,0);                           // XP5-3     sensor "ГГC."
+	mb.Coil(23,0);                           // XP3-3     sensor "ГГ-Радио1."
+	mb.Coil(24,0);                           // XP4-3     sensor "ГГ-Радио2."
+	UpdateRegs();         
+	delay(100);
+
+	measure_volume_P(analog_tok);     
+	mb.Hreg(40400,voltage10);                     
+	measure_volume_P(analog_12V);   
+	mb.Hreg(40493,voltage10);   
+	measure_volume_P(analog_tok_x10);   
+	mb.Hreg(40402,voltage10);   
+
+	mb.Coil(23,1);                           // XP3-3     sensor "ГГ-Радио1."
+	UpdateRegs();         
+	delay(200);
+	measure_volume_P(analog_14); 
+	mb.Hreg(40494,voltage10);   
+
+	mb.Coil(23,0);                           // XP3-3     sensor "ГГ-Радио1."
+	mb.Coil(24,1);                           // XP4-3     sensor "ГГ-Радио2."
+	UpdateRegs();         
+	delay(200);
+	measure_volume_P(analog_14); 
+	mb.Hreg(40495,voltage10);   
+
+	mb.Coil(24,0);                           // XP4-3     sensor "ГГ-Радио2."
+	mb.Coil(22,1);                           // XP5-3     sensor "ГГC."
+	UpdateRegs();         
+	delay(200);
+	measure_volume_P(analog_14); 
+	mb.Hreg(40496,voltage10);   
+	mb.Coil(22,0);                           // XP5-3     sensor "ГГC."
+	UpdateRegs();         
+	delay(100);
+
+	measure_volume_P(analog_3_6);     
+	mb.Hreg(40497,voltage10);   
+	mcp_Analog.digitalWrite(Front_led_Blue, HIGH); 
+	delay(100);
+}
+void measure_volume_P(int analog)
+{
+		volume_fact = 0;
+		volume_fact = analogRead(analog);               // считываем значение
+		voltage = volume_fact * (5.0 / 1023.0);
+		voltage10 = voltage * 100;
+
+		//Serial.print("voltage - ");
+		//Serial.println(voltage10);
+}
+
+
+
+
+
+
 
 
 
@@ -1959,14 +2199,13 @@ void setup_regModbus()
 	mb.addIsts(82);    // Адрес флагa индикации состояния сигнала DSR
 	mb.addIsts(83);    // Адрес флагa индикации состояния сигнала DCD
 
-						 //Add Input registers 30001-30040 to the register bank
-
 
 	//regBank.set(40004+buffer,Serial1.read());
 
 	//mb.addHreg(40000);  // 
+//	mb.addHreg(0,1);  // Регистры обмена с Аудио 1
 	mb.addHreg(1,1);  // Регистры обмена с Аудио 1
-	mb.addHreg(2,2);  // Регистры обмена с Аудио 1
+	mb.addHreg(2,3);  // Регистры обмена с Аудио 1
 	mb.addHreg(3,3);  // Регистры обмена с Аудио 1
 	mb.addHreg(4,4);  // Регистры обмена с Аудио 1
 	mb.addHreg(5,5);  // Регистры обмена с Аудио 1
@@ -1992,22 +2231,10 @@ void setup_regModbus()
 						 // Текущее время 
 	mb.addHreg(46,1);  // адрес день модуля часов контроллера
 	mb.addHreg(47,2);  // адрес месяц модуля часов контроллера
-	mb.addHreg(48,3);  // адрес год модуля часов контроллера
+	mb.addHreg(48,4);  // адрес год модуля часов контроллера
 	mb.addHreg(49,4);  // адрес час модуля часов контроллера
 	mb.addHreg(50,5);  // адрес минута модуля часов контроллера
 	mb.addHreg(51,6);  // адрес секунда модуля часов контроллера
-							 // Текущее время 
-	mb.addIreg(1,6);  // адрес день модуля часов контроллера
-	mb.addIreg(2,5);  // адрес месяц модуля часов контроллера
-	mb.addIreg(3,4);  // адрес год модуля часов контроллера
-	mb.addIreg(4,3);  // адрес час модуля часов контроллера
-	mb.addIreg(5,2);  // адрес минута модуля часов контроллера
-	mb.addIreg(6,1);  // адрес секунда модуля часов контроллера
-	mb.addIreg(7,2);  // адрес минута модуля часов контроллера
-	mb.addIreg(8,1);  // адрес секунда модуля часов контроллера
-
-
-//  mb.addIreg(SENSOR_IREG);
 						 // Установка времени в контроллере
 	mb.addHreg(52);  // адрес день
 	mb.addHreg(53);  // адрес месяц
@@ -2495,10 +2722,10 @@ void setup_resistor()
 
 void setup()
 {
-	Serial.begin(9600);                                        // Подключение к USB ПК
-	Serial1.begin(115200);                                     // Подключение к звуковому модулю Камертон
-	Serial2.begin(38400);                                      // 
-	mb.config(&Serial3, 19200, SERIAL_8N1);                   // Config Modbus Serial (port, speed, byte format) 
+	Serial.begin(9600);                                       // Подключение к USB ПК
+	Serial1.begin(115200);                                    // Подключение к звуковому модулю Камертон
+	Serial2.begin(38400);                                     // 
+	mb.config(&Serial3, 115200, SERIAL_8N1);                   // Config Modbus Serial (port, speed, byte format) 
 
 	Serial.println(" ");
 	Serial.println(" ***** Start system  *****");
@@ -2526,11 +2753,11 @@ void setup()
 	pinMode(ledPin12, OUTPUT);  
 	pinMode(ledPin11, OUTPUT);  
 	pinMode(ledPin10, OUTPUT);  
-	pinMode(kn1Nano, OUTPUT);                        // Назначение кнопок управления Nano генератор качения
-	pinMode(kn2Nano, OUTPUT);                        // Назначение кнопок управления Nano генератор 1000 гц
-	pinMode(kn3Nano, OUTPUT);                        // Назначение кнопок управления Nano генератор 2000 гц
-	pinMode(InNano12, INPUT);                        // Назначение входов - индикация генератор 1000 или 2000 гц
-	pinMode(InNano13, INPUT);                        // Назначение входов - индикация генератор качения 
+	pinMode(kn1Nano,  OUTPUT);                                // Назначение кнопок управления Nano генератор качения
+	pinMode(kn2Nano,  OUTPUT);                                // Назначение кнопок управления Nano генератор 1000 гц
+	pinMode(kn3Nano,  OUTPUT);                                // Назначение кнопок управления Nano генератор 2000 гц
+	pinMode(InNano12, INPUT);                                 // Назначение входов - индикация генератор 1000 или 2000 гц
+	pinMode(InNano13, INPUT);                                 // Назначение входов - индикация генератор качения 
  
 	digitalWrite(kn1Nano, LOW);
 	digitalWrite(kn2Nano, HIGH);
@@ -2582,7 +2809,7 @@ void setup()
 
 
 
-	//MsTimer2::start();                                        // Включить таймер прерывания
+	MsTimer2::start();                                        // Включить таймер прерывания
 	
 	mcp_Analog.digitalWrite(Front_led_Red, LOW); 
 	mcp_Analog.digitalWrite(Front_led_Blue, HIGH); 
@@ -2594,7 +2821,5 @@ void setup()
 
 void loop()
 {
-	mb.task();
- 
-
+	control_command();
 }
