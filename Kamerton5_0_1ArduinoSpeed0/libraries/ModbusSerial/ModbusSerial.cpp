@@ -89,19 +89,22 @@ bool ModbusSerial::config(Serial_* port, long baud, u_int format, int txPin) {
 }
 #endif
 
-bool ModbusSerial::receive(byte* frame) {
+bool ModbusSerial::receive(byte* frame) 
+{
     //first byte of frame = address
     byte address = frame[0];
     //Last two bytes = crc
     u_int crc = ((frame[_len - 2] << 8) | frame[_len - 1]);
 
     //Slave Check
-    if (address != 0xFF && address != this->getSlaveId()) {
+    if (address != 0xFF && address != this->getSlaveId()) 
+	{
 		return false;
 	}
 
     //CRC Check
-    if (crc != this->calcCrc(_frame[0], _frame+1, _len-3)) {
+    if (crc != this->calcCrc(_frame[0], _frame+1, _len-3)) 
+	{
 		return false;
     }
 
@@ -113,7 +116,8 @@ bool ModbusSerial::receive(byte* frame) {
     return true;
 }
 
-bool ModbusSerial::send(byte* frame) {
+bool ModbusSerial::send(byte* frame) 
+{
     byte i;
 
     if (this->_txPin >= 0) {
@@ -161,10 +165,12 @@ bool ModbusSerial::sendPDU(byte* pduframe) {
     }
 }
 
-void ModbusSerial::task() {
+void ModbusSerial::task()
+{
     _len = 0;
 
-    while ((*_port).available() > _len)	{
+    while ((*_port).available() > _len)	
+	{
         _len = (*_port).available();
         delayMicroseconds(_t15);
     }
@@ -172,10 +178,11 @@ void ModbusSerial::task() {
     if (_len == 0) return;
 
     byte i;
-    _frame = (byte*) malloc(_len);
+    _frame = (byte*) malloc(_len);                // Выделение памяти длиной _len   для переменной _frame
     for (i=0 ; i < _len ; i++) _frame[i] = (*_port).read();
-
-    if (this->receive(_frame)) {
+	
+    if (this->receive(_frame)) 
+	{
         if (_reply == MB_REPLY_NORMAL)
             this->sendPDU(_frame);
         else

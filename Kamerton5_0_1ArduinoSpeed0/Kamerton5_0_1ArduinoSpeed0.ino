@@ -1211,17 +1211,16 @@ void UpdateRegs()                                        // Обновить регистры
 		mcp_Out1.digitalWrite(4, set_rele);    
 
 		//-----Установить бит 5
-		//set_rele = mb.Coil(6);                        // Реле RL5 Звук
-		//mcp_Out1.digitalWrite(5, set_rele);              
-		mcp_Out1.digitalWrite(5,  mb.Coil(6));    
+		set_rele = mb.Coil(6);                        // Реле RL5 Звук
+		mcp_Out1.digitalWrite(5, set_rele);              
+	
 		//-----Установить бит 6	 
 		set_rele = mb.Coil(7);
 		mcp_Out1.digitalWrite(6, set_rele);              // Реле RL6 Звук
 
 		//-----Установить бит 7
 		set_rele = mb.Coil(8);
-		//	mcp_Out1.digitalWrite(7, mb.Coil(8));              // Реле RL7 Питание платы
-		//mcp_Out1.digitalWrite(7, set_rele);              // Реле RL7 Питание платы
+		mcp_Out1.digitalWrite(7, set_rele);              // Реле RL7 Питание платы
 
 		//---- Второй байт----------
 		//-----Установить бит 8
@@ -1992,7 +1991,7 @@ void setup_regModbus()
 	// Set the Slave ID (1-247)
 	mb.setSlaveId(1);  
    // Подключение к протоколу MODBUS компьютера Serial3    
-
+	mb.addCoil(0);                           // Реле 
 	mb.addCoil(1);                           // Реле RL0 Звук  MIC1P
 	mb.addCoil(2);                           // Реле RL1 Звук  MIC2P
 	mb.addCoil(3);                           // Реле RL2 Звук  MIC3P
@@ -2203,7 +2202,7 @@ void setup_regModbus()
 	//regBank.set(40004+buffer,Serial1.read());
 
 	//mb.addHreg(40000);  // 
-//	mb.addHreg(0,1);  // Регистры обмена с Аудио 1
+
 	mb.addHreg(1,1);  // Регистры обмена с Аудио 1
 	mb.addHreg(2,3);  // Регистры обмена с Аудио 1
 	mb.addHreg(3,3);  // Регистры обмена с Аудио 1
