@@ -1019,14 +1019,15 @@ void flash_time()                                              // Программа обра
 		prer_Kmerton_Run = true;
 	//	digitalWrite(ledPin12,HIGH);
 		prer_Kamerton();
+		 mb.task();
 	//	digitalWrite(ledPin12,LOW);
 		prer_Kmerton_Run = false;
 }
 
 void serialEvent3()
 {
-	 while (prer_Kmerton_Run){}
-	 mb.task();
+	/* while (prer_Kmerton_Run){}
+	 mb.task();*/
 }
 //fileName_F
 void serialEvent2()
@@ -7179,7 +7180,7 @@ void setup()
 	mcp_Analog.digitalWrite(Front_led_Red, HIGH); 
 	Serial.begin(9600);                             // Подключение к USB ПК
 	Serial1.begin(115200);                          // Подключение к звуковому модулю Камертон
-	mb.config(&Serial3, 115200, SERIAL_8N1);                   // Config Modbus Serial (port, speed, byte format) 
+	mb.config(&Serial3, 57600, SERIAL_8N1);                   // Config Modbus Serial (port, speed, byte format) 
 
 	Serial2.begin(57600);                            // 
 	Serial.println(" ");
