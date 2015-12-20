@@ -2089,9 +2089,6 @@ void sensor_all_off()
 	byte i52 = regBank.get(40006);     
 	byte i53 = regBank.get(40007);     
 
-
-
-
 		if(bitRead(i50,2) != 0)                                                     // XP1- 19 HaSs sensor контроля подключения трубки    "Sensor MTT                          XP1- 19 HaSs            OFF - ";
 		  {
 			regcount = regBank.get(40200);                                          // адрес счетчика ошибки                              "Sensor MTT                          XP1- 19 HaSs            OFF - ";
@@ -3567,7 +3564,7 @@ void test_headset_dispatcher()
 	measure_vol_min(analog_ggs,      40246,246,i2c_eeprom_read_byte(deviceaddress,adr_porog_dispatcher + 5));                                 // Измерить уровень сигнала на выходе GGS       "Test headset dispatcher ** Signal GGS                       OFF - ";
 	measure_vol_min(analog_gg_radio1,40247,247,i2c_eeprom_read_byte(deviceaddress,adr_porog_dispatcher + 6));                                 // Измерить уровень сигнала на выходе GG Radio1 "Test headset dispatcher ** Signal GG Radio1                 OFF - ";
 	measure_vol_min(analog_gg_radio2,40248,248,i2c_eeprom_read_byte(deviceaddress,adr_porog_dispatcher + 7));                                 // Измерить уровень сигнала на выходе GG Radio2 "Test headset dispatcher ** Signal GG Radio2                 OFF - ";
-	wdt_reset();
+
 	regBank.set(31,0);                                                              // XP1- 5  HeS1Rs   Отключить sensor подкючения гарнитуры диспетчера с 2 наушниками
 	regBank.set(32,0);                                                              // XP1- 1  HeS1Ls   Отключить  sensor подкючения гарнитуры диспетчера
 	regBank.set(15,0);                                                              // РТТ микрофона отключить
@@ -3577,7 +3574,6 @@ void test_headset_dispatcher()
 	regBank.set(1,0);                                                               // Отключить сигнал на вход микрофона диспетчера Mic1p
 	UpdateRegs(); 
 	mcp_Analog.digitalWrite(Front_led_Blue, HIGH); 
-	delay(100);
 	regBank.set(adr_control_command,0);                                             // Завершить программу    
  }
 void test_MTT()
@@ -3769,7 +3765,7 @@ void test_tangR()
 	if (test_repeat == false) myFile.println(buffer);                               //
 
 	UpdateRegs();                                                                   // Выполнить команду
-//	delay(500);
+
 	i50 = regBank.get(40004);    
 
 		if(bitRead(i50,3) == 0)                                          // J8-11     XP7 2 sensor тангента ручная             "Command sensor tangenta ruchnaja                            ON  - ";
@@ -3937,15 +3933,12 @@ void test_tangN()
 			myFile.println(buffer);                                                 // "Command PTT tangenta nognaja (CTS)                          OFF - ";
 		  }
 		 }
-
-
 	regBank.set(13,1);                                                              // XP8 2 sensor тангента ножная
 	strcpy_P(buffer, (char*)pgm_read_word(&(table_message[46])));                   // "Command sensor ON  tangenta ruchnaja             send!"      ;
 	if (test_repeat == false) myFile.println(buffer);                               // "Command sensor ON  tangenta ruchnaja             send!"      ;
 	regBank.set(14,1);                                                              // J8-12     XP7 4 PTT2 тангента ручная DSR
 	strcpy_P(buffer, (char*)pgm_read_word(&(table_message[47])));                   // "Command PTT1   ON  tangenta ruchnaja             send!"      ;
 	if (test_repeat == false) myFile.println(buffer);                               // "Command PTT1   ON  tangenta ruchnaja             send!"      ;
-
 
 	UpdateRegs();                                                                   // Выполнить команду
 	delay(100);
@@ -4538,7 +4531,6 @@ void testGGS()
 	regBank.set(6,0);                                                               // Реле RL5 Звук Front L, Front R
 	UpdateRegs();    
 	mcp_Analog.digitalWrite(Front_led_Blue, HIGH); 
-//	delay(100);
 	regBank.set(adr_control_command,0);                                             // Завершить программу    
 }
 void test_GG_Radio1()
@@ -4638,7 +4630,6 @@ void test_GG_Radio2()
 	regBank.set(7,0);                                                               // Реле RL6 Звук Center
 	UpdateRegs();     
 	mcp_Analog.digitalWrite(Front_led_Blue, HIGH); 
-//	delay(100);
 	regBank.set(adr_control_command,0);    
 }
 void test_power()
@@ -4871,7 +4862,6 @@ void test_video()
 	regs_out[1]= 0xC4;                              // 196 Изменять в реальной схеме
 	regs_out[2]= 0x7F;                              // 127 Изменять в реальной схеме
 	mcp_Analog.digitalWrite(Front_led_Blue, HIGH); 
-//	delay(100);
 	regBank.set(adr_control_command,0);    
 }
 void set_video()
@@ -5304,7 +5294,6 @@ void test_disp_off()
 		   }
 		 }
 	   mcp_Analog.digitalWrite(Front_led_Blue, HIGH); 
-	//   delay(100);
 }
 void test_disp_on()
 {
