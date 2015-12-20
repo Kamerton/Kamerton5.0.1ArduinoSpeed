@@ -1053,8 +1053,9 @@ void serialEvent3()
 {
 
 	////wdt_reset();  // Сброс сторожевого таймера при наличии связи с ПК
-	//while (prer_Kmerton_Run){}
+	while (prer_Kmerton_Run){}
 	//digitalWrite(ledPin13,HIGH);
+	control_command();
 	////if (portFound == true)
 	////{
 	//slave.run(); 
@@ -1504,34 +1505,7 @@ void UpdateRegs()                                        // Обновить регистры
 
 
 	  //*******************************************************
-/*
-// перенести состояние регистров в переменные
-  
-//	  avto_test  =  regBank.get(33);
-	 // start_prer =  regBank.get(34);
 
-
-	  regBank.set(adr_reg_count_cts0, count_test_CTS);                    // записать в регистр показания счетчика проходов теста CTS
-	  regBank.set(adr_reg_err_cts0, err_count_cts);                       // записать в регистр показания счетчика ошибок CTS
-	  regBank.set(adr_reg_err_volume_HaSPTT, err_count_volume_HaSPTT);    // записать в регистр показания счетчика Нет звука HaSPTT
-	  regBank.set(adr_reg_err_HaSPTT_ON, err_count_HaSPTT_ON);            // записать в регистр показания счетчика ошибок HaSPTT_ON
-	  regBank.set(adr_reg_err_HaSPTT_OFF, err_count_HaSPTT_OFF);          // записать в регистр показания счетчика ошибок HaSPTT_OFF
-	  regBank.set(adr_reg_err_volume_HeS1PTT, err_count_volume_HeS1PTT);  // записать в регистр показания счетчика Нет звука  HeS1PTT
-	  regBank.set(adr_reg_err_HeS1PTT_ON, err_count_HeS1PTT_ON);          // записать в регистр показания счетчика ошибок HeS1PTT_ON
-	  regBank.set(adr_reg_err_HeS1PTT_OFF,err_count_HeS1PTT_OFF );        // записать в регистр показания счетчика ошибок HeS1PTT_OFF
-	  regBank.set(adr_reg_err_volume_HeS2PTT,err_count_volume_HeS2PTT);   // записать в регистр показания счетчика Нет звука HeS2PTT
-	  regBank.set(adr_reg_err_HeS2PTT_ON,err_count_HeS2PTT_ON);           // записать в регистр показания счетчика ошибок HeS2PTT_ON     
-	  regBank.set(adr_reg_err_HeS2PTT_OFF,err_count_HeS2PTT_OFF);         // записать в регистр показания счетчика ошибок HeS2PTT_OFF
-	  regBank.set(adr_reg_err_volume_MicPTT, err_count_volume_MicPTT);    // записать в регистр показания счетчика Нет звука  MicPTT
-	  regBank.set(adr_reg_err_MicPTT_ON, err_count_MicPTT_ON);            // записать в регистр показания счетчика ошибок MicPTT_ON
-	  regBank.set(adr_reg_err_MicPTT_OFF,err_count_MicPTT_OFF );          // записать в регистр показания счетчика ошибок MicPTT_OFF
-	  regBank.set(adr_reg_err_volume_TangNPTT,err_count_volume_TangNPTT); // записать в регистр показания счетчика Нет звука HeS2PTT
-	  regBank.set(adr_reg_err_TangNPTT_ON,err_count_TangNPTT_ON);         // записать в регистр показания счетчика ошибок HeS2PTT_ON     
-	  regBank.set(adr_reg_err_TangNPTT_OFF,err_count_TangNPTT_OFF);       // записать в регистр показания счетчика ошибок HeS2PTT_OFF
-
-	 // regBank.set(adr_reg_count_Mic, count_test_Mic);                   // записать в регистр показания счетчика проходов теста Mic
-	  regBank.set(adr_reg_err_Mic, err_count_Mic);                        // записать в регистр показания счетчика ошибок CTS
-	  */
 	regBank.set(adr_reg_ind_CTS, !mcp_Analog.digitalRead(CTS));
 	regBank.set(adr_reg_ind_DSR, !mcp_Analog.digitalRead(DSR));
 	regBank.set(adr_reg_ind_DCD, !mcp_Analog.digitalRead(DCD));
@@ -1649,7 +1623,7 @@ void list_file()
 }
 void load_list_files()
 {
-	//wdt_reset();
+
 	if (!sd.begin(chipSelect)) 
 		{
 			Serial.println("initialization SD failed!");
@@ -1668,7 +1642,7 @@ void load_list_files()
 		  } 
 		   Serial2.flush();
 		 }
-		delay(1000);
+		delay(100);
 	//	Serial2.println("Filesend");
 		Serial.println("Files end");
   regBank.set(adr_control_command,0);
@@ -1762,13 +1736,11 @@ void controlFileName()
 	{
 		regBank.set(adr_reg_file_name,temp_file_name-1); 
 	}
-
-  delay(200);
   regBank.set(adr_control_command,0);  
 }
 void FileOpen()
 {
-	Serial.println("FileOpen");
+  Serial.println("FileOpen");
   int temp_file_name = 0;
   preob_num_str();
   while (sd.exists(fileName)) 
@@ -1832,7 +1804,6 @@ void FileOpen()
 	myFile.println ("");
 	regBank.set(122,0);                              // Флаг индикации открытия файла                                   
 //	Serial.println(fileName);
-	delay(100);
    }
   regBank.set(adr_control_command,0);  
 }
@@ -1860,7 +1831,6 @@ void FileClose()
 			regBank.set(123,1);                              // Флаг ошибки  закрытия файла
 		}
 	regBank.set(adr_control_command,0);                                             // Завершить программу    
-	delay(100);
 }
 
 void file_name()
@@ -1974,56 +1944,42 @@ void control_command()
 	{
 		case 1:
 			 sensor_all_off();                                                      // Отключить все сенсоры
-			 wdt_reset();
 			 break;
 		case 2:		
 			 sensor_all_on();                                                       // Включить все сенсоры
-			 wdt_reset();
 			 break;
 		case 3:
 			 test_headset_instructor();
-			 wdt_reset();
 			 break;
 		case 4:	
 			 test_headset_dispatcher();                                             //
-			 wdt_reset();
 			 break;
 		case 5:
 			 test_MTT();                                                            //
-			 wdt_reset();
 			 break;
 		case 6:	
 			 test_tangR();                                                          //
-			 wdt_reset();
 			 break;
 		case 7:
 			test_tangN();
-			wdt_reset();
 			break;
 		case 8:				
 			 testGGS();
-			 wdt_reset();
 			 break;
 		case 9:
 			 test_GG_Radio1();
-			 wdt_reset();
 			 break;
 		case 10:	
 			 test_GG_Radio2();
-			 wdt_reset();
 			 break;
 		case 11:				
 			 test_mikrophon();                                                      // Тестирование микрофона
-			 wdt_reset();
 			 break;
 		case 12:
 			  FileOpen();
-			  wdt_reset();
 			  break;
 		case 13:
-		
 			  FileClose();
-			  wdt_reset();
 			  break;
 		case 14:
 			  set_clock();
@@ -2086,11 +2042,9 @@ void control_command()
 				break;
 	
 		default:
-
-			wdt_reset();
 		break;
 	 }
-	// wdt_reset();
+
 	 regBank.set(adr_control_command,0);
 	}
 }
@@ -2106,7 +2060,7 @@ void sensor_all_off()
 	myFile.println();
 	regBank.set(8,1);                                                               // Включить питание Камертон
 	UpdateRegs(); 
-	delay(500);
+	delay(100);
 	regBank.set(5,0);                                                               // Микрофон инструктора отключить
 	regBank.set(10,0);                                                              // Микрофон диспетчера отключить
 	regBank.set(13,0);                                                              // XP8 - 2   sensor Тангента ножная
@@ -2128,11 +2082,8 @@ void sensor_all_off()
 	regBank.set(32,0);                                                              // XP1- 1  HeS1Ls    sensor подкючения гарнитуры диспетчера
 
 	UpdateRegs(); 
-	delay(500);
+	delay(100);
 	UpdateRegs(); 
-/*	byte i50 = regs_in[0];    
-	byte i52 = regs_in[2];    
-	byte i53 = regs_in[3];   */ 
 
 	byte i50 = regBank.get(40004);    
 	byte i52 = regBank.get(40006);     
@@ -2413,10 +2364,7 @@ void sensor_all_off()
 		  }
 	UpdateRegs(); 
 	mcp_Analog.digitalWrite(Front_led_Blue, HIGH); 
-	delay(100);
-
 	regBank.set(adr_control_command,0);                                             // Завершить программу    
-	//delay(100);
 }
 void sensor_all_on()
 {
@@ -2429,7 +2377,7 @@ void sensor_all_on()
 	myFile.println();
 	regBank.set(8,1);                                                               // Включить питание Камертон
 	UpdateRegs(); 
-	delay(500);
+	delay(100);
 	regBank.set(5,1);                                                               // Микрофон инструктора включить
 	regBank.set(10,1);                                                              // Микрофон диспетчера включить
 	regBank.set(13,1);                                                              // XP8 - 2   sensor Тангента ножная
@@ -2440,9 +2388,9 @@ void sensor_all_on()
 	//regBank.set(29,1);                                                              // XP1- 13 HeS2Ls    sensor подключения гарнитуры инструктора 
 	//regBank.set(31,1);                                                              // XP1- 5  HeS1Rs    sensor подкючения гарнитуры диспетчера с 2 наушниками
 	//regBank.set(32,1);                                                              // XP1- 1  HeS1Ls    sensor подкючения гарнитуры диспетчера
-	delay(500);
+//	delay(500);
 	UpdateRegs(); 
-	delay(500);
+	delay(100);
 
 	byte i50 = regBank.get(40004);    
 	byte i52 = regBank.get(40006);     
@@ -3418,10 +3366,10 @@ if(test_sens == false)
 	*/
 	UpdateRegs(); 
 	mcp_Analog.digitalWrite(Front_led_Blue, HIGH); 
-	delay(500);
+	delay(100);
 	UpdateRegs(); 
 	regBank.set(adr_control_command,0);                                             // Завершить программу    
-	//delay(100);
+
 }
 
 void set_rezistor()
@@ -3449,8 +3397,8 @@ void test_headset_instructor()
 	resistor(2, i2c_eeprom_read_byte(deviceaddress,adr_porog_instruktor + 1));                                                                // Установить уровень сигнала 30 мв
 	regBank.set(2,1);                                                               // Подать сигнал на вход микрофона инструктора  Mic2p
 	UpdateRegs();                                                                   // Выполнить команду
-	delay(500);
-	wdt_reset();
+	delay(100);
+
 	strcpy_P(buffer, (char*)pgm_read_word(&(table_message[4])));                    // "Signal headset instructor microphone 30mv     ON"            ;   
 	if (test_repeat == false)  myFile.println(buffer);                              // "Signal headset instructor microphone 30mv     ON"            ;   
 	//++++++++++++++++++++++++++++++++++ Проверить отсутствие сигнала на линиях FrontL FrontR +++++++++++++++++++++++++++++++++
@@ -3474,8 +3422,8 @@ void test_headset_instructor()
 	regBank.set(15,0);                                                              // РТТ микрофона отключить
 	regBank.set(29,1);                                                              // ВКЛ XP1- 13 HeS2Ls Кнопка  ВКЛ флаг подключения гарнитуры инструктора 
 	UpdateRegs();                                                                   // 
-	delay(500); 
-	wdt_reset();    //
+	delay(100); 
+
 	byte i53 = regBank.get(40007);                                                  // Получить текущее состояние Камертона
 		if(bitRead(i53,4) == 0)                                                     // Реле RL4 XP1 12  HeS2e   Включение микрофона инструктора
 		  {
@@ -3505,8 +3453,8 @@ void test_headset_instructor()
 		  }
 	strcpy_P(buffer, (char*)pgm_read_word(&(table_message[5])));                    // "Microphone headset instructor signal          ON"            ;  
 	if (test_repeat == false) myFile.println(buffer);                               // "Microphone headset instructor signal          ON"            ;    Звуковой сигнал подан на вход микрофона инструктора
-	delay(500);
-	wdt_reset();
+	delay(100);
+
 	//+++++++++++++++++++++++++++ Проверить наличие сигнала на линиях LineL  mag phone  ++++++++++++++++++++++++++++++++++
 	measure_vol_max(analog_LineL,    40224,224,i2c_eeprom_read_byte(deviceaddress,adr_porog_instruktor + 11));                                // Измерить уровень сигнала на выходе LineL      "Test headset instructor ** Signal LineL                     ON  - ";
 	measure_vol_max(analog_mag_phone,40226,226,i2c_eeprom_read_byte(deviceaddress,adr_porog_instruktor + 12));                                // Измерить уровень сигнала на выходе mag phone  "Test headset instructor ** Signal Mag phone                 ON  - ";
@@ -3519,7 +3467,7 @@ void test_headset_instructor()
 	measure_vol_min(analog_ggs,      40236,236,i2c_eeprom_read_byte(deviceaddress,adr_porog_instruktor + 5));                                 // Измерить уровень сигнала на выходе GGS       "Test headset instructor ** Signal GGS                       OFF - ";
 	measure_vol_min(analog_gg_radio1,40237,237,i2c_eeprom_read_byte(deviceaddress,adr_porog_instruktor + 6));                                 // Измерить уровень сигнала на выходе GG Radio1 "Test headset instructor ** Signal GG Radio1                 OFF - ";
 	measure_vol_min(analog_gg_radio2,40238,238,i2c_eeprom_read_byte(deviceaddress,adr_porog_instruktor + 7));                                 // Измерить уровень сигнала на выходе GG Radio2 "Test headset instructor ** Signal GG Radio2                 OFF - ";
-	wdt_reset();
+
 	regBank.set(29,0);                                                              // XP1- 13 HeS2Ls  Отключить сенсор инструктора
 	regBank.set(27,0);                                                              // XP1- 16 HeS2Rs  Отключить сенсор инструктора c 2  наушниками
 	regBank.set(16,0);                                                              // XP1- 16 HeS2Rs  Отключить сенсор инструктора c 2  наушниками
@@ -3529,9 +3477,7 @@ void test_headset_instructor()
 	regBank.set(2,0);                                                               // Выключить сигнал на вход микрофона инструктора  Mic2p
 	UpdateRegs();     
 	mcp_Analog.digitalWrite(Front_led_Blue, HIGH); 
-	delay(100);
 	regBank.set(adr_control_command,0);                                             // Завершить программу    
-	//delay(100);
 }
 void test_headset_dispatcher()
  {
@@ -3549,8 +3495,8 @@ void test_headset_dispatcher()
 	resistor(2, i2c_eeprom_read_byte(deviceaddress,adr_porog_dispatcher + 1));                                                                // Установить уровень сигнала 30 мв
 	regBank.set(1,1);                                                               // Подать сигнал на вход микрофона диспетчера Mic1p
 	UpdateRegs();                                                                   // Выполнить команду
-	delay(1000);
-	wdt_reset();
+	delay(100);
+
 	strcpy_P(buffer, (char*)pgm_read_word(&(table_message[13])));                   // "Signal headset dispatcher microphone 30mv     ON"            ;    
 	if (test_repeat == false)  myFile.println(buffer);                              // "Signal headset dispatcher microphone 30mv     ON"            ;   
 	//++++++++++++++++++++++++++++++++++ Проверить отсутствие сигнала на линиях FrontL FrontR +++++++++++++++++++++++++++++++++
@@ -3575,7 +3521,7 @@ void test_headset_dispatcher()
 	regBank.set(32,1);                                                              // XP1- 1  HeS1Ls    sensor подкючения гарнитуры диспетчера
 
 	UpdateRegs();                                                                   // 
-	delay(500);                                                                     //
+	delay(100);                                                                     //
 
 	byte i53 = regBank.get(40007);     
 		if(bitRead(i53,6) == 0)                                                      // Проверка  включения микрофона диспетчера
@@ -3608,8 +3554,8 @@ void test_headset_dispatcher()
 		  }
 	strcpy_P(buffer, (char*)pgm_read_word(&(table_message[14])));                   // "Microphone headset dispatcher signal          ON" 
 	if (test_repeat == false) myFile.println(buffer);                               // "Microphone dispatcher signal ON"  Звуковой сигнал подан на вход микрофона диспетчера
-	delay(500);
-	wdt_reset();
+	delay(100);
+
 	//+++++++++++++++++++++++++++ Проверить наличие сигнала на линиях LineL  mag phone  ++++++++++++++++++++++++++++++++++
 	measure_vol_max(analog_LineL,    40227,227,i2c_eeprom_read_byte(deviceaddress,adr_porog_dispatcher + 11));                                // Измерить уровень сигнала на выходе LineL     "Test headset dispatcher ** Signal LineL                     ON  - ";
 	measure_vol_max(analog_mag_phone,40229,229,i2c_eeprom_read_byte(deviceaddress,adr_porog_dispatcher + 12));                                // Измерить уровень сигнала на выходе mag phone "Test headset dispatcher ** Signal Mag phone                 ON  - ";
@@ -3633,7 +3579,6 @@ void test_headset_dispatcher()
 	mcp_Analog.digitalWrite(Front_led_Blue, HIGH); 
 	delay(100);
 	regBank.set(adr_control_command,0);                                             // Завершить программу    
-	//delay(100);
  }
 void test_MTT()
 {
@@ -3645,14 +3590,12 @@ void test_MTT()
 	myFile.println("");
 	test_MTT_off();                                                                 // Отключить реле и сенсоры, прверить отключение
 	test_MTT_on();                                                                  // Включить необходимые сенсоры, проверить состояние
-//	myFile.println("");
 	regBank.set(25,0);                                                              //  XP1- 19 HaSs  sensor подключения трубки    MTT включить должно быть в "0"
 	strcpy_P(buffer, (char*)pgm_read_word(&(table_message[30])));
 	if (test_repeat == false)  myFile.println(buffer);                              // "Command sensor ON MTT  send!         
 	regBank.set(18,0);                                                              // XP1 - 20  HangUp  DCD Трубку поднять DCD должно быть в "0"
 	UpdateRegs();                                                                   // Выполнить команду
-	delay(1000);
-	wdt_reset();
+	delay(100);
 	strcpy_P(buffer, (char*)pgm_read_word(&(table_message[32])));
 	if (test_repeat == false)  myFile.println(buffer);                              // "Command  HangUp MTT OFF send!"
 	// ++++++++++++++++++++++++++++++++++ Проверить исправность канала динамиков на отсутствие наводок ++++++++++++++++++++++++
@@ -3671,8 +3614,7 @@ void test_MTT()
 	resistor(2,i2c_eeprom_read_byte(deviceaddress,adr_porog_MTT + 1));                                                               // Установить уровень сигнала 60 мв
 	regBank.set(3,1);                                                               // Включить сигнал на вход микрофона трубки Mic3p
 	UpdateRegs();                                                                   // Выполнить команду
-	delay(500);
-	wdt_reset();
+	delay(100);
 	strcpy_P(buffer, (char*)pgm_read_word(&(table_message[33])));                   // "Signal MTT microphone 30mv                    ON"            ;
 	if (test_repeat == false) myFile.println(buffer);                               // "Signal MTT microphone 30mv                    ON"            ;
 	//++++++++++++++++++++++++++++++++++ Проверить отсутствие сигнала на линиях  +++++++++++++++++++++++++++++++++
@@ -3690,15 +3632,13 @@ void test_MTT()
 	regBank.set(3,0);                                                               // Отключить сигнал на вход микрофона трубки Mic3p
 	regBank.set(6,1);                                                               // Реле RL5. Подать звук Front L, Front R
 	UpdateRegs();                                                                   // Выполнить команду
-	delay(500);
-//	wdt_reset();
+	delay(100);
 	strcpy_P(buffer, (char*)pgm_read_word(&(table_message[35])));                   //   
 	if (test_repeat == false) myFile.println(buffer);                               // "Signal FrontL, FrontR  ON                             - "
 	measure_vol_min(analog_ggs,       40256,256,i2c_eeprom_read_byte(deviceaddress,adr_porog_MTT + 19));                    // Измерить уровень сигнала на выходе GGS       "Test MTT ** Signal GGS                                      OFF - ";
 	regBank.set(18,1);                                                              // XP1 - 20  HangUp  DCD ON
 	UpdateRegs();                                                                   // Выполнить команду
-	delay(500);
-	wdt_reset();
+	delay(100);
 	strcpy_P(buffer, (char*)pgm_read_word(&(table_message[32])));                   // "Command HangUp ON  MTT                           send!"      ;
 	if (test_repeat == false) myFile.println(buffer);                               // "Command HangUp ON  MTT                           send!"      ;
 	measure_vol_max(analog_ggs,      40259,259,i2c_eeprom_read_byte(deviceaddress,adr_porog_MTT + 20));                                //  Измерить уровень сигнала на выходе GGS       "Test MTT ** Signal GGS             On      
@@ -3709,7 +3649,6 @@ void test_MTT()
 	UpdateRegs();                                                                   // Выполнить команду
 	regBank.set(adr_control_command,0);                                             // Завершить программу    
 	mcp_Analog.digitalWrite(Front_led_Blue, HIGH); 
-	delay(200);
 }
 void test_tangR()
 {
@@ -3830,7 +3769,7 @@ void test_tangR()
 	if (test_repeat == false) myFile.println(buffer);                               //
 
 	UpdateRegs();                                                                   // Выполнить команду
-	delay(500);
+//	delay(500);
 	i50 = regBank.get(40004);    
 
 		if(bitRead(i50,3) == 0)                                          // J8-11     XP7 2 sensor тангента ручная             "Command sensor tangenta ruchnaja                            ON  - ";
@@ -3922,7 +3861,6 @@ void test_tangR()
 	UpdateRegs();                                                                   // Выполнить команду
 	regBank.set(adr_control_command,0);                                             // Завершить программу    
 	mcp_Analog.digitalWrite(Front_led_Blue, HIGH); 
-	delay(100);
 }
 void test_tangN()
 {
@@ -3936,16 +3874,14 @@ void test_tangN()
 	regBank.set(13,0);                                                              // XP8 - 2   sensor Тангента ножная
 	regBank.set(14,0);                                                              // XP8 - 1   PTT Тангента ножная
 	UpdateRegs();                                                                   // Выполнить команду
-	delay(400);
+	delay(100);
 	strcpy_P(buffer, (char*)pgm_read_word(&(table_message[44])));                   // "Command sensor OFF tangenta nognaja              send!"      ;
 	if (test_repeat == false)  myFile.println(buffer);                              //
 	strcpy_P(buffer, (char*)pgm_read_word(&(table_message[45])));                   // "Command PTT    OFF tangenta nognaja              send!"      ;
 	if (test_repeat == false)  myFile.println(buffer);                              //
-
-//	byte i50 = regs_in[0];    
+  
 	byte i50 = regBank.get(40004);    
-//	byte i52 = regBank.get(40006);     
-//	byte i53 = regBank.get(40007);     
+
 	if(bitRead(i50,4) != 0)                                                         // J8-11     XP8 2 sensor тангента                  "Command sensor tangenta nognaja                             OFF - ";
 		{
 			regcount = regBank.get(40276);                                          // адрес счетчика ошибки sensor тангента ручная     "Command sensor tangenta nognaja                             OFF - ";
@@ -4012,12 +3948,9 @@ void test_tangN()
 
 
 	UpdateRegs();                                                                   // Выполнить команду
-	delay(400);
+	delay(100);
 
 	i50 = regBank.get(40004);    
-	//byte i52 = regBank.get(40006);     
-	//byte i53 = regBank.get(40007);     
-
 
 			if(bitRead(i50,4) == 0)                                                 // J8-11     XP7 2 sensor тангента                    "Command sensor tangenta nognaja                             ON  - ";
 		  {
@@ -4079,7 +4012,6 @@ void test_tangN()
 	UpdateRegs();                                                                   // Выполнить команду
 	mcp_Analog.digitalWrite(Front_led_Blue, HIGH); 
 	regBank.set(adr_control_command,0);                                             // Завершить программу    
-	delay(100);
 }
 void test_mikrophon()
 {
@@ -4106,15 +4038,12 @@ void test_mikrophon()
 	strcpy_P(buffer, (char*)pgm_read_word(&(table_message[56])));                   // "Command PTT    OFF microphone                    send!"      ;
 	if (test_repeat == false) myFile.println(buffer);                               //
 	UpdateRegs();                                                                   // Выполнить команду
-	delay(500);
-	wdt_reset();
+	delay(100);
 
 	 // +++++++++++++++++++++++++++++++++++++++ Проверка  на отключение сенсора и  PTT microphone ++++++++++++++++++++++++++++++++++++++++++++
-//		byte i50 = regBank.get(40004);    
-	byte i52 = regBank.get(40006);     
-//	byte i53 = regBank.get(40007);     
 
-	//byte i52 = regs_in[2];    
+	byte i52 = regBank.get(40006);     
+
 			if(bitRead(i52,5) != 0)                                                 // XS1 - 6   sensor отключения микрофона
 		  {
 			regcount = regBank.get(40207);                                          // адрес счетчика ошибки sensor подключения микрофона
@@ -4143,8 +4072,8 @@ void test_mikrophon()
 		  }
 
 	 UpdateRegs(); 
-	 delay(500);
-	 wdt_reset();
+	 delay(100);
+
 	  // 2)  Проверка  на отключение PTT microphone
 		if(regBank.get(adr_reg_ind_CTS) != 0)                                       // Проверка  на отключение "Test microphone PTT  (CTS)                                  OFF - ";
 		  {
@@ -4178,13 +4107,9 @@ void test_mikrophon()
 	strcpy_P(buffer, (char*)pgm_read_word(&(table_message[59])));                   // "Command sensor ON  microphone                    send!"      ; 
 	if (test_repeat == false) myFile.println(buffer);                               //
 	UpdateRegs();                                                                   // Выполнить команду
-	delay(500);
-	wdt_reset();
-	//	byte i50 = regBank.get(40004);    
-	i52 = regBank.get(40006);     
-	//byte i53 = regBank.get(40007);     
+	delay(100);
 
-	//i52 = regs_in[2];    
+	i52 = regBank.get(40006);     
 
 	  if(bitRead(i52,5) == 0)                                                       // XS1 - 6   sensor отключения микрофона
 		  {
@@ -4220,12 +4145,9 @@ void test_mikrophon()
 	strcpy_P(buffer, (char*)pgm_read_word(&(table_message[58])));                   // "Command sensor OFF microphone                    send!"      ;  
 	if (test_repeat == false) myFile.println(buffer);                               //
 	UpdateRegs();                                                                   // Выполнить команду
-	delay(500);
-	wdt_reset();
-	//byte i50 = regBank.get(40004);    
+
 	i52 = regBank.get(40006);     
-	//byte i53 = regBank.get(40007);     
-	//i52 = regs_in[2];    
+ 
 
 	if(bitRead(i52,5) == 0)                                                         // XS1 - 6   sensor отключения микрофона
 		  {
@@ -4255,8 +4177,7 @@ void test_mikrophon()
 		  }
 
 	 UpdateRegs(); 
-	 delay(500);
-	 wdt_reset();
+
 	  // 2)  Проверка  на включение  PTT microphone
 		if(regBank.get(adr_reg_ind_CTS) == 0)                                       // Проверка  на включение      "Test microphone PTT  (CTS)                                  ON  
 		  {
@@ -4302,10 +4223,9 @@ void test_mikrophon()
 	resistor(2,i2c_eeprom_read_byte(deviceaddress,adr_porog_Microphone + 1));                                                                // Установить уровень сигнала 60 мв
 	regBank.set(9,1);                                                               // Включить сигнал на вход микрофона Реле RL8 Звук на микрофон
 	UpdateRegs();                                                                   // Выполнить команду
-	delay(500);
+	delay(100);
 	UpdateRegs();                                                                   // Выполнить команду
-//	delay(1000);
-//	wdt_reset();
+
 	strcpy_P(buffer, (char*)pgm_read_word(&(table_message[55])));                   // "Signal miсrophone 30  mV                      ON"     
 	if (test_repeat == false) myFile.println(buffer);                               //
 
@@ -4326,7 +4246,7 @@ void test_mikrophon()
 	strcpy_P(buffer, (char*)pgm_read_word(&(table_message[59])));                   // "Command sensor ON  microphone                    send!"      ; 
 	if (test_repeat == false) myFile.println(buffer);                               //
 	UpdateRegs();                                                                   // Выполнить команду
-	delay(500);
+	delay(100);
 	UpdateRegs();                                                                   // Выполнить команду
 	delay(100);
 
@@ -4373,7 +4293,7 @@ void test_mikrophon()
 	regBank.set(15,0);                                                              // XS1 - 5   PTT Мик CTS
 	UpdateRegs();     
 	mcp_Analog.digitalWrite(Front_led_Blue, HIGH); 
-	delay(200);
+	//delay(200);
 	regBank.set(adr_control_command,0);                                             // Завершить программу    
 
 }
@@ -4407,9 +4327,9 @@ void testGGS()
 	if (test_repeat == false) myFile.println(buffer);              
 	UpdateRegs();                                                                   // Выполнить команду
   
-	delay(500);
+	delay(100);
 	UpdateRegs(); 
-	delay(500);
+	delay(100);
 	UpdateRegs(); 
 
 	byte i50 = regBank.get(40004);                                                 
@@ -4483,9 +4403,9 @@ void testGGS()
 	regBank.set(6,1);                                                               // Реле RL5 Звук Front L, Front R
 	strcpy_P(buffer, (char*)pgm_read_word(&(table_message[49])));                   // "Signal GGS  FrontL, FrontR   0,7V             ON"   
 	if (test_repeat == false) myFile.println(buffer);              
-	delay(500);
+	delay(100);
 	UpdateRegs(); 
-	delay(500);
+	delay(100);
 	UpdateRegs(); 
 
 	measure_vol_max(analog_FrontL,    40290,290,i2c_eeprom_read_byte(deviceaddress,adr_porog_GGS + 11));                                // Измерить уровень сигнала на выходе "Test GGS ** Signal FrontL                                   ON  - ";
@@ -4500,9 +4420,9 @@ void testGGS()
 
 	regBank.set(25,0);                                                                          // XP1- 19 HaSs      sensor подключения трубки          
 	UpdateRegs();                                                                               // Выполнить команду
-	delay(500);
+	delay(100);
 	UpdateRegs(); 
-	delay(500);
+	delay(100);
 	strcpy_P(buffer, (char*)pgm_read_word(&(table_message[30])));                               // "Command sensor ON  MTT                           send!"      ;
 	if (test_repeat == false) myFile.println(buffer);                                           // "Command sensor ON  MTT                           send!"      ;
 
@@ -4575,7 +4495,7 @@ void testGGS()
 	if (test_repeat == false) myFile.println(buffer);                               // "Command HangUp ON  MTT                           send!"      ;
 
 	UpdateRegs(); 
-	delay(1000);
+	delay(100);
 	UpdateRegs();
 
 	   if(regBank.get(adr_reg_ind_DCD)== 0)                                         // Проверить включение HangUp  DCD "Test MTT HangUp (DCD)                                       ON  - ";
@@ -4618,7 +4538,7 @@ void testGGS()
 	regBank.set(6,0);                                                               // Реле RL5 Звук Front L, Front R
 	UpdateRegs();    
 	mcp_Analog.digitalWrite(Front_led_Blue, HIGH); 
-	delay(100);
+//	delay(100);
 	regBank.set(adr_control_command,0);                                             // Завершить программу    
 }
 void test_GG_Radio1()
@@ -4633,10 +4553,9 @@ void test_GG_Radio1()
 	resistor(1,i2c_eeprom_read_byte(deviceaddress,adr_porog_Radio1 + 0));                                                               // Установить уровень сигнала 300 мв
 	resistor(2,i2c_eeprom_read_byte(deviceaddress,adr_porog_Radio1 + 1));                                                               // Установить уровень сигнала 300 мв
 	UpdateRegs();                                                                   // Выполнить команду
-	delay(500);
+	delay(100);
 	UpdateRegs(); 
-	delay(500);
-	wdt_reset();
+	
 	//+++++++++++++++++++++++++++++++++++   Проверка отсутствия сигнала на выходах +++++++++++++++++++++++++++++++++++++++++++++++++++++++
 	measure_vol_min(analog_FrontL,    40300,300,i2c_eeprom_read_byte(deviceaddress,adr_porog_Radio1 + 2));                                // Измерить уровень сигнала на выходе "Test Radio1 ** Signal FrontL                                OFF - ";
 	measure_vol_min(analog_FrontR,    40301,301,i2c_eeprom_read_byte(deviceaddress,adr_porog_Radio1 + 3));                                // Измерить уровень сигнала на выходе "Test Radio1 ** Signal FrontR                                OFF - ";
@@ -4652,9 +4571,9 @@ void test_GG_Radio1()
 	if (test_repeat == false) myFile.println(buffer);                               // "Signal Radio1 300 mV    LFE                   ON"            ;
 	regBank.set(4,1);                                                               //  Реле RL3 Звук  LFE  "Маг."
 	UpdateRegs();                                                                   // Выполнить команду
-	delay(500);
+	delay(100);
 	UpdateRegs();  
-	wdt_reset();
+
 //	Serial.println("test_GG_Radio1 - on ");
 	measure_vol_min(analog_FrontL,    40300,300,i2c_eeprom_read_byte(deviceaddress,adr_porog_Radio1 + 11));                                // Измерить уровень сигнала на выходе "Test Radio1 ** Signal FrontL                                OFF - ";
 	measure_vol_min(analog_FrontR,    40301,301,i2c_eeprom_read_byte(deviceaddress,adr_porog_Radio1 + 12));                                // Измерить уровень сигнала на выходе "Test Radio1 ** Signal FrontR                                OFF - ";
@@ -4683,10 +4602,9 @@ void test_GG_Radio2()
 	resistor(1,i2c_eeprom_read_byte(deviceaddress,adr_porog_Radio2 + 0));                                                               // Установить уровень сигнала 300 мв
 	resistor(2,i2c_eeprom_read_byte(deviceaddress,adr_porog_Radio2 + 1));                                                               // Установить уровень сигнала 300 мв
 	UpdateRegs();                                                                   // Выполнить команду
-	delay(500);
+	delay(100);
 	UpdateRegs(); 
-	delay(500);
-	wdt_reset();
+
 	//+++++++++++++++++++++++++++++++++++   Проверка отсутствия сигнала на выходах +++++++++++++++++++++++++++++++++++++++++++++++++++++++
 	measure_vol_min(analog_FrontL,    40310,310,i2c_eeprom_read_byte(deviceaddress,adr_porog_Radio2 + 2));                                // Измерить уровень сигнала на выходе "Test Radio2 ** Signal FrontL                                OFF - ";
 	measure_vol_min(analog_FrontR,    40311,311,i2c_eeprom_read_byte(deviceaddress,adr_porog_Radio2 + 3));                                // Измерить уровень сигнала на выходе "Test Radio2 ** Signal FrontR                                OFF - ";
@@ -4702,9 +4620,9 @@ void test_GG_Radio2()
 	if (test_repeat == false) myFile.println(buffer);                               // "Signal Radio1 300 mV    LFE                   ON"            ;
 	regBank.set(7,1);                                                               //  Реле RL3 Звук  LFE  "Маг."
 	UpdateRegs();                                                                   // Выполнить команду
-	delay(500);
+	delay(100);
 	UpdateRegs();  
-	wdt_reset();
+
 	//Serial.println("test_GG_Radio2 - on ");
 
 	measure_vol_min(analog_FrontL,    40310,310,i2c_eeprom_read_byte(deviceaddress,adr_porog_Radio2 + 11));                                // Измерить уровень сигнала на выходе "Test Radio2 ** Signal FrontL                                OFF - ";
@@ -4720,7 +4638,7 @@ void test_GG_Radio2()
 	regBank.set(7,0);                                                               // Реле RL6 Звук Center
 	UpdateRegs();     
 	mcp_Analog.digitalWrite(Front_led_Blue, HIGH); 
-	delay(100);
+//	delay(100);
 	regBank.set(adr_control_command,0);    
 }
 void test_power()
@@ -4877,7 +4795,6 @@ void test_power()
 			}
 	}
 	mcp_Analog.digitalWrite(Front_led_Blue, HIGH); 
-	delay(100);
 	regBank.set(adr_control_command,0);    
 }
 void test_video()
@@ -4926,8 +4843,6 @@ void test_video()
 		}
 	}
 
-	delay(100);
-	wdt_reset();
 	strcpy_P(buffer, (char*)pgm_read_word(&(table_message[70])));                   // 
 	if (regBank.get(40063) < 18 || regBank.get(40063) > 26)                         // Диапазон измерения длительности импульса яркости
 	{
@@ -4956,7 +4871,7 @@ void test_video()
 	regs_out[1]= 0xC4;                              // 196 Изменять в реальной схеме
 	regs_out[2]= 0x7F;                              // 127 Изменять в реальной схеме
 	mcp_Analog.digitalWrite(Front_led_Blue, HIGH); 
-	delay(100);
+//	delay(100);
 	regBank.set(adr_control_command,0);    
 }
 void set_video()
@@ -5016,16 +4931,10 @@ void test_instr_off()
 	strcpy_P(buffer, (char*)pgm_read_word(&(table_message[8])));
 	if (test_repeat == false) myFile.println(buffer);                               // "Command PTT headset instructor OFF      send!"
 	UpdateRegs();                                                                   // Выполнить команду отключения сенсоров
-	delay(1000);
-	UpdateRegs(); 
 	delay(100);
-	wdt_reset();
-//	byte i50 = regBank.get(40004);    
+	UpdateRegs(); 
+ 
 	byte i52 = regBank.get(40006);     
-//	byte i53 = regBank.get(40007);     
-
-
-//	byte i52 = regs_in[2];    
 	 
 	  // 1)  Проверка сенсора на отключение гарнитуры инструктора 2 наушниками
 		if(bitRead(i52,1) != 0)                                                     // XP1- 16 HeS2Rs    sensor подключения гарнитуры инструктора с 2 наушниками
@@ -5112,8 +5021,7 @@ void test_instr_off()
 		  }
 
 		UpdateRegs(); 
-		delay(100);
-		wdt_reset();
+
 	   if(regBank.get(adr_reg_ind_CTS) != 0)                                        // Проверить включение PTT инструктора   CTS "Command PTT headset instructor (CTS)                        OFF - ";
 		  {
 			regcount = regBank.get(40220);                                          // адрес счетчика ошибки отключения PTT гарнитуры инструктора "Command PTT headset instructor (CTS)                        OFF - ";
@@ -5141,7 +5049,7 @@ void test_instr_off()
 		   }
 		 }
 	   mcp_Analog.digitalWrite(Front_led_Blue, HIGH); 
-	   delay(100);
+	//   delay(100);
 }
 void test_instr_on()
 {
@@ -5161,10 +5069,8 @@ void test_instr_on()
 	strcpy_P(buffer, (char*)pgm_read_word(&(table_message[12])));
 	if (test_repeat == false) myFile.println(buffer);                               // "Command        ON  PTT headset instructor (CTS)  send!"      ;  
 	UpdateRegs();                                                                   // Выполнить команду включения сенсоров
-	delay(1000);
-	UpdateRegs(); 
 	delay(100);
-	wdt_reset();
+	UpdateRegs(); 
  
 	byte i52 = regBank.get(40006);     
 
@@ -5224,8 +5130,7 @@ void test_instr_on()
 		  }
 
 		UpdateRegs(); 
-		delay(100);
-		wdt_reset();
+	
 	   if(regBank.get(adr_reg_ind_CTS)== 0)                                         // Проверить включение PTT инструктора   CTS "Command PTT headset instructor (CTS)                        ON  - ";
 		  {
 			regcount = regBank.get(40221);                                          // адрес счетчика ошибки отключения PTT гарнитуры инструктора "Command PTT headset instructor (CTS)                        ON  - ";
@@ -5253,7 +5158,7 @@ void test_instr_on()
 		   }
 		 }
 	   mcp_Analog.digitalWrite(Front_led_Blue, HIGH); 
-	   delay(100);
+	//   delay(100);
 }
 
 void test_disp_off()
@@ -5281,14 +5186,11 @@ void test_disp_off()
 	if (test_repeat == false) myFile.println(buffer);                               // "Command PTT headset instructor OFF      send!""
 
 	UpdateRegs();                                                                   // Выполнить команду отключения сенсоров
-	delay(1000);
+	delay(100);
 	UpdateRegs(); 
-	wdt_reset();
-	//byte i50 = regBank.get(40004);    
+  
 	byte i52 = regBank.get(40006);     
-	//byte i53 = regBank.get(40007);     
-	//byte i52 = regs_in[2];    
-	 
+	
 	  // 1)  Проверка сенсора на отключение гарнитуры диспетчера 2 наушниками
 		if(bitRead(i52,3) != 0)                                                     // XP1- 16 HeS2Rs    sensor подключения гарнитуры диспетчера с 2 наушниками
 		  {
@@ -5374,8 +5276,7 @@ void test_disp_off()
 		  }
 
 		UpdateRegs(); 
-		delay(100);
-		wdt_reset();
+
 	   if(regBank.get(adr_reg_ind_CTS) != 0)                                        // Проверить отключения PTT диспетчера   CTS "Command PTT headset instructor (CTS)                        OFF - ";
 		  {
 			regcount = regBank.get(40222);                                          // адрес счетчика   ошибки отключения PTT гарнитуры диспетчера "Command PTT headset instructor (CTS)                        OFF - ";
@@ -5403,7 +5304,7 @@ void test_disp_off()
 		   }
 		 }
 	   mcp_Analog.digitalWrite(Front_led_Blue, HIGH); 
-	   delay(100);
+	//   delay(100);
 }
 void test_disp_on()
 {
@@ -5423,13 +5324,10 @@ void test_disp_on()
 	strcpy_P(buffer, (char*)pgm_read_word(&(table_message[21])));
 	if (test_repeat == false) myFile.println(buffer);                               // "Command        ON  PTT headset dispatcher (CTS)  send!"      ;  
 	UpdateRegs();                                                                   // Выполнить команду включения сенсоров
-	delay(1000);
+	delay(100);
 	UpdateRegs(); 
-	wdt_reset();
-	//byte i50 = regBank.get(40004);    
+
 	byte i52 = regBank.get(40006);     
-	//byte i53 = regBank.get(40007);     
-	//byte i52 = regs_in[2];    
 
 	  // 3)  Проверка сенсора на подключение гарнитуры диспетчера 2 наушниками
 		if(bitRead(i52,3) == 0)                                                 // XP1- 16 HeS2Rs    sensor подключения гарнитуры диспетчера с 2 наушниками
@@ -5515,7 +5413,7 @@ void test_disp_on()
 		   }
 		 }
 	   mcp_Analog.digitalWrite(Front_led_Blue, HIGH); 
-	   delay(100);
+	 //  delay(100);
 }
 
 void test_MTT_off()
@@ -5542,13 +5440,11 @@ void test_MTT_off()
 	regBank.set(9,0);                                                               // Реле RL8 Звук на микрофон
 	regBank.set(10,0);                                                              // Реле RL9 XP1 10
 	UpdateRegs();                                                                   // Выполнить команду отключения сенсоров
-	delay(1000);
+	delay(100);
 	UpdateRegs(); 
 	delay(100);
 	byte i50 = regBank.get(40004);    
-	//byte i52 = regBank.get(40006);     
-	//byte i53 = regBank.get(40007);     
-	//byte i50 = regs_in[0];    
+
 	wdt_reset();
 		if(bitRead(i50,2) != 0)                                                     // XP1- 19 HaSs sensor контроля подключения трубки    "Sensor MTT                          XP1- 19 HaSs            OFF - ";
 		  {
@@ -5577,8 +5473,8 @@ void test_MTT_off()
 			   }
 		  }
 		   UpdateRegs(); 
-		   delay(1000);
-		   wdt_reset();
+		   delay(100);
+
 	  // 2)  Проверка  на отключение PTT  MTT (CTS)
 		if(regBank.get(adr_reg_ind_CTS) != 0)                                       // Проверка  на отключение CTS MTT
 		  {
@@ -5634,7 +5530,7 @@ void test_MTT_off()
 			   }             
 		 }
 	   mcp_Analog.digitalWrite(Front_led_Blue, HIGH); 
-	   delay(100);
+	//   delay(100);
 }
 void test_MTT_on()
 {
@@ -5652,15 +5548,12 @@ void test_MTT_on()
 	if (test_repeat == false) myFile.println(buffer);                               // "Command HangUp ON  MTT                           send!"      ;
 
 	UpdateRegs(); 
-	delay(1000);
+	delay(100);
 	UpdateRegs();
-	wdt_reset();
 
 	  // 1)  Проверка сенсора MTT на включение 
 	byte i50 = regBank.get(40004);    
-	//byte i52 = regBank.get(40006);     
-	//byte i53 = regBank.get(40007);     
-	//byte i50 = regs_in[0];    
+
 		if(bitRead(i50,2) == 0)                                                     // XP1- 19 HaSs sensor контроля подключения трубки    "Sensor MTT                          XP1- 19 HaSs            ON  - ";
 		  {
 			regcount = regBank.get(40210);                                          // адрес счетчика ошибки                              "Sensor MTT                          XP1- 19 HaSs            ON  - ";
@@ -5688,9 +5581,9 @@ void test_MTT_on()
 			   }
 		  }
 
-		delay(1000);
+		delay(100);
 		UpdateRegs(); 
-		wdt_reset();
+
 	  // 2)  Проверка  на отключение PTT  MTT (CTS)
 		if(regBank.get(adr_reg_ind_CTS) == 0)                                       // Проверка  на включение CTS MTT
 		  {
@@ -5746,7 +5639,7 @@ void test_MTT_on()
 			   }
 		 }
 	   mcp_Analog.digitalWrite(Front_led_Blue, HIGH); 
-	   delay(100);
+	//   delay(100);
 }
 
 void measure_vol_min(int istochnik, unsigned int adr_count, int adr_flagErr, unsigned int porogV)
@@ -5953,7 +5846,6 @@ void measure_vol_min(int istochnik, unsigned int adr_count, int adr_flagErr, uns
 				break;
 
 		}
-		wdt_reset();
 		
 	/*	Serial.print("voltage - ");
 		Serial.print(voltage);
@@ -5998,9 +5890,8 @@ void measure_vol_min(int istochnik, unsigned int adr_count, int adr_flagErr, uns
 					myFile.println(_porogVF/100);
 				}
 			}  
-		wdt_reset();
 		mcp_Analog.digitalWrite(Front_led_Blue, HIGH); 
-	delay(100);
+	//delay(100);
 }
 void measure_vol_max(int istochnik, unsigned int adr_count, int adr_flagErr, unsigned int porogV)
 {
@@ -6081,7 +5972,7 @@ void measure_vol_max(int istochnik, unsigned int adr_count, int adr_flagErr, uns
 				break;
 
 		}
-	wdt_reset();
+
 	regBank.set(_adr_count+200,voltage10);                                          // адрес данных ошибки канала 
 		if(voltage10 < _porogV)                                                     // Проверить исправность канала
 			{
@@ -6118,9 +6009,8 @@ void measure_vol_max(int istochnik, unsigned int adr_count, int adr_flagErr, uns
 					myFile.println(_porogVF/100);
 				}
 			} 
-		wdt_reset();
 		mcp_Analog.digitalWrite(Front_led_Blue, HIGH); 
-		delay(100);
+	//	delay(100);
 }
 void measure_volume(int analog)
 {
@@ -6446,6 +6336,7 @@ void mem_byte_trans_read()
 	regBank.set(adr_control_command,0);                                             // Завершить программу    
 	delay(200);
 }
+
 void mem_byte_trans_save()
 {
 	int _adr_reg = regBank.get(40127);  //  Адрес блока регистров для передачи в ПК уровней порогов.
@@ -7750,6 +7641,7 @@ void setup()
 	mcp_Analog.digitalWrite(Front_led_Red, HIGH); 
 	Serial.begin(9600);                             // Подключение к USB ПК
 	Serial1.begin(115200);                          // Подключение к звуковому модулю Камертон
+	//	slave.setSerial(3,57600);                       // Подключение к протоколу MODBUS компьютера Serial3 
 	slave.setSerial(3,115200);                       // Подключение к протоколу MODBUS компьютера Serial3 
 //	Serial2.begin(57600);                            // 
 	Serial2.begin(9600);                            // 
@@ -7758,7 +7650,7 @@ void setup()
 	Serial.println(" ");
 	portFound = false;
 
-	pinMode(ledPin13, OUTPUT);  
+	pinMode(ledPin13, OUTPUT);   
 	pinMode(ledPin12, OUTPUT);  
 	pinMode(ledPin11, OUTPUT);  
 	pinMode(ledPin10, OUTPUT);  
@@ -7874,7 +7766,7 @@ void setup()
 
 void loop()
 {
-	control_command();
+	//control_command();
 
 //	delay(100);
 	
