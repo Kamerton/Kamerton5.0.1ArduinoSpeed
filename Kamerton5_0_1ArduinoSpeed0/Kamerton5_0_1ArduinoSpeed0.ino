@@ -130,17 +130,19 @@ int analog_14             = 14;       // Измерение напряжения питания  12в.на ра
 int analog_3_6            = 15;       // Измерение напряжения питания 3,6в. на разъемах платы Камертон
 
 //-----------------------------------------------------------------------------------
-bool portFound = false;
-bool portFound2 = false;
+
+
+bool blink_red   = false;
+bool portFound   = false;
+bool portFound2  = false;
+uint32_t logTime = 0;
+int32_t diff     = 0;
 byte inputByte_0;
 byte inputByte_1;
 byte inputByte_2;
 byte inputByte_3;
 byte inputByte_4;
-uint32_t logTime = 0;
-int32_t diff = 0;
 
-bool blink_red = false;
 //************************************************************************************************
 
 RTC_DS1307 RTC;                                     // define the Real Time Clock object
@@ -1065,6 +1067,11 @@ void serialEvent3()
 //fileName_F
 void serialEvent2()
 {
+	if (portFound2 == false) set_serial2();
+
+
+
+
 	/*
 	if (Serial2.available())                             // есть что-то проверить? Есть данные в буфере?
 		  {
@@ -7364,7 +7371,8 @@ void test_system()
 }
 void set_serial2()
 {
-   clear_serial2();
+   //clear_serial2();
+	int COM_POrt_Seek=0;
    delay(200);
 // Поиск ком порта
 	Serial.println("COM port find...");
@@ -7422,16 +7430,13 @@ void set_serial2()
 			inputByte_4 = 0;
 	   }
 	   Serial.print(".");
-	   //clear_serial3();
 	   delay(500);
-	   //mcp_Analog.digitalWrite(Front_led_Red, blink_red); 
-	   //mcp_Analog.digitalWrite(Front_led_Blue, !blink_red); 
-	   //blink_red = !blink_red;
-	   //digitalWrite(ledPin13,!digitalRead(ledPin13));
-	} while(portFound2 == false);
+	   COM_POrt_Seek++;
+	 //  if (COM_POrt_Seek == 40) break;
+
+	} while(portFound2 == false & COM_POrt_Seek < 30 );
+	clear_serial2();
 //	wdt_enable (WDTO_8S); // Для тестов не рекомендуется устанавливать значение менее 8 сек.
-	//digitalWrite(ledPin13,LOW);
-	//mcp_Analog.digitalWrite(Front_led_Red, LOW); 
 }
 void set_serial3()
 {
@@ -7617,23 +7622,21 @@ void file_del_SD()
 
 void setup()
 {
-	wdt_disable(); // бесполезная строка до которой не доходит выполнение при bootloop
+	wdt_disable();                                     // бесполезная строка до которой не доходит выполнение при bootloop
 	Wire.begin();
-	if (!RTC.begin())                               // Настройка часов 
+	if (!RTC.begin())                                  // Настройка часов 
 		{
 			Serial.println("RTC failed");
 			while(1);
 		};
-	setup_mcp();                                    // Настроить порты расширения  
-	mcp_Analog.digitalWrite(DTR, HIGH);             // Разрешение вывода (обмена)информации с Камертоном
+	setup_mcp();                                      // Настроить порты расширения  
+	mcp_Analog.digitalWrite(DTR, HIGH);               // Разрешение вывода (обмена)информации с Камертоном
 	mcp_Analog.digitalWrite(Front_led_Blue, LOW); 
 	mcp_Analog.digitalWrite(Front_led_Red, HIGH); 
-	Serial.begin(9600);                             // Подключение к USB ПК
-	Serial1.begin(115200);                          // Подключение к звуковому модулю Камертон
-	//	slave.setSerial(3,57600);                       // Подключение к протоколу MODBUS компьютера Serial3 
-	slave.setSerial(3,115200);                       // Подключение к протоколу MODBUS компьютера Serial3 
-//	Serial2.begin(57600);                            // 
-	Serial2.begin(9600);                            // 
+	Serial.begin(9600);                               // Подключение к USB ПК
+	Serial1.begin(115200);                            // Подключение к звуковому модулю Камертон
+	slave.setSerial(3,115200);                        // Подключение к протоколу MODBUS компьютера Serial3 
+	Serial2.begin(9600);                             // 
 	Serial.println(" ");
 	Serial.println(" ***** Start system  *****");
 	Serial.println(" ");
@@ -7739,8 +7742,8 @@ void setup()
 	//controlFileName();
 	//default_mem_porog();
 	prer_Kmerton_On = true;                          // Разрешить прерывания на камертон
-
-
+	clear_serial2();
+	//set_serial2();
 	//i2c_eeprom_write_byte(deviceaddress, adr_int_porog_instruktor + 0, 56);
 	//i2c_test1();
 
