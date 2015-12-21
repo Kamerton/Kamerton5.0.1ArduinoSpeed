@@ -1,0 +1,77 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{25061E38-816D-4035-8BAE-7E273C9174B2}</ProjectGuid>
+    <RootNamespace>Kamerton5_0_1ArduinoSpeed0</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup />
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>c:\arduino-1.6.5-r2\hardware\arduino\avr\cores\arduino;c:\arduino-1.6.5-r2\hardware\arduino\avr\variants\mega;E:\1 SVN Kamerton5.0.1ArduinoSpeed\trunk\Kamerton5_0_1ArduinoSpeed0;E:\1 SVN Kamerton5.0.1ArduinoSpeed\trunk\Kamerton5_0_1ArduinoSpeed0\libraries\AH_AD9850;E:\1 SVN Kamerton5.0.1ArduinoSpeed\trunk\Kamerton5_0_1ArduinoSpeed0\libraries\AH_AD9850\utility;E:\1 SVN Kamerton5.0.1ArduinoSpeed\trunk\Kamerton5_0_1ArduinoSpeed0\libraries\MCP23017;E:\1 SVN Kamerton5.0.1ArduinoSpeed\trunk\Kamerton5_0_1ArduinoSpeed0\libraries\MCP23017\utility;E:\1 SVN Kamerton5.0.1ArduinoSpeed\trunk\Kamerton5_0_1ArduinoSpeed0\libraries\MODBUS;E:\1 SVN Kamerton5.0.1ArduinoSpeed\trunk\Kamerton5_0_1ArduinoSpeed0\libraries\MODBUS\utility;E:\1 SVN Kamerton5.0.1ArduinoSpeed\trunk\Kamerton5_0_1ArduinoSpeed0\libraries\MsTimer2;E:\1 SVN Kamerton5.0.1ArduinoSpeed\trunk\Kamerton5_0_1ArduinoSpeed0\libraries\MsTimer2\utility;E:\1 SVN Kamerton5.0.1ArduinoSpeed\trunk\Kamerton5_0_1ArduinoSpeed0\libraries\RTClib;E:\1 SVN Kamerton5.0.1ArduinoSpeed\trunk\Kamerton5_0_1ArduinoSpeed0\libraries\RTClib\utility;E:\1 SVN Kamerton5.0.1ArduinoSpeed\trunk\Kamerton5_0_1ArduinoSpeed0\libraries\SdFat;E:\1 SVN Kamerton5.0.1ArduinoSpeed\trunk\Kamerton5_0_1ArduinoSpeed0\libraries\SdFat\utility;c:\arduino-1.6.5-r2\hardware\arduino\avr\libraries\SPI;c:\arduino-1.6.5-r2\hardware\arduino\avr\libraries\SPI\utility;c:\arduino-1.6.5-r2\hardware\arduino\avr\libraries\Wire;c:\arduino-1.6.5-r2\hardware\arduino\avr\libraries\Wire\utility;c:\arduino-1.6.5-r2\libraries;c:\arduino-1.6.5-r2\hardware\arduino\avr\libraries;C:\Program Files\Visual Micro\Visual Micro for Arduino\Micro Platforms\default\debuggers;E:\1 SVN Kamerton5.0.1ArduinoSpeed\trunk\Kamerton5_0_1ArduinoSpeed0\libraries;c:\arduino-1.6.5-r2\hardware\arduino\avr\cores\arduino;c:\arduino-1.6.5-r2\hardware\arduino\avr\variants\mega;E:\1 SVN Kamerton5.0.1ArduinoSpeed\trunk\Kamerton5_0_1ArduinoSpeed0\libraries\AH_AD9850;E:\1 SVN Kamerton5.0.1ArduinoSpeed\trunk\Kamerton5_0_1ArduinoSpeed0\libraries\MCP23017;E:\1 SVN Kamerton5.0.1ArduinoSpeed\trunk\Kamerton5_0_1ArduinoSpeed0\libraries\MODBUS;E:\1 SVN Kamerton5.0.1ArduinoSpeed\trunk\Kamerton5_0_1ArduinoSpeed0\libraries\MsTimer2;E:\1 SVN Kamerton5.0.1ArduinoSpeed\trunk\Kamerton5_0_1ArduinoSpeed0\libraries\RTClib;E:\1 SVN Kamerton5.0.1ArduinoSpeed\trunk\Kamerton5_0_1ArduinoSpeed0\libraries\SdFat;c:\arduino-1.6.5-r2\hardware\arduino\avr\libraries\SPI;c:\arduino-1.6.5-r2\hardware\arduino\avr\libraries\Wire;c:\arduino-1.6.5-r2\libraries;c:\arduino-1.6.5-r2\hardware\arduino\avr\libraries;C:\Program Files\Visual Micro\Visual Micro for Arduino\Micro Platforms\default\debuggers;E:\1 SVN Kamerton5.0.1ArduinoSpeed\trunk\Kamerton5_0_1ArduinoSpeed0\libraries;E:\1 SVN Kamerton5.0.1ArduinoSpeed\trunk\Kamerton5_0_1ArduinoSpeed0\libraries\SdFat\utility;c:\arduino-1.6.5-r2\hardware\arduino\avr\libraries\Wire\utility;c:\arduino-1.6.5-r2\hardware\tools\avr/avr/include/;c:\arduino-1.6.5-r2\hardware\tools\avr//avr/include/avr/;c:\arduino-1.6.5-r2\hardware\tools\avr/lib\gcc\avr\4.8.1\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <ForcedIncludeFiles>E:\1 SVN Kamerton5.0.1ArduinoSpeed\trunk\Kamerton5_0_1ArduinoSpeed0\Visual Micro\.Kamerton5_0_1ArduinoSpeed0.vsarduino.h;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+      <IgnoreStandardIncludePath>true</IgnoreStandardIncludePath>
+      <PreprocessorDefinitions>__AVR_ATmega2560__;F_CPU=16000000L;ARDUINO=165;ARDUINO_AVR_MEGA2560;ARDUINO_ARCH_AVR;__cplusplus;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <None Include="Kamerton5_0_1ArduinoSpeed0.ino">
+      <FileType>CppCode</FileType>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Visual Micro\.Kamerton5_0_1ArduinoSpeed0.vsarduino.h" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
