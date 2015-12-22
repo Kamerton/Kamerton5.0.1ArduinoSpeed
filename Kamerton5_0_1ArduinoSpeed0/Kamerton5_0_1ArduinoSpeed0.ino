@@ -7336,12 +7336,17 @@ modbus registers follow the following format
 void set_serial2()
 {
    //clear_serial2();
-	int COM_POrt_Seek=0;
+   int COM_POrt_Seek=0;
    delay(200);
 // Поиск ком порта
 	Serial.println("COM port find...");
+	//for (int i = 0; i < 30;i++)
+	//{
+  
+	//}
 	do
 	{
+
 	  if (Serial2.available() == 5) 
 	  {
 		//Read buffer
@@ -7383,7 +7388,6 @@ void set_serial2()
 				//Say hello
 				Serial2.print("HELLO FROM SERIAL2 ");
 				portFound2 = true;
-				Serial.println("COM port find OK!.");
 				break;
 			} 
 			//Clear Message bytes
@@ -7398,7 +7402,18 @@ void set_serial2()
 	   COM_POrt_Seek++;
 	 //  if (COM_POrt_Seek > 20) break;
 
-	} while(portFound2 == false);
+	} while(portFound2 == false & COM_POrt_Seek < 30);
+
+	if (portFound2)
+		{
+			Serial.println();
+			Serial.println("COM port find OK!.");
+		}
+	else
+		{
+			Serial.println();
+			Serial.println("COM port find false!.");
+		}
 	clear_serial2();
 //	wdt_enable (WDTO_8S); // Для тестов не рекомендуется устанавливать значение менее 8 сек.
 }
@@ -7600,7 +7615,8 @@ void setup()
 	Serial.begin(9600);                               // Подключение к USB ПК
 	Serial1.begin(115200);                            // Подключение к звуковому модулю Камертон
 	slave.setSerial(3,115200);                        // Подключение к протоколу MODBUS компьютера Serial3 
-	Serial2.begin(57600);                             // 
+	Serial2.begin(115200);                             // 
+	//Serial2.begin(57600);                             // 
 	Serial.println(" ");
 	Serial.println(" ***** Start system  *****");
 	Serial.println(" ");
