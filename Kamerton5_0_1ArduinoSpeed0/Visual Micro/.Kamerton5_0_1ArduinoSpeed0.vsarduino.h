@@ -160,7 +160,6 @@ void send_file_PC();
 void setup_mcp();
 void setup_resistor();
 void setup_regModbus();
-void test_system();
 void set_serial2();
 void set_serial3();
 void clear_serial();

@@ -98,7 +98,7 @@ unsigned int volume_porog_L = 200;                  // Минимальная величина поро
 float voltage ;
 //float voltage_test = 0.60;                        // порог величины синусоиды звука
 unsigned int  voltage10 ;
-unsigned long number_audio = 0;   
+unsigned long number_audio ;   
 
 
 #define FASTADC 1                                   // Ускорение считывания аналогового сигнала
@@ -1067,7 +1067,7 @@ void serialEvent3()
 //fileName_F
 void serialEvent2()
 {
-	if (portFound2 == false) set_serial2();
+	//if (portFound2 == false) set_serial2();
 
 
 
@@ -1642,9 +1642,9 @@ void load_list_files()
 		  {
 			file.printName(&Serial2);
 			Serial2.println();
-		//	file.printName(&Serial);
-		//	Serial.println();
-		//	wdt_reset();
+			file.printName(&Serial);
+			Serial.println();
+
 			file.close();
 		  } 
 		   Serial2.flush();
@@ -1796,12 +1796,12 @@ void FileOpen()
 	regBank.set(adr_Time_Test_second, 0); 
 	myFile.println ("");
 	myFile.print ("Report of test module Audio-1 N ");
-	byte y[4];                                //Чтение из памяти текущих данных счетчика 
+	byte y[4];                                  //Чтение из памяти текущих данных счетчика 
 		y[3]= regBank.get(40010);
 		y[2]= regBank.get(40011);
 		y[1]= regBank.get(40012);
 		y[0]= regBank.get(40013);
-		number_audio = (unsigned long&) y;       // Сложить восстановленные текущие данные в count_colwater_old
+		number_audio = (unsigned long&) y;       // Сложить восстановленные текущие данные в 
 	myFile.print (number_audio);
 	myFile.println ("");
 	myFile.println ("");
@@ -2024,22 +2024,21 @@ void control_command()
 				 set_SD();                                 // Проверка SD памяти
 				break;
 		case 25:   
-			//	delay(1000);
-			 //   Serial.println(test_n);	
-			 //   read_Serial2();
-				send_file_PC();                                 // 
+			   // Serial.println(test_n);	
+	    		send_file_PC();                                 // 
 				break;
 		case 26:   
-				load_list_files();  
+			  //  Serial.println(test_n);	
+				load_list_files();                              // Отправить список файлов в Камертон   
 				break;
 		case 27:   
 				file_del_SD();
 				break;
 		 case 28:   
-				clear_serial2();
+				clear_serial2();                                // Очистить буфер serial2
 				break;
 		 case 29:   
-				set_USB0();
+				set_serial2();                                  // Поиск serial 2
 				break;
 		 case 30:   
 				mem_byte_trans_read();
@@ -6408,20 +6407,20 @@ void read_mem_regBank(int adr_mem , int step_mem)
 void send_file_PC()
 {
 	//delay(1000);
-	if (Serial2.available())                             // есть что-то проверить? Есть данные в буфере?
+	if (Serial2.available())                                     // есть что-то проверить? Есть данные в буфере?
 		  {
-			unsigned char overflowFlag = 0 ;               // Флаг превышения размера буфера
+			unsigned char overflowFlag = 0 ;                     // Флаг превышения размера буфера
 			unsigned char buffer_count = 0;                      // Установить в начало чтения буфера
 
 			while (Serial2.available())
 				{
-				  if (overflowFlag)                        // Если буфер переполнен - очистить
+				  if (overflowFlag)                              // Если буфер переполнен - очистить
 					 Serial2.read();
-				  else                                     // Размер буфера в норме, считать информацию
+				  else                                           // Размер буфера в норме, считать информацию
 					{
 					if (buffer_count == BUFFER_SIZEKF)           // Проверить размер буфера
 						{
-							overflowFlag = 1;              // Установить флаг превышения размера буфера
+							overflowFlag = 1;                    // Установить флаг превышения размера буфера
 						}
 						 fileName_F[buffer_count] = Serial2.read(); 
 						 buffer_count++;
@@ -6468,7 +6467,7 @@ void send_file_PC()
 	delay(100);
 
 	// close the file:
-	// Serial2.flush();
+	 Serial2.flush();
 	 myFile.close();
 
    //}
@@ -7333,42 +7332,7 @@ modbus registers follow the following format
 
 	slave._device = &regBank;  
 }
-void test_system()
-{
-	//prer_Kmerton_On = 0;   
-	////reg_Kamerton();
-	//Serial.print(regs_in[0],HEX);
-	//Serial.print("--");
-	//////  Serial.println(regs_out[0],DEC);
-	//Serial.print(regs_in[1],HEX);
-	//Serial.print("--");
-	////  Serial.println(regs_out[1],DEC);
-	//Serial.print(regs_in[2],HEX);
-	//Serial.print("--");
-	//Serial.print(regs_in[3],HEX);
 
-	//Serial.print("-   -");
-	//Serial.print(regBank.get(10279),HEX);
-	//Serial.print("--");
-	//Serial.print(regBank.get(10278),HEX);
-	//Serial.print("--");
-	//Serial.print(regBank.get(10277),HEX);
-	//Serial.print("--");
-	//Serial.print(regBank.get(10276),HEX);
-	//Serial.print("--");
-	//Serial.print(regBank.get(10275),HEX);
-	//Serial.print("--");
-	//Serial.print(regBank.get(10274),HEX);
-	//Serial.print("--");
-	//Serial.print(regBank.get(10273),HEX);
-	//Serial.print("--");
-	//Serial.println(regBank.get(10272),HEX);
-
-	//////  Serial.println(regs_out[2],DEC);*/
-
-	//prer_Kmerton_On = 1;   
-	////delay(1000);
-}
 void set_serial2()
 {
    //clear_serial2();
@@ -7432,9 +7396,9 @@ void set_serial2()
 	   Serial.print(".");
 	   delay(500);
 	   COM_POrt_Seek++;
-	 //  if (COM_POrt_Seek == 40) break;
+	 //  if (COM_POrt_Seek > 20) break;
 
-	} while(portFound2 == false & COM_POrt_Seek < 30 );
+	} while(portFound2 == false);
 	clear_serial2();
 //	wdt_enable (WDTO_8S); // Для тестов не рекомендуется устанавливать значение менее 8 сек.
 }
@@ -7636,7 +7600,7 @@ void setup()
 	Serial.begin(9600);                               // Подключение к USB ПК
 	Serial1.begin(115200);                            // Подключение к звуковому модулю Камертон
 	slave.setSerial(3,115200);                        // Подключение к протоколу MODBUS компьютера Serial3 
-	Serial2.begin(9600);                             // 
+	Serial2.begin(57600);                             // 
 	Serial.println(" ");
 	Serial.println(" ***** Start system  *****");
 	Serial.println(" ");

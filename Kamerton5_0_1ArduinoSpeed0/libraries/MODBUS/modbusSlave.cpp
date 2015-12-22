@@ -397,7 +397,8 @@ void modbusSlave::setStatus(byte funcType, word reg, word val)
 void modbusSlave::setMULTIPLE_Status(byte funcType, word reg, word val)
 {
 	// int8_t Modbus::process_FC15( unsigned int *regs, uint8_t u8size )
-  uint8_t u8currentRegister, u8currentBit, u8frameByte, u8bitsno;
+  uint8_t u8frameByte, u8bitsno;
+  //uint8_t u8currentRegister, u8currentBit;
   unsigned int u16currentCoil, u16coil;
   boolean bTemp;
   reg += 1;                                                  // Первый адрес регистров
@@ -413,8 +414,8 @@ void modbusSlave::setMULTIPLE_Status(byte funcType, word reg, word val)
 	  {
 
 		u16coil = u16StartCoil + u16currentCoil;
-		u8currentRegister = (uint8_t) (u16coil / 16);
-		u8currentBit = (uint8_t) (u16coil % 16);
+		//u8currentRegister = (uint8_t) (u16coil / 16);
+		//u8currentBit = (uint8_t) (u16coil % 16);
 
 		bTemp = bitRead( _msg[ u8frameByte ], u8bitsno );
 

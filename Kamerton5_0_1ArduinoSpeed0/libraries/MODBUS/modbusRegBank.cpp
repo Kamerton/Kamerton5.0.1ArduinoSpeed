@@ -65,7 +65,7 @@ word modbusRegBank::get(word addr)
 		if(regPtr)
 			return(regPtr->value);
 		else
-			return(NULL);	
+			return(0);	
 	}
 	else
 	{
@@ -74,7 +74,7 @@ word modbusRegBank::get(word addr)
 		if(regPtr)
 			return(regPtr->value);
 		else
-			return(NULL);	
+			return(0);	
 	}
 }
 
